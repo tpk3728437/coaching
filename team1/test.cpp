@@ -14,7 +14,7 @@ TEST(CalculatorTest, Add_zero) {
 
 TEST(CalculatorTest, Minus) {
   calculator calc;
-  EXPECT_EQ(0, calc.minus(1,1));
+  EXPECT_EQ(1, calc.minus(1,1));
   EXPECT_EQ(1, calc.minus(2,1));
 }
 
