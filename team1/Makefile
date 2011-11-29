@@ -23,9 +23,12 @@ clean :
 test.o: test.cpp calculator.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o test.o test.cpp
 
+headsortailsgame.o: HeadsOrTailsGame.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o headsortailsgame.o HeadsOrTailsGame.cpp
+
 calculator.o: calculator.cpp calculator.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o calculator.o calculator.cpp
 
-test1 : test.o calculator.o
+test1 : test.o calculator.o headsortailsgame.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LIBS) $^ -o $@
 
