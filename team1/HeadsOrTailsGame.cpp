@@ -2,7 +2,7 @@
 #include <time.h>
 #include <stdlib.h>
 
-HeadsOrTailsGame::HeadsOrTailsGame()
+HeadsOrTailsGame::HeadsOrTailsGame(GamePlay& gamePlay) : m_gamePlay(gamePlay)
 {
 }
 
@@ -13,10 +13,11 @@ HeadsOrTailsGame::~HeadsOrTailsGame()
 HeadsOrTailsGame::Side HeadsOrTailsGame::Play()
 {
     /* initialize random seed: */
-    srand ( time(0) );
+//    srand ( time(0) );
 
     /* generate secret number: */
-    int result = rand() % 2;
+//    int result = rand() % 2;
+    const int result = m_gamePlay.Flip();
 
     return (HeadsOrTailsGame::Side) result;
 }

@@ -1,8 +1,8 @@
 CXX      = g++
-CXXFLAGS += -g -Wall -Wextra -std=c++0x
-INCPATH  = -I. -I/usr/include/
+CXXFLAGS += -fPIC -g -Wall -Wextra -std=c++0x
+INCPATH  = -I. -I/usr/include
 LINK     = g++
-LIBS     = -pthread -lgtest_main -lgtest
+LIBS     = -pthread -lgmock_main -lgmock -lgtest
 
 ####### Files
 
@@ -20,15 +20,12 @@ clean :
 
 ####### Compile
 
-test.o: test.cpp calculator.h
+test.o: test.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o test.o test.cpp
 
 headsortailsgame.o: HeadsOrTailsGame.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o headsortailsgame.o HeadsOrTailsGame.cpp
 
-calculator.o: calculator.cpp calculator.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o calculator.o calculator.cpp
-
-test1 : test.o calculator.o headsortailsgame.o
+test1 : test.o headsortailsgame.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LIBS) $^ -o $@
 
