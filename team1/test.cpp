@@ -9,15 +9,24 @@ using ::testing::Return;
 class MockGamePlay : public GamePlay
 {
 public:
-//    int Flip() const { return 1; }
     MOCK_CONST_METHOD0(Flip, int());
 };
 
-TEST(CalculatorTest, PlayOneRound_resultTails) 
+TEST(CoinFlipTest, PlayOneRound_resultTails) 
 {
     MockGamePlay play;
-    ON_CALL(play, Flip()).WillByDefault(Return(0));
+    EXPECT_CALL(play, Flip()).Times(1).WillOnce(Return(0));
 
     HeadsOrTailsGame game(play);
     EXPECT_EQ(game.Play(), HeadsOrTailsGame::Tails);
+}
+
+TEST(CoinFlipTest, PlayOneRound_resultHeads)
+{
+    MockGamePlay play;
+    EXPECT_CALL(play, Flip()).Times(1).WillOnce(Return(1));
+
+
+    HeadsOrTailsGame game(play);
+    EXPECT_EQ(game.Play(), HeadsOrTailsGame::Heads);
 }
