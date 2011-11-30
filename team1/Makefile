@@ -6,9 +6,6 @@ LIBS     = -pthread -lgtest_main -lgtest
 
 ####### Files
 
-SOURCES = test.cpp \
-	  calculator.cpp 
-
 TARGET = test1
 
 ####### Build rules
@@ -20,15 +17,12 @@ clean :
 
 ####### Compile
 
-test.o: test.cpp calculator.h
+test.o: test.cpp HeadsOrTailsGame.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o test.o test.cpp
 
 headsortailsgame.o: HeadsOrTailsGame.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o headsortailsgame.o HeadsOrTailsGame.cpp
 
-calculator.o: calculator.cpp calculator.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o calculator.o calculator.cpp
-
-test1 : test.o calculator.o headsortailsgame.o
+test1 : test.o headsortailsgame.o
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LIBS) $^ -o $@
 
