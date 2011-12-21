@@ -11,6 +11,9 @@ USER_DIR = .
 # Flags passed to the preprocessor.
 CPPFLAGS += -I$(GTEST_DIR)/include -I$(GMOCK_DIR)/include
 
+# flag to compile in 32-bit mode
+CFLAGS += -m32
+
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra
 
@@ -54,15 +57,15 @@ GMOCK_SRCS_ = $(GMOCK_DIR)/src/*.cc $(GMOCK_HEADERS)
 # Google Test compile fast and for ordinary users their source rarely
 # changes.
 gtest-all.o : $(GTEST_SRCS_)
-	$(CXX) $(CPPFLAGS) -I$(GTEST_DIR) -I$(GMOCK_DIR) $(CXXFLAGS) \
+	$(CXX) $(CPPFLAGS) $(CFLAGS) -I$(GTEST_DIR) -I$(GMOCK_DIR) $(CXXFLAGS) \
             -c $(GTEST_DIR)/src/gtest-all.cc
 
 gmock-all.o : $(GMOCK_SRCS_)
-	$(CXX) $(CPPFLAGS) -I$(GTEST_DIR) -I$(GMOCK_DIR) $(CXXFLAGS) \
+	$(CXX) $(CPPFLAGS) $(CFLAGS) -I$(GTEST_DIR) -I$(GMOCK_DIR) $(CXXFLAGS) \
             -c $(GMOCK_DIR)/src/gmock-all.cc
 
 gmock_main.o : $(GMOCK_SRCS_)
-	$(CXX) $(CPPFLAGS) -I$(GTEST_DIR) -I$(GMOCK_DIR) $(CXXFLAGS) \
+	$(CXX) $(CPPFLAGS) $(CFLAGS) -I$(GTEST_DIR) -I$(GMOCK_DIR) $(CXXFLAGS) \
             -c $(GMOCK_DIR)/src/gmock_main.cc
 
 gmock.a : gmock-all.o gtest-all.o
@@ -74,10 +77,10 @@ gmock_main.a : gmock-all.o gtest-all.o gmock_main.o
 # Builds a sample test.
 
 test.o : $(USER_DIR)/test.cpp $(GMOCK_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/test.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/test.cpp
 
 HeadsOrTailsGame.o: $(USER_DIR)/HeadsOrTailsGame.cpp $(GMOCK_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/HeadsOrTailsGame.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/HeadsOrTailsGame.cpp
 
 test1 : gmock_main.a test.o HeadsOrTailsGame.o
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -pthread $^ -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -pthread $^ -o $@
