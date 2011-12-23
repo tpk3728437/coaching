@@ -2,31 +2,27 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include "HeadsOrTailsGame.h"
+#include "mock_gameplay.h"
+#include "mock_player.h"
 
 using ::testing::_;
 using ::testing::Return;
+using ::testing::Eq;
 
-class MockGamePlay : public GamePlay
-{
-public:
-    MOCK_CONST_METHOD0(Flip, int());
-};
 
-TEST(CoinFlipTest, PlayOneRound_resultTails) 
+TEST(FlipCoin, lose_with_two_tails)
 {
     MockGamePlay play;
-    EXPECT_CALL(play, Flip()).Times(1).WillOnce(Return(0));
+    EXPECT_CALL(play, Flip()).Times(2).WillRepeatedly(Return(Tails));
 
-    HeadsOrTailsGame game(play);
-    EXPECT_EQ(game.Play(), HeadsOrTailsGame::Tails);
-}
+    MockPlayer player;
+    EXPECT_CALL(player, onPlayStarted());
+    EXPECT_CALL(player, onCoinFlipped(Eq(0), Heads));
+    EXPECT_CALL(player, onCoinFlipped(Eq(1), Tails));
+    EXPECT_CALL(player, onGameWin()).Times(0);
+    EXPECT_CALL(player, onGameLoss());
+    EXPECT_CALL(player, onGameEnd());
 
-TEST(CoinFlipTest, PlayOneRound_resultHeads)
-{
-    MockGamePlay play;
-    EXPECT_CALL(play, Flip()).Times(1).WillOnce(Return(1));
-
-
-    HeadsOrTailsGame game(play);
-    EXPECT_EQ(game.Play(), HeadsOrTailsGame::Heads);
+    HeadsOrTailsGame game(play, player);
+    game.Play();    
 }

@@ -1,27 +1,20 @@
 #ifndef HEADSORTAILS_H
 #define HEADSORTAILS_H
 
-class GamePlay
-{
-public:
-    virtual int Flip() const =0;
-};
+class GamePlay;
+class Player;
 
 class HeadsOrTailsGame
 {
 public:
-    HeadsOrTailsGame(GamePlay& gamePlay);
+    HeadsOrTailsGame(GamePlay& gamePlay, Player& player);
     virtual ~HeadsOrTailsGame();
 
-    enum Side {
-        Tails = 0,
-        Heads
-    };
-
-    HeadsOrTailsGame::Side Play();
+    void Play();
 
 private:
     GamePlay& m_gamePlay;
+    Player& m_player;
 };
 
 #endif //HEADSORTAILS_H
