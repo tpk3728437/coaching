@@ -12,6 +12,7 @@ public:
     virtual void onGameWin() =0;
     virtual void onGameLoss() =0;
     virtual void onGameEnd() =0;
+    virtual void onDoubleUp(bool win) =0;
     
 };
 

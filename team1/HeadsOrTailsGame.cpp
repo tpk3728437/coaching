@@ -67,7 +67,12 @@ void HeadsOrTailsGame::Play()
         m_player.onGameWin();        
 
         if ( numberOfHeads == 2) { 
-            bool doubleup = m_events.DoubleUp();
+            if (m_events.DoubleUp())
+            {
+            const Side result = (Side) m_gamePlay.Flip();
+            m_player.onDoubleUp(result == Heads);
+            m_player.onCoinFlipped(3, result);
+            }
         }
     }
     else

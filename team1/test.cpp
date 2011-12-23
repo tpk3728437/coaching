@@ -202,3 +202,32 @@ TEST(FlipCoin, win_with_heads_heads_heads_sequence)
     HeadsOrTailsGame game(play, player, events);
     game.Play();    
 }
+
+TEST(FlipCoin, doubleup_lose_with_tails)
+{
+    MockGamePlay play;
+    EXPECT_CALL(play, Flip()).Times(4)
+        .WillOnce(Return(Tails))
+        .WillOnce(Return(Heads))
+        .WillOnce(Return(Heads))
+        .WillRepeatedly(Return(Tails));
+
+    MockPlayer player;
+    EXPECT_CALL(player, onPlayStarted());
+    EXPECT_CALL(player, onCoinFlipped(0, Tails));
+    EXPECT_CALL(player, onCoinFlipped(1, Heads));
+    EXPECT_CALL(player, onCoinFlipped(2, Heads));
+    EXPECT_CALL(player, onCoinFlipped(3, Tails));
+    EXPECT_CALL(player, onBigWin()).Times(0);
+    EXPECT_CALL(player, onGameWin());
+    EXPECT_CALL(player, onGameLoss()).Times(0);
+    EXPECT_CALL(player, onGameEnd());
+    EXPECT_CALL(player, onDoubleUp(false));
+    
+    MockUserEvents events;
+    EXPECT_CALL(events, DoubleUp())
+        .WillOnce(Return(true));
+
+    HeadsOrTailsGame game(play, player, events);
+    game.Play();    
+}
