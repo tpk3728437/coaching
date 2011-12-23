@@ -21,7 +21,6 @@ void HeadsOrTailsGame::Play()
     // signal player onPlayStarted()
     m_player.onPlayStarted();
 
-
     // state machine
     // flip one coin, then signal player that coin has been flipped with result
     const Side firstResult = (Side) m_gamePlay.Flip();
@@ -38,22 +37,29 @@ void HeadsOrTailsGame::Play()
     }
     m_player.onCoinFlipped(1, secondResult);
 
-    if (numberOfHeads == 1)
+    if (numberOfHeads >= 1)
     {
         const Side thirdResult = (Side) m_gamePlay.Flip();
+        if (thirdResult == Heads) 
+        {
+            ++numberOfHeads;
+        }
         m_player.onCoinFlipped(2, thirdResult);
     }
 
-    // signal player Game Loss
-    m_player.onGameLoss();
+    if ( numberOfHeads >= 2) 
+    {
+        m_player.onGameWin();        
+    }
+    else
+    {
+        // signal player Game Loss
+        m_player.onGameLoss();
+    }
     
     // signal game end
     m_player.onGameEnd();
         
-        // 
-        //virtual void onGameWin() =0;
-        //virtual void onGameEnd() =0;
-
     // started->oneWin
     // started->oneLoss
     // oneWin->twoWin
