@@ -18,11 +18,10 @@ HeadsOrTailsGame::~HeadsOrTailsGame()
 void HeadsOrTailsGame::Play()
 {
     int numberOfHeads = 0;
-    // signal player onPlayStarted()
+
     m_player.onPlayStarted();
 
     // state machine
-    // flip one coin, then signal player that coin has been flipped with result
     const Side firstResult = (Side) m_gamePlay.Flip();
     if (firstResult == Heads) 
     {
@@ -49,15 +48,17 @@ void HeadsOrTailsGame::Play()
 
     if ( numberOfHeads >= 2) 
     {
+        if (numberOfHeads == 3) 
+        {
+            m_player.onBigWin();
+        }
         m_player.onGameWin();        
     }
     else
     {
-        // signal player Game Loss
         m_player.onGameLoss();
     }
     
-    // signal game end
     m_player.onGameEnd();
         
     // started->oneWin

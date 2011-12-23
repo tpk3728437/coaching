@@ -31,6 +31,7 @@ TEST(FlipCoin, lose_with_two_tails)
     EXPECT_CALL(player, onPlayStarted());
     EXPECT_CALL(player, onCoinFlipped(0, Tails));
     EXPECT_CALL(player, onCoinFlipped(1, Tails));
+    EXPECT_CALL(player, onBigWin()).Times(0);
     EXPECT_CALL(player, onGameWin()).Times(0);
     EXPECT_CALL(player, onGameLoss());
     EXPECT_CALL(player, onGameEnd());
@@ -52,6 +53,7 @@ TEST(FlipCoin, lose_with_heads_then_two_tails)
     EXPECT_CALL(player, onCoinFlipped(0, Heads));
     EXPECT_CALL(player, onCoinFlipped(1, Tails));
     EXPECT_CALL(player, onCoinFlipped(2, Tails));
+    EXPECT_CALL(player, onBigWin()).Times(0);
     EXPECT_CALL(player, onGameWin()).Times(0);
     EXPECT_CALL(player, onGameLoss());
     EXPECT_CALL(player, onGameEnd());
@@ -74,6 +76,7 @@ TEST(FlipCoin, lose_with_tails_heads_tails_sequence)
     EXPECT_CALL(player, onCoinFlipped(0, Tails));
     EXPECT_CALL(player, onCoinFlipped(1, Heads));
     EXPECT_CALL(player, onCoinFlipped(2, Tails));
+    EXPECT_CALL(player, onBigWin()).Times(0);
     EXPECT_CALL(player, onGameWin()).Times(0);
     EXPECT_CALL(player, onGameLoss());
     EXPECT_CALL(player, onGameEnd());
@@ -96,6 +99,7 @@ TEST(FlipCoin, win_with_heads_heads_tails_sequence)
     EXPECT_CALL(player, onCoinFlipped(0, Heads));
     EXPECT_CALL(player, onCoinFlipped(1, Heads));
     EXPECT_CALL(player, onCoinFlipped(2, Tails));
+    EXPECT_CALL(player, onBigWin()).Times(0);
     EXPECT_CALL(player, onGameWin());
     EXPECT_CALL(player, onGameLoss()).Times(0);
     EXPECT_CALL(player, onGameEnd());
@@ -117,6 +121,7 @@ TEST(FlipCoin, win_with_tails_heads_heads_sequence)
     EXPECT_CALL(player, onCoinFlipped(0, Tails));
     EXPECT_CALL(player, onCoinFlipped(1, Heads));
     EXPECT_CALL(player, onCoinFlipped(2, Heads));
+    EXPECT_CALL(player, onBigWin()).Times(0);
     EXPECT_CALL(player, onGameWin());
     EXPECT_CALL(player, onGameLoss()).Times(0);
     EXPECT_CALL(player, onGameEnd());
@@ -139,6 +144,7 @@ TEST(FlipCoin, win_with_heads_tails_heads_sequence)
     EXPECT_CALL(player, onCoinFlipped(0, Heads));
     EXPECT_CALL(player, onCoinFlipped(1, Tails));
     EXPECT_CALL(player, onCoinFlipped(2, Heads));
+    EXPECT_CALL(player, onBigWin()).Times(0);
     EXPECT_CALL(player, onGameWin());
     EXPECT_CALL(player, onGameLoss()).Times(0);
     EXPECT_CALL(player, onGameEnd());
@@ -157,6 +163,7 @@ TEST(FlipCoin, win_with_heads_heads_heads_sequence)
     MockPlayer player;
     EXPECT_CALL(player, onPlayStarted());
     EXPECT_CALL(player, onCoinFlipped(AllOf(Ge(0), Le(2)), Heads)).Times(3);
+    EXPECT_CALL(player, onBigWin());
     EXPECT_CALL(player, onGameWin());
     EXPECT_CALL(player, onGameLoss()).Times(0);
     EXPECT_CALL(player, onGameEnd());
