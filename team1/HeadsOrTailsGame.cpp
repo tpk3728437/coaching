@@ -4,10 +4,22 @@
 #include "gameplay.h"
 #include "player.h"
 
+    // started->oneWin
+    // started->oneLoss
+    // oneWin->twoWin
+    // twoWin -> BigWin
+    // twoWin->doubleUp
+    // doubleUp->doubleUp
+    // oneLoss-> oneWin
+    // oneLoss -> twoLoss
+    // twoLoss -> endGame
+    // doubleUp -> endGame
+    // bigWin -> endGame 
 
-HeadsOrTailsGame::HeadsOrTailsGame(GamePlay& gamePlay, Player& player) : 
+HeadsOrTailsGame::HeadsOrTailsGame(GamePlay& gamePlay, Player& player, UserEvents& events) : 
     m_gamePlay(gamePlay),
-    m_player(player)
+    m_player(player),
+    m_events(events)
 {
 }
 
@@ -53,23 +65,15 @@ void HeadsOrTailsGame::Play()
             m_player.onBigWin();
         }
         m_player.onGameWin();        
+
+        if ( numberOfHeads == 2) { 
+            bool doubleup = m_events.DoubleUp();
+        }
     }
     else
     {
         m_player.onGameLoss();
     }
     
-    m_player.onGameEnd();
-        
-    // started->oneWin
-    // started->oneLoss
-    // oneWin->twoWin
-    // twoWin->doubleUp
-    // doubleUp->doubleUp
-    // oneLoss-> oneWin
-    // oneLoss -> twoLoss
-    // twoLoss -> endGame
-    // twoWin -> endGame 
-
+    m_player.onGameEnd();        
 }
-
