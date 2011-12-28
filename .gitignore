@@ -40,3 +40,5 @@ gmock-1.6.0/test/.deps/
 
 *.a
 team1/test1
+*_sm.h
+*_sm.cpp
