@@ -231,3 +231,130 @@ TEST(FlipCoin, doubleup_lose_with_tails)
     HeadsOrTailsGame game(play, player, events);
     game.Play();    
 }
+
+TEST(FlipCoin, doubleup_win_with_heads)
+{
+    MockGamePlay play;
+    EXPECT_CALL(play, Flip()).Times(4)
+        .WillOnce(Return(Tails))
+        .WillOnce(Return(Heads))
+        .WillOnce(Return(Heads))
+        .WillRepeatedly(Return(Heads));
+
+    MockPlayer player;
+    EXPECT_CALL(player, onPlayStarted());
+    EXPECT_CALL(player, onCoinFlipped(0, Tails));
+    EXPECT_CALL(player, onCoinFlipped(1, Heads));
+    EXPECT_CALL(player, onCoinFlipped(2, Heads));
+    EXPECT_CALL(player, onCoinFlipped(3, Heads));
+    EXPECT_CALL(player, onBigWin()).Times(0);
+    EXPECT_CALL(player, onGameWin()).Times(2);
+    EXPECT_CALL(player, onGameLoss()).Times(0);
+    EXPECT_CALL(player, onGameEnd());
+    EXPECT_CALL(player, onDoubleUp(true));
+    
+    MockUserEvents events;
+    EXPECT_CALL(events, DoubleUp())
+        .WillOnce(Return(true))
+        .WillOnce(Return(false));
+
+    HeadsOrTailsGame game(play, player, events);
+    game.Play();    
+}
+
+TEST(FlipCoin, doubleup_twice_win_with_heads_then_lose_with_tails)
+{
+    MockGamePlay play;
+    EXPECT_CALL(play, Flip()).Times(5)
+        .WillOnce(Return(Tails))
+        .WillOnce(Return(Heads))
+        .WillOnce(Return(Heads))
+        .WillOnce(Return(Heads))
+        .WillRepeatedly(Return(Tails));
+
+    MockPlayer player;
+    EXPECT_CALL(player, onPlayStarted());
+    EXPECT_CALL(player, onCoinFlipped(0, Tails));
+    EXPECT_CALL(player, onCoinFlipped(1, Heads));
+    EXPECT_CALL(player, onCoinFlipped(2, Heads));
+    EXPECT_CALL(player, onCoinFlipped(3, Heads));
+    EXPECT_CALL(player, onCoinFlipped(4, Tails));
+    EXPECT_CALL(player, onBigWin()).Times(0);
+    EXPECT_CALL(player, onGameWin()).Times(2);
+    EXPECT_CALL(player, onGameLoss()).Times(1);
+    EXPECT_CALL(player, onGameEnd());
+    EXPECT_CALL(player, onDoubleUp(_)).Times(2);
+    
+    MockUserEvents events;
+    EXPECT_CALL(events, DoubleUp())
+        .WillOnce(Return(true))
+        .WillOnce(Return(true));
+
+    HeadsOrTailsGame game(play, player, events);
+    game.Play();    
+}
+
+TEST(FlipCoin, doubleup_twice_win_with_heads_heads)
+{
+    MockGamePlay play;
+    EXPECT_CALL(play, Flip()).Times(5)
+        .WillOnce(Return(Tails))
+        .WillRepeatedly(Return(Heads));
+
+    MockPlayer player;
+    EXPECT_CALL(player, onPlayStarted());
+    EXPECT_CALL(player, onCoinFlipped(0, Tails));
+    EXPECT_CALL(player, onCoinFlipped(1, Heads));
+    EXPECT_CALL(player, onCoinFlipped(2, Heads));
+    EXPECT_CALL(player, onCoinFlipped(3, Heads));
+    EXPECT_CALL(player, onCoinFlipped(4, Heads));
+    EXPECT_CALL(player, onBigWin()).Times(0);
+    EXPECT_CALL(player, onGameWin()).Times(3);
+    EXPECT_CALL(player, onGameLoss()).Times(0);
+    EXPECT_CALL(player, onGameEnd());
+    EXPECT_CALL(player, onDoubleUp(_)).Times(2);
+    
+    MockUserEvents events;
+    EXPECT_CALL(events, DoubleUp())
+        .WillOnce(Return(true))
+        .WillOnce(Return(true))
+        .WillOnce(Return(false));
+
+    HeadsOrTailsGame game(play, player, events);
+    game.Play();    
+}
+
+TEST(FlipCoin, doubleup_twice_win_with_heads_heads_lose_with_tails)
+{
+    MockGamePlay play;
+    EXPECT_CALL(play, Flip()).Times(6)
+        .WillOnce(Return(Tails))
+        .WillOnce(Return(Heads))
+        .WillOnce(Return(Heads))
+        .WillOnce(Return(Heads))
+        .WillOnce(Return(Heads))
+        .WillRepeatedly(Return(Tails));
+
+    MockPlayer player;
+    EXPECT_CALL(player, onPlayStarted());
+    EXPECT_CALL(player, onCoinFlipped(0, Tails));
+    EXPECT_CALL(player, onCoinFlipped(1, Heads));
+    EXPECT_CALL(player, onCoinFlipped(2, Heads));
+    EXPECT_CALL(player, onCoinFlipped(3, Heads));
+    EXPECT_CALL(player, onCoinFlipped(4, Heads));
+    EXPECT_CALL(player, onCoinFlipped(5, Tails));
+    EXPECT_CALL(player, onBigWin()).Times(0);
+    EXPECT_CALL(player, onGameWin()).Times(3);
+    EXPECT_CALL(player, onGameLoss()).Times(1);
+    EXPECT_CALL(player, onGameEnd());
+    EXPECT_CALL(player, onDoubleUp(_)).Times(3);
+    
+    MockUserEvents events;
+    EXPECT_CALL(events, DoubleUp())
+        .WillOnce(Return(true))
+        .WillOnce(Return(true))
+        .WillOnce(Return(true));
+
+    HeadsOrTailsGame game(play, player, events);
+    game.Play();    
+}
