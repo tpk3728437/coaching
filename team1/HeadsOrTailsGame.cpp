@@ -19,7 +19,9 @@
 HeadsOrTailsGame::HeadsOrTailsGame(GamePlay& gamePlay, Player& player, UserEvents& events) : 
     m_gamePlay(gamePlay),
     m_player(player),
-    m_events(events)
+    m_events(events),
+    m_fsm(*this),
+    numberOfFlips(-1)
 {
 }
 
@@ -29,56 +31,68 @@ HeadsOrTailsGame::~HeadsOrTailsGame()
 
 void HeadsOrTailsGame::Play()
 {
-    int numberOfHeads = 0;
+    m_fsm.enterStartState();    
+}
 
+void HeadsOrTailsGame::playStarted() 
+{
     m_player.onPlayStarted();
-
-    // state machine
-    const Side firstResult = (Side) m_gamePlay.Flip();
-    if (firstResult == Heads) 
+}
+    
+void HeadsOrTailsGame::flipCoin() 
+{
+    const Side result = (Side) m_gamePlay.Flip();
+    ++numberOfFlips;
+    if (result == Heads)
     {
-        ++numberOfHeads;
-    }
-    m_player.onCoinFlipped(0, firstResult);
-
-    const Side secondResult = (Side) m_gamePlay.Flip();
-    if (secondResult == Heads) 
-    {
-        ++numberOfHeads;
-    }
-    m_player.onCoinFlipped(1, secondResult);
-
-    if (numberOfHeads >= 1)
-    {
-        const Side thirdResult = (Side) m_gamePlay.Flip();
-        if (thirdResult == Heads) 
-        {
-            ++numberOfHeads;
-        }
-        m_player.onCoinFlipped(2, thirdResult);
-    }
-
-    if ( numberOfHeads >= 2) 
-    {
-        if (numberOfHeads == 3) 
-        {
-            m_player.onBigWin();
-        }
-        m_player.onGameWin();        
-
-        if ( numberOfHeads == 2) { 
-            if (m_events.DoubleUp())
-            {
-            const Side result = (Side) m_gamePlay.Flip();
-            m_player.onDoubleUp(result == Heads);
-            m_player.onCoinFlipped(3, result);
-            }
-        }
+        m_fsm.head();
     }
     else
     {
-        m_player.onGameLoss();
+        m_fsm.tail();
     }
+}
+
+void HeadsOrTailsGame::coinFlipped(Side side)
+{
+    m_player.onCoinFlipped(numberOfFlips, side);
+}
+
+void HeadsOrTailsGame::gameLoss()
+{
+    m_player.onGameLoss();
+    m_fsm.end();
+}
+
+void HeadsOrTailsGame::doubleUp()
+{
+    if ( m_events.DoubleUp())
+    {
+        m_fsm.doubleUp();
+    }
+    else
+    {
+        m_fsm.end();
+    }
+}
+
+void HeadsOrTailsGame::bigWin()
+{
+    m_player.onBigWin();
+    m_fsm.end();
+}
+
+void HeadsOrTailsGame::gameWin()
+{
+    m_player.onGameWin();        
+}
     
+void HeadsOrTailsGame::gameEnd()
+{
     m_player.onGameEnd();        
+}
+
+void HeadsOrTailsGame::doubleUpWin(bool win)
+{
+    m_player.onDoubleUp(win);
 }

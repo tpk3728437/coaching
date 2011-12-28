@@ -5,17 +5,25 @@ GTEST_DIR = ../gmock-1.6.0/gtest
 # Remember to tweak this if you move this file.
 GMOCK_DIR = ../gmock-1.6.0
 
+SMC_DIR = /home/tokoskin/repos/StateMachineCompiler
+
 # Where to find user code.
 USER_DIR = .
 
 # Flags passed to the preprocessor.
-CPPFLAGS += -I$(GTEST_DIR)/include -I$(GMOCK_DIR)/include
+CPPFLAGS += -I$(GTEST_DIR)/include -I$(GMOCK_DIR)/include -I$(SMC_DIR)/lib/C++
 
 # flag to compile in 32-bit mode
 #CFLAGS += -m32
 
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra
+
+# State Machine Compiler 
+SM_SOURCES = GameMachine.sm
+SMC = java -jar $(SMC_DIR)/bin/Smc.jar
+SMC_FLAGS = -c++ $(TRACE) $(SERIAL) $(NO_CATCH) $(NO_EXCEPT)
+SMC_HEADERS = $(SMC_DIR)/lib/C++/*.h
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
@@ -33,12 +41,26 @@ GMOCK_HEADERS = $(GMOCK_DIR)/include/gmock/*.h \
                 $(GMOCK_DIR)/include/gmock/internal/*.h \
                 $(GTEST_HEADERS)
 
-# House-keeping build targets.
+# House-keeping build targets.	
+%_sm.h %_sm.cpp : %.sm
+		$(SMC) $(SMC_FLAGS) $<
+
+%_sm.dot :      %.sm
+		$(SMC) -graph -glevel 1 $<
+
+%_sm.pdf :      %_sm.dot
+		dot -Tpdf -o $@ $<	
+	
 
 all : $(TESTS)
 
+graph : $(SM_SOURCES:%.sm=%_sm.dot)
+
+pdf : $(SM_SOURCES:%.sm=%_sm.pdf)
+
 clean :
-	rm -f $(TESTS) gmock.a gmock_main.a *.o
+	rm -f $(TESTS) gmock.a gmock_main.a *.o *_sm.h *_sm.cpp *_sm.pdf *_sm.dot
+	
 
 # Builds gmock.a and gmock_main.a.  These libraries contain both
 # Google Mock and Google Test.  A test should link with either gmock.a
@@ -76,11 +98,14 @@ gmock_main.a : gmock-all.o gtest-all.o gmock_main.o
 
 # Builds a sample test.
 
+GameMachine_sm.o : $(SM_SOURCES:.sm=_sm.cpp) $(SMC_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/$(SM_SOURCES:.sm=_sm.cpp)
+
 test.o : $(USER_DIR)/test.cpp $(GMOCK_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/test.cpp
 
 HeadsOrTailsGame.o: $(USER_DIR)/HeadsOrTailsGame.cpp $(GMOCK_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/HeadsOrTailsGame.cpp
 
-test1 : gmock_main.a test.o HeadsOrTailsGame.o
+test1 : gmock_main.a GameMachine_sm.o test.o HeadsOrTailsGame.o 
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -pthread $^ -o $@
