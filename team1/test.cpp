@@ -283,7 +283,8 @@ TEST(FlipCoin, doubleup_twice_win_with_heads_then_lose_with_tails)
     EXPECT_CALL(player, onGameWin()).Times(2);
     EXPECT_CALL(player, onGameLoss()).Times(1);
     EXPECT_CALL(player, onGameEnd());
-    EXPECT_CALL(player, onDoubleUp(_)).Times(2);
+    EXPECT_CALL(player, onDoubleUp(true));
+    EXPECT_CALL(player, onDoubleUp(false));
     
     MockUserEvents events;
     EXPECT_CALL(events, DoubleUp())
@@ -312,7 +313,7 @@ TEST(FlipCoin, doubleup_twice_win_with_heads_heads)
     EXPECT_CALL(player, onGameWin()).Times(3);
     EXPECT_CALL(player, onGameLoss()).Times(0);
     EXPECT_CALL(player, onGameEnd());
-    EXPECT_CALL(player, onDoubleUp(_)).Times(2);
+    EXPECT_CALL(player, onDoubleUp(true)).Times(2);
     
     MockUserEvents events;
     EXPECT_CALL(events, DoubleUp())
@@ -347,7 +348,8 @@ TEST(FlipCoin, doubleup_twice_win_with_heads_heads_lose_with_tails)
     EXPECT_CALL(player, onGameWin()).Times(3);
     EXPECT_CALL(player, onGameLoss()).Times(1);
     EXPECT_CALL(player, onGameEnd());
-    EXPECT_CALL(player, onDoubleUp(_)).Times(3);
+    EXPECT_CALL(player, onDoubleUp(true)).Times(2);
+    EXPECT_CALL(player, onDoubleUp(false));
     
     MockUserEvents events;
     EXPECT_CALL(events, DoubleUp())
