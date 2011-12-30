@@ -12,6 +12,7 @@ using ::testing::InSequence;
 using ::testing::AllOf;
 using ::testing::Ge;
 using ::testing::Le;
+using ::testing::Invoke;
 
 
 /// Win table
@@ -24,10 +25,20 @@ using ::testing::Le;
 // 101, (win) x
 // 111, (super win)
 
-TEST(FlipCoin, lose_with_two_tails)
+void tailsFlipResult(FlipResult& result)
 {
+    result.flipResult(Tails);
+}
+
+void headsFlipResult(FlipResult& result)
+{
+    result.flipResult(Heads);
+}
+
+TEST(FlipCoin, lose_with_two_tails)
+{    
     MockGamePlay play;
-    EXPECT_CALL(play, Flip()).Times(2).WillRepeatedly(Return(Tails));
+    EXPECT_CALL(play, Flip(_)).Times(2).WillRepeatedly(Invoke(tailsFlipResult)); 
 
     MockPlayer player;
     EXPECT_CALL(player, onPlayStarted());
@@ -48,9 +59,9 @@ TEST(FlipCoin, lose_with_two_tails)
 TEST(FlipCoin, lose_with_heads_then_two_tails)
 {
     MockGamePlay play;
-    EXPECT_CALL(play, Flip()).Times(3)
-        .WillOnce(Return(Heads))
-        .WillRepeatedly(Return(Tails));
+    EXPECT_CALL(play, Flip(_)).Times(3)
+        .WillOnce(Invoke(headsFlipResult))
+        .WillRepeatedly(Invoke(tailsFlipResult));
 
     InSequence in;
     MockPlayer player;
@@ -73,10 +84,10 @@ TEST(FlipCoin, lose_with_heads_then_two_tails)
 TEST(FlipCoin, lose_with_tails_heads_tails_sequence)
 {
     MockGamePlay play;
-    EXPECT_CALL(play, Flip()).Times(3)
-        .WillOnce(Return(Tails))
-        .WillOnce(Return(Heads))
-        .WillRepeatedly(Return(Tails));
+    EXPECT_CALL(play, Flip(_)).Times(3)
+        .WillOnce(Invoke(tailsFlipResult))
+        .WillOnce(Invoke(headsFlipResult))
+        .WillRepeatedly(Invoke(tailsFlipResult));
 
     InSequence in;
     MockPlayer player;
@@ -99,10 +110,10 @@ TEST(FlipCoin, lose_with_tails_heads_tails_sequence)
 TEST(FlipCoin, win_with_heads_heads_tails_sequence)
 {
     MockGamePlay play;
-    EXPECT_CALL(play, Flip()).Times(3)
-        .WillOnce(Return(Heads))
-        .WillOnce(Return(Heads))
-        .WillRepeatedly(Return(Tails));
+    EXPECT_CALL(play, Flip(_)).Times(3)
+        .WillOnce(Invoke(headsFlipResult))
+        .WillOnce(Invoke(headsFlipResult))
+        .WillRepeatedly(Invoke(tailsFlipResult));
 
     MockPlayer player; {
     InSequence in; 
@@ -126,9 +137,9 @@ TEST(FlipCoin, win_with_heads_heads_tails_sequence)
 TEST(FlipCoin, win_with_tails_heads_heads_sequence)
 {
     MockGamePlay play;
-    EXPECT_CALL(play, Flip()).Times(3)
-        .WillOnce(Return(Tails))
-        .WillRepeatedly(Return(Heads));
+    EXPECT_CALL(play, Flip(_)).Times(3)
+        .WillOnce(Invoke(tailsFlipResult))
+        .WillRepeatedly(Invoke(headsFlipResult));
 
     MockPlayer player; {
     InSequence in;
@@ -152,10 +163,10 @@ TEST(FlipCoin, win_with_tails_heads_heads_sequence)
 TEST(FlipCoin, win_with_heads_tails_heads_sequence)
 {
     MockGamePlay play;
-    EXPECT_CALL(play, Flip()).Times(3)
-        .WillOnce(Return(Heads))
-        .WillOnce(Return(Tails))
-        .WillRepeatedly(Return(Heads));
+    EXPECT_CALL(play, Flip(_)).Times(3)
+        .WillOnce(Invoke(headsFlipResult))
+        .WillOnce(Invoke(tailsFlipResult))
+        .WillRepeatedly(Invoke(headsFlipResult));
 
     MockPlayer player; {
     InSequence in;
@@ -179,8 +190,8 @@ TEST(FlipCoin, win_with_heads_tails_heads_sequence)
 TEST(FlipCoin, bigwin_with_heads_heads_heads_sequence)
 {
     MockGamePlay play;
-    EXPECT_CALL(play, Flip()).Times(3)
-        .WillRepeatedly(Return(Heads));
+    EXPECT_CALL(play, Flip(_)).Times(3)
+        .WillRepeatedly(Invoke(headsFlipResult));
 
     MockPlayer player; {
     InSequence in;
@@ -201,11 +212,11 @@ TEST(FlipCoin, bigwin_with_heads_heads_heads_sequence)
 TEST(FlipCoin, doubleup_lose_with_tails)
 {
     MockGamePlay play;
-    EXPECT_CALL(play, Flip()).Times(4)
-        .WillOnce(Return(Tails))
-        .WillOnce(Return(Heads))
-        .WillOnce(Return(Heads))
-        .WillRepeatedly(Return(Tails));
+    EXPECT_CALL(play, Flip(_)).Times(4)
+        .WillOnce(Invoke(tailsFlipResult))
+        .WillOnce(Invoke(headsFlipResult))
+        .WillOnce(Invoke(headsFlipResult))
+        .WillRepeatedly(Invoke(tailsFlipResult));
 
     MockPlayer player;
     EXPECT_CALL(player, onPlayStarted());
@@ -230,11 +241,11 @@ TEST(FlipCoin, doubleup_lose_with_tails)
 TEST(FlipCoin, doubleup_win_with_heads)
 {
     MockGamePlay play;
-    EXPECT_CALL(play, Flip()).Times(4)
-        .WillOnce(Return(Tails))
-        .WillOnce(Return(Heads))
-        .WillOnce(Return(Heads))
-        .WillRepeatedly(Return(Heads));
+    EXPECT_CALL(play, Flip(_)).Times(4)
+        .WillOnce(Invoke(tailsFlipResult))
+        .WillOnce(Invoke(headsFlipResult))
+        .WillOnce(Invoke(headsFlipResult))
+        .WillRepeatedly(Invoke(headsFlipResult));
 
     MockPlayer player;
     EXPECT_CALL(player, onPlayStarted());
@@ -260,12 +271,12 @@ TEST(FlipCoin, doubleup_win_with_heads)
 TEST(FlipCoin, doubleup_twice_win_with_heads_then_lose_with_tails)
 {
     MockGamePlay play;
-    EXPECT_CALL(play, Flip()).Times(5)
-        .WillOnce(Return(Tails))
-        .WillOnce(Return(Heads))
-        .WillOnce(Return(Heads))
-        .WillOnce(Return(Heads))
-        .WillRepeatedly(Return(Tails));
+    EXPECT_CALL(play, Flip(_)).Times(5)
+        .WillOnce(Invoke(tailsFlipResult))
+        .WillOnce(Invoke(headsFlipResult))
+        .WillOnce(Invoke(headsFlipResult))
+        .WillOnce(Invoke(headsFlipResult))
+        .WillRepeatedly(Invoke(tailsFlipResult));
 
     MockPlayer player;
     EXPECT_CALL(player, onPlayStarted());
@@ -293,9 +304,9 @@ TEST(FlipCoin, doubleup_twice_win_with_heads_then_lose_with_tails)
 TEST(FlipCoin, doubleup_twice_win_with_heads_heads)
 {
     MockGamePlay play;
-    EXPECT_CALL(play, Flip()).Times(5)
-        .WillOnce(Return(Tails))
-        .WillRepeatedly(Return(Heads));
+    EXPECT_CALL(play, Flip(_)).Times(5)
+        .WillOnce(Invoke(tailsFlipResult))
+        .WillRepeatedly(Invoke(headsFlipResult));
 
     MockPlayer player;
     EXPECT_CALL(player, onPlayStarted());
@@ -323,13 +334,13 @@ TEST(FlipCoin, doubleup_twice_win_with_heads_heads)
 TEST(FlipCoin, doubleup_twice_win_with_heads_heads_lose_with_tails)
 {
     MockGamePlay play;
-    EXPECT_CALL(play, Flip()).Times(6)
-        .WillOnce(Return(Tails))
-        .WillOnce(Return(Heads))
-        .WillOnce(Return(Heads))
-        .WillOnce(Return(Heads))
-        .WillOnce(Return(Heads))
-        .WillRepeatedly(Return(Tails));
+    EXPECT_CALL(play, Flip(_)).Times(6)
+        .WillOnce(Invoke(tailsFlipResult))
+        .WillOnce(Invoke(headsFlipResult))
+        .WillOnce(Invoke(headsFlipResult))
+        .WillOnce(Invoke(headsFlipResult))
+        .WillOnce(Invoke(headsFlipResult))
+        .WillRepeatedly(Invoke(tailsFlipResult));
 
     MockPlayer player;
     EXPECT_CALL(player, onPlayStarted());

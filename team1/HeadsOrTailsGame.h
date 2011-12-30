@@ -3,13 +3,14 @@
 
 #include "GameMachine_sm.h"
 #include "globals.h"
+#include "gameplay.h"
 
 class GamePlay;
 class Player;
 class UserEvents;
 
 
-class HeadsOrTailsGame
+class HeadsOrTailsGame : private FlipResult
 {
 public:
     HeadsOrTailsGame(GamePlay& gamePlay, Player& player, UserEvents& events);
@@ -27,6 +28,9 @@ public:
     void doubleUp();
     void gameEnd();
     void doubleUpWin(bool win);
+
+private: // from FlipResult
+    void flipResult(Side side);
 
 private:
     GamePlay& m_gamePlay;

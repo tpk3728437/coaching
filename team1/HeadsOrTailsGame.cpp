@@ -31,9 +31,14 @@ void HeadsOrTailsGame::playStarted()
     
 void HeadsOrTailsGame::flipCoin() 
 {
-    const Side result = (Side) m_gamePlay.Flip();
+    // gives an asyncronous callback to the client
+    m_gamePlay.Flip(*this);
+}
+
+void HeadsOrTailsGame::flipResult(Side side)
+{
     ++numberOfFlips;
-    if (result == Heads)
+    if (side == Heads)
     {
         m_fsm.head();
     }
