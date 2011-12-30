@@ -4,6 +4,7 @@
 #include "HeadsOrTailsGame.h"
 #include "mock_gameplay.h"
 #include "mock_player.h"
+#include "mock_userevents.h"
 
 using ::testing::_;
 using ::testing::Return;
@@ -11,12 +12,6 @@ using ::testing::InSequence;
 using ::testing::AllOf;
 using ::testing::Ge;
 using ::testing::Le;
-
-class MockUserEvents : public UserEvents
-{
-public:
-    MOCK_METHOD0(DoubleUp, bool());
-};
 
 
 /// Win table

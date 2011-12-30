@@ -6,12 +6,8 @@
 
 class GamePlay;
 class Player;
+class UserEvents;
 
-class UserEvents
-{
-public:
-    virtual bool DoubleUp() =0;
-};
 
 class HeadsOrTailsGame
 {

@@ -3,18 +3,8 @@
 #include <stdlib.h>
 #include "gameplay.h"
 #include "player.h"
+#include "userevents.h"
 
-    // started->oneWin
-    // started->oneLoss
-    // oneWin->twoWin
-    // twoWin -> BigWin
-    // twoWin->doubleUp
-    // doubleUp->doubleUp
-    // oneLoss-> oneWin
-    // oneLoss -> twoLoss
-    // twoLoss -> endGame
-    // doubleUp -> endGame
-    // bigWin -> endGame 
 
 HeadsOrTailsGame::HeadsOrTailsGame(GamePlay& gamePlay, Player& player, UserEvents& events) : 
     m_gamePlay(gamePlay),
