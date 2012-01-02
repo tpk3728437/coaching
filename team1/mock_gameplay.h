@@ -7,7 +7,7 @@
 class MockGamePlay : public GamePlay
 {
 public:
-    MOCK_CONST_METHOD1(Flip, void(FlipResult& result));
+    MOCK_METHOD1(Flip, void(FlipResult& result));
 };
 
 #endif // MOCKGAMEPLAY_H
