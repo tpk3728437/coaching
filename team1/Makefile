@@ -5,7 +5,7 @@ GTEST_DIR = ../gmock-1.6.0/gtest
 # Remember to tweak this if you move this file.
 GMOCK_DIR = ../gmock-1.6.0
 
-SMC_DIR = /home/tokoskin/repos/StateMachineCompiler
+SMC_DIR = ../smc
 
 # Where to find user code.
 USER_DIR = .
@@ -62,8 +62,10 @@ graph : $(SM_SOURCES:%.sm=%_sm.dot)
 pdf : $(SM_SOURCES:%.sm=%_sm.pdf)
 
 clean :
-	rm -f $(TESTS) gmock.a gmock_main.a *.o *_sm.h *_sm.cpp *_sm.pdf *_sm.dot
+	rm -f $(TESTS) gmock.a gmock_main.a *.o 
 	
+distclean: clean
+	rm -f *_sm.h *_sm.cpp *_sm.pdf *_sm.dot
 
 # Builds gmock.a and gmock_main.a.  These libraries contain both
 # Google Mock and Google Test.  A test should link with either gmock.a
