@@ -12,7 +12,7 @@ USER_DIR = .
 CPPFLAGS += -I$(GTEST_DIR)/include -I$(GMOCK_DIR)/include
 
 # flag to compile in 32-bit mode
-CFLAGS += -m32
+#CFLAGS += -m32
 
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra
