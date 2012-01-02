@@ -11,78 +11,79 @@
 
 %map MainMap
 %%
-// State		Transition		End State		    Action(s)
+// State        Transition      End State           Action(s)
 StartState
 Entry { playStarted(); flipCoin(); }
 {
-                head			HeadState			{ coinFlipped(Heads); }
-				tail			TailState			{ coinFlipped(Tails); }
+                head            HeadState           { coinFlipped(Heads); }
+                tail            TailState           { coinFlipped(Tails); }
 }
 
 HeadState
 Entry { flipCoin(); }
 {
-				head			HeadHeadState		{ coinFlipped(Heads); }
-				tail			HeadTailState		{ coinFlipped(Tails); }
+                head            HeadHeadState       { coinFlipped(Heads); }
+                tail            HeadTailState       { coinFlipped(Tails); }
 }
 
 TailState
 Entry { flipCoin(); }
 {
-				head			TailHeadState		{ coinFlipped(Heads); }
-				tail			LoseState			{ coinFlipped(Tails); }
+                head            TailHeadState       { coinFlipped(Heads); }
+                tail            LoseState           { coinFlipped(Tails); }
 }
 
 HeadHeadState
 Entry { flipCoin(); }
 {
-				head			BigWinState		    { coinFlipped(Heads); }
-				tail			WinState		    { coinFlipped(Tails); }
+                head            BigWinState         { coinFlipped(Heads); }
+                tail            WinState            { coinFlipped(Tails); }
 }
 
 HeadTailState
 Entry { flipCoin(); }
 {
-				head			WinState		    { coinFlipped(Heads); }
-				tail			LoseState		    { coinFlipped(Tails); }
+                head            WinState            { coinFlipped(Heads); }
+                tail            LoseState           { coinFlipped(Tails); }
 }
 
 TailHeadState
 Entry { flipCoin(); }
 {
-				head			WinState		    { coinFlipped(Heads); }
-				tail			LoseState		    { coinFlipped(Tails); }
+                head            WinState            { coinFlipped(Heads); }
+                tail            LoseState           { coinFlipped(Tails); }
 }
 
 WinState
 Entry { gameWin(); doubleUp(); }
 {
                 doubleUp        DoubleUpState       {}
-                end             GameEndState        {}
+                quit            GameEndState        {}
 }
 
 LoseState
 Entry { gameLoss(); }
 {
-                end             GameEndState        {}      
+                quit            GameEndState        {}      
 }
 
 BigWinState
 Entry { gameWin(); bigWin(); }
 {
-                end             GameEndState        {}
+                quit            GameEndState        {}
 }
 
 DoubleUpState
 Entry { flipCoin(); }
 {                
-				head			WinState	        { coinFlipped(Heads);  doubleUpWin(true); }
-				tail			LoseState		    { coinFlipped(Tails);  doubleUpWin(false); }
+                head            WinState            { coinFlipped(Heads);  doubleUpWin(true); }
+                tail            LoseState           { coinFlipped(Tails);  doubleUpWin(false); }
 }
 
 GameEndState
 Entry { gameEnd(); }
 {
+                restart         StartState          { reset(); }
 }
 
 %%

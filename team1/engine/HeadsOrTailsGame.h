@@ -18,7 +18,7 @@ public:
 
     void Play();
     
-public:
+public: // State machine actions
     void playStarted();
     void flipCoin();
     void coinFlipped(Side side);
@@ -28,6 +28,7 @@ public:
     void doubleUp();
     void gameEnd();
     void doubleUpWin(bool win);
+    void reset();
 
 private: // from FlipResult
     void flipResult(Side side);

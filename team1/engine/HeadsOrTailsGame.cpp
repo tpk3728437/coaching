@@ -21,7 +21,12 @@ HeadsOrTailsGame::~HeadsOrTailsGame()
 
 void HeadsOrTailsGame::Play()
 {
-    m_fsm.enterStartState();    
+    if (&m_fsm.getState() == &MainMap::GameEndState ) {
+        m_fsm.restart();
+    }
+    else {
+        m_fsm.enterStartState();
+    }
 }
 
 void HeadsOrTailsGame::playStarted() 
@@ -56,7 +61,7 @@ void HeadsOrTailsGame::coinFlipped(Side side)
 void HeadsOrTailsGame::gameLoss()
 {
     m_player.onGameLoss();
-    m_fsm.end();
+    m_fsm.quit();
 }
 
 void HeadsOrTailsGame::doubleUp()
@@ -67,14 +72,14 @@ void HeadsOrTailsGame::doubleUp()
     }
     else
     {
-        m_fsm.end();
+        m_fsm.quit();
     }
 }
 
 void HeadsOrTailsGame::bigWin()
 {
     m_player.onBigWin();
-    m_fsm.end();
+    m_fsm.quit();
 }
 
 void HeadsOrTailsGame::gameWin()
@@ -90,4 +95,9 @@ void HeadsOrTailsGame::gameEnd()
 void HeadsOrTailsGame::doubleUpWin(bool win)
 {
     m_player.onDoubleUp(win);
+}
+
+void HeadsOrTailsGame::reset()
+{
+    numberOfFlips = -1;
 }

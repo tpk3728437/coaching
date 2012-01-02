@@ -585,3 +585,4 @@ shadow_w 105 465 5 1
 shadow_nw 105 460 5 5
 cointail 86 282 150 152
 coinhead 250 282 150 152
+opaque 3 317 10 10

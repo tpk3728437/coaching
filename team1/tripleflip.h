@@ -48,8 +48,9 @@ private:
     void createBackground();
     void createCoinSprites();
     void createTripleFlipEngine();
-    void setCoinImage(Side side, Ogre::Vector2 position);
+    void setCoinImage(int index, Side side);
     void onCoinFlippedTimerElapse();
+    void play();
 
 private:
     Gorilla::Silverback*    mSilverback;
@@ -81,7 +82,10 @@ private:
     
     HeadsOrTailsGame*       mGameEngine;
     
-    mutable FlipResult*             mCoinFlipResultCallback;
+    FlipResult*             mCoinFlipResultCallback;
+    typedef std::vector<Gorilla::Rectangle*> RectangleVector;
+    RectangleVector mCoinRectangles;
+    
 };
 
 #endif // TRIPLEFLIP_H
