@@ -54,6 +54,9 @@ GMOCK_HEADERS = $(GMOCK_DIR)/include/gmock/*.h \
 
 all : $(TESTS)
 
+test: $(TESTS)
+	./$(TESTS)
+
 graph : $(SM_SOURCES:%.sm=%_sm.dot)
 
 pdf : $(SM_SOURCES:%.sm=%_sm.pdf)
@@ -96,8 +99,8 @@ gmock.a : gmock-all.o gtest-all.o
 gmock_main.a : gmock-all.o gtest-all.o gmock_main.o
 	$(AR) $(ARFLAGS) $@ $^
 
-# Builds a sample test.
 
+# Builds a sample test.
 GameMachine_sm.o : $(SM_SOURCES:.sm=_sm.cpp) $(SMC_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/$(SM_SOURCES:.sm=_sm.cpp)
 
@@ -107,5 +110,5 @@ test.o : $(USER_DIR)/test.cpp $(GMOCK_HEADERS)
 HeadsOrTailsGame.o: $(USER_DIR)/HeadsOrTailsGame.cpp $(GMOCK_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/HeadsOrTailsGame.cpp
 
-test1 : gmock_main.a GameMachine_sm.o test.o HeadsOrTailsGame.o 
+$(TESTS) : gmock_main.a GameMachine_sm.o test.o HeadsOrTailsGame.o 
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -pthread $^ -o $@
