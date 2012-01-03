@@ -63,19 +63,11 @@ private:
     Gorilla::Screen*        mScreen;
     Gorilla::Layer*         mLayer;
 
-    Gorilla::Polygon* poly;
-    Gorilla::LineList*       list;
-    Gorilla::Caption*        caption;
-    Gorilla::Rectangle*      rect;
-    Gorilla::QuadList*       quads;
-    Gorilla::MarkupText*     markup;
-
     Ogre::Root*             mRoot;
     Ogre::RenderWindow*     mWindow;
     Ogre::Viewport*         mViewport;
     Ogre::SceneManager*     mSceneMgr;
     Ogre::Camera*           mCamera;
-    Ogre::Real              mNextUpdate;    
     OIS::InputManager*      mInputManager;
     OIS::Keyboard*          mKeyboard;
     OIS::Mouse*             mMouse; 

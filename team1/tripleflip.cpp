@@ -4,7 +4,7 @@
 #include "timer.h"
 
 TripleFlipApp::TripleFlipApp() : 
-    mNextUpdate(0), mCoinFlipResultCallback(0)
+    mCoinFlipResultCallback(0)
 {
     srand(time(NULL));
 
@@ -146,8 +146,8 @@ void TripleFlipApp::createBackground()
     Ogre::Real vpHeight = mBackgroundScreen->getHeight();
 
     mBackgroundLayer = mBackgroundScreen->createLayer(0);
-    rect = mBackgroundLayer->createRectangle(0,0, vpWidth, vpHeight);
-    rect->background_image("background");
+    Gorilla::Rectangle* backgroundRect = mBackgroundLayer->createRectangle(0,0, vpWidth, vpHeight);
+    backgroundRect->background_image("background");
 }
 
 void TripleFlipApp::createGameScreen()
