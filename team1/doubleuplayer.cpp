@@ -19,14 +19,14 @@ DoubleupLayer::~DoubleupLayer()
 {
 }
 
-void DoubleupLayer::show()
+void DoubleupLayer::Show()
 {
     mLayer->show();
     
     // arpoo kolikko ja näyttää se
 }
 
-void DoubleupLayer::hide()
+void DoubleupLayer::Hide()
 {
     mLayer->hide();
 }

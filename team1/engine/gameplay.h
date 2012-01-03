@@ -1,6 +1,8 @@
 #ifndef GAMEPLAY_H
 #define GAMEPLAY_H
 
+#include "globals.h"
+
 class FlipResult
 {
 public:

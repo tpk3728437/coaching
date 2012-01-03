@@ -1,17 +1,13 @@
 #include "tripleflip.h"
 #include <sstream>
-#include <boost/function.hpp>
 #include "timer.h"
 #include "backgroundlayer.h"
 #include "gamelayer.h"
 #include "doubleuplayer.h"
 
 
-TripleFlipApp::TripleFlipApp() : 
-    mCoinFlipResultCallback(0)
+TripleFlipApp::TripleFlipApp()
 {
-    srand(time(NULL));
-
     initializeOgre();
     initializeOIS();
 
@@ -97,8 +93,6 @@ bool TripleFlipApp::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonI
   
 void TripleFlipApp::initializeOgre()
 {
-    srand(time(0));
-
     mRoot = new Ogre::Root("","");
     mRoot->addFrameListener(this);
 
@@ -169,25 +163,7 @@ void TripleFlipApp::createDoubleupLayer()
 
 void TripleFlipApp::createTripleFlipEngine()
 {
-    mGameEngine = new HeadsOrTailsGame(*this, *this, mDoubleupLogic);
-}
-
-void TripleFlipApp::onCoinFlippedTimerElapse() 
-{ 
-    // random
-    Side side = (Side) (rand() % 2);
-
-    mCoinFlipResultCallback->flipResult(side);
-}
-
-void TripleFlipApp::Flip(FlipResult& result)
-{
-    // save the interface
-    mCoinFlipResultCallback = &result;
-    
-    boost::function<void ()> callback(boost::bind(&TripleFlipApp::onCoinFlippedTimerElapse, this));
-    
-    ::Timer::getInstance()->delay(callback, 1000);
+    mGameEngine = new HeadsOrTailsGame(mCoinFlipLogic, *this, mDoubleupLogic);
 }
 
 void TripleFlipApp::onPlayStarted()
@@ -231,13 +207,14 @@ void TripleFlipApp::onGameEnd()
 
 void TripleFlipApp::onDoubleUp(bool win)
 {
-    mDoubleupLayer->show();
+    mDoubleupLayer->Show();
 }
 
 void TripleFlipApp::play()
 {
     std::cout << "play started" << std::endl;
 
+    mDoubleupLayer->Hide();
     mGameLayer->ResetGraphics();
     mGameEngine->Play();      
 }

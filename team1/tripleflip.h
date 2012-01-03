@@ -6,10 +6,10 @@
 #include "Gorilla.h"
 
 #include "HeadsOrTailsGame.h"
-#include "gameplay.h"
 #include "player.h"
 #include "userevents.h"
 #include "doubleuplogic.h"
+#include "coinfliplogic.h"
 
 class BackgroundLayer;
 class GameLayer;
@@ -17,7 +17,7 @@ class DoubleupLayer;
 
 
 class TripleFlipApp : public Ogre::FrameListener, public OIS::KeyListener, public OIS::MouseListener, 
-        public Player, public GamePlay
+        public Player
 {
 public:    
     TripleFlipApp();
@@ -32,9 +32,6 @@ private:
     bool mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
     bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
   
-private: // from GamePlay  
-    void Flip(FlipResult& result);
-
 private: // from Player
     void onPlayStarted();
     void onCoinFlipped(int index, Side side);
@@ -72,9 +69,9 @@ private:
     OIS::Mouse*             mMouse; 
     
     HeadsOrTailsGame*       mGameEngine;    
-    FlipResult*             mCoinFlipResultCallback;
     
     DoubleUpLogic           mDoubleupLogic;
+    CoinFlipLogic           mCoinFlipLogic;
     
 
 };

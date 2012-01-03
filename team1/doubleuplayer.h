@@ -11,8 +11,8 @@ public:
     DoubleupLayer(Gorilla::Silverback& silverback, Ogre::Viewport& viewport);
     ~DoubleupLayer();
     
-    void show();
-    void hide();
+    void Show();
+    void Hide();
 
 private:
 
