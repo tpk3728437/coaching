@@ -10,6 +10,9 @@
 #include "player.h"
 #include "userevents.h"
 
+class BackgroundLayer;
+class GameLayer;
+
 
 class TripleFlipApp : public Ogre::FrameListener, public OIS::KeyListener, public OIS::MouseListener, 
         public Player, public GamePlay, public UserEvents
@@ -46,22 +49,17 @@ private:
     void initializeOgre();
     void initializeOIS();
     void createGorilla();
-    void createBackground();
-    void createGameScreen();
-    void createCoinSprites();
-    void createWinLogos();
+    void createLayers();
+    void createBackgroundLayer();
+    void createGameLayer();
     void createTripleFlipEngine();
-    void setCoinImage(int index, Side side);
     void onCoinFlippedTimerElapse();
     void play();
 
 private:
     Gorilla::Silverback*    mSilverback;
-    Gorilla::Screen*        mBackgroundScreen;
-    Gorilla::Layer*         mBackgroundLayer;
-
-    Gorilla::Screen*        mScreen;
-    Gorilla::Layer*         mLayer;
+    BackgroundLayer*        mBackgroundLayer;
+    GameLayer*              mGameLayer;
 
     Ogre::Root*             mRoot;
     Ogre::RenderWindow*     mWindow;
@@ -72,20 +70,8 @@ private:
     OIS::Keyboard*          mKeyboard;
     OIS::Mouse*             mMouse; 
     
-    Gorilla::Sprite*        mCoinHeadSprite;
-    Gorilla::Sprite*        mCoinTailSprite;
-    
-    HeadsOrTailsGame*       mGameEngine;
-    
+    HeadsOrTailsGame*       mGameEngine;    
     FlipResult*             mCoinFlipResultCallback;
-    typedef std::vector<Gorilla::Rectangle*> RectangleVector;
-    RectangleVector mCoinRectangles;
-    
-    Gorilla::Rectangle* mResultRect;
-    Gorilla::Sprite* mLoseSprite;
-    Gorilla::Sprite* mWinSprite;
-    Gorilla::Sprite* mBigwinSprite;
-
 };
 
 #endif // TRIPLEFLIP_H

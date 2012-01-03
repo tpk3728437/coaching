@@ -6,7 +6,7 @@
 OGRE_INCDIR=-I/usr/local/include
 OGRE_RENDERER=/usr/local/lib/OGRE/RenderSystem_GL.so
 
-SMC_DIR = /home/tokoskin/repos/StateMachineCompiler
+SMC_DIR = ../smc
 
 ENGINE = engine
 ENGINE_OBJS = $(ENGINE)/GameMachine_sm.o $(ENGINE)/HeadsOrTailsGame.o
@@ -36,5 +36,5 @@ distclean: clean
 $(ENGINE_OBJS): $(ENGINE)/*.cpp $(ENGINE)/*.h $(ENGINE)/*.sm
 	$(MAKE) --directory=$(ENGINE); done
 
-$(EXECUTABLE): $(ENGINE_OBJS) timer.o tripleflip.o Gorilla.o main.o 
+$(EXECUTABLE): $(ENGINE_OBJS) timer.o backgroundlayer.o gamelayer.o tripleflip.o Gorilla.o main.o 
 	${CXX} $^ ${LIBS} -o $@

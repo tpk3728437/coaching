@@ -2,6 +2,8 @@
 #include <sstream>
 #include <boost/function.hpp>
 #include "timer.h"
+#include "backgroundlayer.h"
+#include "gamelayer.h"
 
 TripleFlipApp::TripleFlipApp() : 
     mCoinFlipResultCallback(0)
@@ -13,13 +15,7 @@ TripleFlipApp::TripleFlipApp() :
 
     createGorilla();
 
-    createBackground();
-
-    createGameScreen();
-    
-    createCoinSprites();
-    
-    createWinLogos();
+    createLayers();
     
     createTripleFlipEngine();
 }
@@ -28,6 +24,8 @@ TripleFlipApp::~TripleFlipApp()
 {
     std::cout << "\n** Average FPS is " << mWindow->getAverageFPS() << "\n\n";
     delete mGameEngine;
+    delete mGameLayer;
+    delete mBackgroundLayer;
     delete mSilverback;
     delete mRoot;
 }
@@ -134,60 +132,22 @@ void TripleFlipApp::initializeOIS()
 void TripleFlipApp::createGorilla()
 {
     mSilverback = new Gorilla::Silverback();
-    mSilverback->loadAtlas("tripleflip");
-    mSilverback->loadAtlas("background");
 }
 
-void TripleFlipApp::createBackground()
+void TripleFlipApp::createLayers()
 {
-    mBackgroundScreen = mSilverback->createScreen(mViewport, "background");
-    mBackgroundScreen->setOrientation(Ogre::OR_PORTRAIT);
-    Ogre::Real vpWidth = mBackgroundScreen->getWidth(); 
-    Ogre::Real vpHeight = mBackgroundScreen->getHeight();
-
-    mBackgroundLayer = mBackgroundScreen->createLayer(0);
-    Gorilla::Rectangle* backgroundRect = mBackgroundLayer->createRectangle(0,0, vpWidth, vpHeight);
-    backgroundRect->background_image("background");
+    createBackgroundLayer();
+    createGameLayer();
 }
 
-void TripleFlipApp::createGameScreen()
+void TripleFlipApp::createBackgroundLayer()
 {
-    mScreen = mSilverback->createScreen(mViewport, "tripleflip");
-    mScreen->setOrientation(Ogre::OR_PORTRAIT);
-    Ogre::Real vpWidth = mScreen->getWidth(); 
-    Ogre::Real vpHeight = mScreen->getHeight();
-
-    mLayer = mScreen->createLayer(1);    
-    Gorilla::Sprite* logoSprite = mScreen->getAtlas()->getSprite("logo"); 
-    Gorilla::Rectangle* logoRect = mLayer->createRectangle(100,0, logoSprite->spriteWidth, logoSprite->spriteHeight);
-    logoRect->background_image(logoSprite);
+    mBackgroundLayer = new BackgroundLayer(*mSilverback, *mViewport);
 }
 
-void TripleFlipApp::createCoinSprites()
+void TripleFlipApp::createGameLayer()
 {
-    mCoinHeadSprite = mScreen->getAtlas()->getSprite("coinhead");
-    mCoinTailSprite = mScreen->getAtlas()->getSprite("cointail");
-    
-    for (int i = 0; i <= 2; ++i)
-    {
-        const int horizontalPosition = 100 + i * 300;
-        const Ogre::Vector2 coinSize(mCoinHeadSprite->spriteWidth, mCoinHeadSprite->spriteHeight);    
-        
-        Gorilla::Rectangle* coinRect = mLayer->createRectangle(Ogre::Vector2(horizontalPosition,300), coinSize);
-        coinRect->background_image("opaque");
-        mCoinRectangles.push_back(coinRect);
-    }
-}
-
-void TripleFlipApp::createWinLogos()
-{
-    mLoseSprite = mScreen->getAtlas()->getSprite("lose"); 
-    mWinSprite = mScreen->getAtlas()->getSprite("win"); 
-    mBigwinSprite = mScreen->getAtlas()->getSprite("bigwin"); 
-
-    Ogre::Real vpHeight = mScreen->getHeight();
-    mResultRect = mLayer->createRectangle(100,vpHeight-200, mBigwinSprite->spriteWidth, mWinSprite->spriteHeight);
-    mResultRect->background_image("opaque");
+    mGameLayer = new GameLayer(*mSilverback, *mViewport);
 }
 
 void TripleFlipApp::createTripleFlipEngine()
@@ -223,7 +183,7 @@ void TripleFlipApp::onCoinFlipped(int index, Side side)
     if (index >= 0 && index <= 2)
     {
         std::cout << "Coin flipped:" << index << " " << side << std::endl;
-        setCoinImage(index, side);
+        mGameLayer->setCoinImage(index, side);
     }
     else
     {
@@ -234,17 +194,17 @@ void TripleFlipApp::onCoinFlipped(int index, Side side)
 
 void TripleFlipApp::onBigWin()
 {
-    mResultRect->background_image(mBigwinSprite);
+    mGameLayer->showBigWin();
 }
 
 void TripleFlipApp::onGameWin()
 {
-    mResultRect->background_image(mWinSprite);
+    mGameLayer->showWin();
 }
 
 void TripleFlipApp::onGameLoss()
 {
-    mResultRect->background_image(mLoseSprite);
+    mGameLayer->showLoss();
 }
 
 void TripleFlipApp::onGameEnd()
@@ -261,27 +221,10 @@ bool TripleFlipApp::DoubleUp()
     return false;
 }
 
-void TripleFlipApp::setCoinImage(int index, Side side)
-{
-    if (side == Heads) 
-    {
-        std::cout << "coin rect addr:" << mCoinRectangles[index] << std::endl;
-        mCoinRectangles[index]->background_image(mCoinHeadSprite);
-    }
-    else 
-    {
-        mCoinRectangles[index]->background_image(mCoinTailSprite);
-    }
-}
-
 void TripleFlipApp::play()
 {
     std::cout << "play started" << std::endl;
 
-    for (RectangleVector::iterator i = mCoinRectangles.begin(); i != mCoinRectangles.end(); ++i)
-    {
-        (*i)->background_image("opaque");
-    }
-    mResultRect->background_image("opaque");
+    mGameLayer->ResetGraphics();
     mGameEngine->Play();      
 }
