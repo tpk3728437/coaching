@@ -45,8 +45,11 @@ private: // UserEvents
 private:  
     void initializeOgre();
     void initializeOIS();
+    void createGorilla();
     void createBackground();
+    void createGameScreen();
     void createCoinSprites();
+    void createWinLogos();
     void createTripleFlipEngine();
     void setCoinImage(int index, Side side);
     void onCoinFlippedTimerElapse();
@@ -86,6 +89,11 @@ private:
     typedef std::vector<Gorilla::Rectangle*> RectangleVector;
     RectangleVector mCoinRectangles;
     
+    Gorilla::Rectangle* mResultRect;
+    Gorilla::Sprite* mLoseSprite;
+    Gorilla::Sprite* mWinSprite;
+    Gorilla::Sprite* mBigwinSprite;
+
 };
 
 #endif // TRIPLEFLIP_H

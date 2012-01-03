@@ -586,3 +586,7 @@ shadow_nw 105 460 5 5
 cointail 86 282 150 152
 coinhead 250 282 150 152
 opaque 3 317 10 10
+logo 0 513 711 164
+lose 0 682 314 138
+win 0 830 222 141
+bigwin 0 970 340 87

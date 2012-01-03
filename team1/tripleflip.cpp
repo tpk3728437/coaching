@@ -3,32 +3,23 @@
 #include <boost/function.hpp>
 #include "timer.h"
 
-TripleFlipApp::TripleFlipApp() : mNextUpdate(0), mCoinFlipResultCallback(0)
+TripleFlipApp::TripleFlipApp() : 
+    mNextUpdate(0), mCoinFlipResultCallback(0)
 {
     srand(time(NULL));
 
     initializeOgre();
     initializeOIS();
 
-    // Create Silverback and load in tripleflip
-    mSilverback = new Gorilla::Silverback();
-    mSilverback->loadAtlas("tripleflip");
-    mSilverback->loadAtlas("background");
+    createGorilla();
 
     createBackground();
-    
-    mScreen = mSilverback->createScreen(mViewport, "tripleflip");
-    mScreen->setOrientation(Ogre::OR_PORTRAIT);
-    Ogre::Real vpWidth = mScreen->getWidth(); 
-    Ogre::Real vpHeight = mScreen->getHeight();
 
-    // Create our drawing layer
-    mLayer = mScreen->createLayer(1);
-    caption = mLayer->createCaption(24, 0, 5, "Three flip");
-    caption->width(vpWidth);
-    caption->align(Gorilla::TextAlign_Centre);
+    createGameScreen();
     
     createCoinSprites();
+    
+    createWinLogos();
     
     createTripleFlipEngine();
 }
@@ -156,6 +147,17 @@ void TripleFlipApp::createCoinSprites()
     }
 }
 
+void TripleFlipApp::createWinLogos()
+{
+    mLoseSprite = mScreen->getAtlas()->getSprite("lose"); 
+    mWinSprite = mScreen->getAtlas()->getSprite("win"); 
+    mBigwinSprite = mScreen->getAtlas()->getSprite("bigwin"); 
+
+    Ogre::Real vpHeight = mScreen->getHeight();
+    mResultRect = mLayer->createRectangle(100,vpHeight-200, mBigwinSprite->spriteWidth, mWinSprite->spriteHeight);
+    mResultRect->background_image("opaque");
+}
+
 void TripleFlipApp::createTripleFlipEngine()
 {
     mGameEngine = new HeadsOrTailsGame(*this, *this, *this);
@@ -200,29 +202,17 @@ void TripleFlipApp::onCoinFlipped(int index, Side side)
 
 void TripleFlipApp::onBigWin()
 {
-    std::cout << "BIG WIN!!!" << std::endl;
-
-    caption = mLayer->createCaption(24, 0, 700, "BIG WIN!!");
-    caption->width(500);
-    caption->align(Gorilla::TextAlign_Centre);
+    mResultRect->background_image(mBigwinSprite);
 }
 
 void TripleFlipApp::onGameWin()
 {
-    std::cout << "WIN" << std::endl;
-
-    caption = mLayer->createCaption(24, 0, 700, "WIN!!");
-    caption->width(500);
-    caption->align(Gorilla::TextAlign_Centre);
+    mResultRect->background_image(mWinSprite);
 }
 
 void TripleFlipApp::onGameLoss()
 {
-    std::cout << "LOSE" << std::endl;
-
-    caption = mLayer->createCaption(24, 0, 700, "lose");
-    caption->width(500);
-    caption->align(Gorilla::TextAlign_Centre);
+    mResultRect->background_image(mLoseSprite);
 }
 
 void TripleFlipApp::onGameEnd()
@@ -252,6 +242,13 @@ void TripleFlipApp::setCoinImage(int index, Side side)
     }
 }
 
+void TripleFlipApp::createGorilla()
+{
+    mSilverback = new Gorilla::Silverback();
+    mSilverback->loadAtlas("tripleflip");
+    mSilverback->loadAtlas("background");
+}
+
 void TripleFlipApp::createBackground()
 {
     mBackgroundScreen = mSilverback->createScreen(mViewport, "background");
@@ -259,10 +256,22 @@ void TripleFlipApp::createBackground()
     Ogre::Real vpWidth = mBackgroundScreen->getWidth(); 
     Ogre::Real vpHeight = mBackgroundScreen->getHeight();
 
-    // Create our drawing layer
     mBackgroundLayer = mBackgroundScreen->createLayer(0);
     rect = mBackgroundLayer->createRectangle(0,0, vpWidth, vpHeight);
     rect->background_image("background");
+}
+
+void TripleFlipApp::createGameScreen()
+{
+    mScreen = mSilverback->createScreen(mViewport, "tripleflip");
+    mScreen->setOrientation(Ogre::OR_PORTRAIT);
+    Ogre::Real vpWidth = mScreen->getWidth(); 
+    Ogre::Real vpHeight = mScreen->getHeight();
+
+    mLayer = mScreen->createLayer(1);    
+    Gorilla::Sprite* logoSprite = mScreen->getAtlas()->getSprite("logo"); 
+    Gorilla::Rectangle* logoRect = mLayer->createRectangle(100,0, logoSprite->spriteWidth, logoSprite->spriteHeight);
+    logoRect->background_image(logoSprite);
 }
 
 void TripleFlipApp::play()
@@ -273,5 +282,6 @@ void TripleFlipApp::play()
     {
         (*i)->background_image("opaque");
     }
-    mGameEngine->Play();            
+    mResultRect->background_image("opaque");
+    mGameEngine->Play();      
 }
