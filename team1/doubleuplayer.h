@@ -10,6 +10,7 @@ class DoubleupLayer
 public:
     DoubleupLayer(Gorilla::Silverback& silverback, Ogre::Viewport& viewport);
     ~DoubleupLayer();
+    void SetCoin(Side side);
     
     void Show();
     void Hide();

@@ -182,6 +182,7 @@ void TripleFlipApp::onCoinFlipped(int index, Side side)
     {
         // double up rounds
         std::cout << "doubleUP result" << side << std::endl;
+        mDoubleupLayer->SetCoin(side);
     }
 }
 

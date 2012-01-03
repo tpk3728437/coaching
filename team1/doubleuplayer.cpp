@@ -19,6 +19,11 @@ DoubleupLayer::~DoubleupLayer()
 {
 }
 
+void DoubleupLayer::SetCoin(Side side)
+{
+    std::cout << "Double up Side:" << side << std::endl;
+}
+
 void DoubleupLayer::Show()
 {
     mLayer->show();
