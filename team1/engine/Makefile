@@ -57,6 +57,9 @@ all : $(TESTS)
 test: $(TESTS)
 	./$(TESTS)
 
+valgrind: $(TESTS)
+	valgrind ./$(TESTS)
+
 graph : $(SM_SOURCES:%.sm=%_sm.dot)
 
 pdf : $(SM_SOURCES:%.sm=%_sm.pdf)
