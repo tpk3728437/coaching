@@ -131,6 +131,38 @@ void TripleFlipApp::initializeOIS()
     mMouse->getMouseState().height = mViewport->getActualHeight();
 }
 
+void TripleFlipApp::createGorilla()
+{
+    mSilverback = new Gorilla::Silverback();
+    mSilverback->loadAtlas("tripleflip");
+    mSilverback->loadAtlas("background");
+}
+
+void TripleFlipApp::createBackground()
+{
+    mBackgroundScreen = mSilverback->createScreen(mViewport, "background");
+    mBackgroundScreen->setOrientation(Ogre::OR_PORTRAIT);
+    Ogre::Real vpWidth = mBackgroundScreen->getWidth(); 
+    Ogre::Real vpHeight = mBackgroundScreen->getHeight();
+
+    mBackgroundLayer = mBackgroundScreen->createLayer(0);
+    rect = mBackgroundLayer->createRectangle(0,0, vpWidth, vpHeight);
+    rect->background_image("background");
+}
+
+void TripleFlipApp::createGameScreen()
+{
+    mScreen = mSilverback->createScreen(mViewport, "tripleflip");
+    mScreen->setOrientation(Ogre::OR_PORTRAIT);
+    Ogre::Real vpWidth = mScreen->getWidth(); 
+    Ogre::Real vpHeight = mScreen->getHeight();
+
+    mLayer = mScreen->createLayer(1);    
+    Gorilla::Sprite* logoSprite = mScreen->getAtlas()->getSprite("logo"); 
+    Gorilla::Rectangle* logoRect = mLayer->createRectangle(100,0, logoSprite->spriteWidth, logoSprite->spriteHeight);
+    logoRect->background_image(logoSprite);
+}
+
 void TripleFlipApp::createCoinSprites()
 {
     mCoinHeadSprite = mScreen->getAtlas()->getSprite("coinhead");
@@ -240,38 +272,6 @@ void TripleFlipApp::setCoinImage(int index, Side side)
     {
         mCoinRectangles[index]->background_image(mCoinTailSprite);
     }
-}
-
-void TripleFlipApp::createGorilla()
-{
-    mSilverback = new Gorilla::Silverback();
-    mSilverback->loadAtlas("tripleflip");
-    mSilverback->loadAtlas("background");
-}
-
-void TripleFlipApp::createBackground()
-{
-    mBackgroundScreen = mSilverback->createScreen(mViewport, "background");
-    mBackgroundScreen->setOrientation(Ogre::OR_PORTRAIT);
-    Ogre::Real vpWidth = mBackgroundScreen->getWidth(); 
-    Ogre::Real vpHeight = mBackgroundScreen->getHeight();
-
-    mBackgroundLayer = mBackgroundScreen->createLayer(0);
-    rect = mBackgroundLayer->createRectangle(0,0, vpWidth, vpHeight);
-    rect->background_image("background");
-}
-
-void TripleFlipApp::createGameScreen()
-{
-    mScreen = mSilverback->createScreen(mViewport, "tripleflip");
-    mScreen->setOrientation(Ogre::OR_PORTRAIT);
-    Ogre::Real vpWidth = mScreen->getWidth(); 
-    Ogre::Real vpHeight = mScreen->getHeight();
-
-    mLayer = mScreen->createLayer(1);    
-    Gorilla::Sprite* logoSprite = mScreen->getAtlas()->getSprite("logo"); 
-    Gorilla::Rectangle* logoRect = mLayer->createRectangle(100,0, logoSprite->spriteWidth, logoSprite->spriteHeight);
-    logoRect->background_image(logoSprite);
 }
 
 void TripleFlipApp::play()
