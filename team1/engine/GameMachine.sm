@@ -55,7 +55,7 @@ Entry { flipCoin(); }
 }
 
 WinState
-Entry { gameWin(); doubleUp(); }
+Entry { gameWin(); doesUserWantToDoubleUp(); }
 {
                 doubleUp        DoubleUpState       {}
                 quit            GameEndState        {}

@@ -59,7 +59,6 @@ void GameLayer::showLoss()
     mResultRect->background_image(mLoseSprite);
 }
 
-
 void GameLayer::createCoinSprites()
 {
     mCoinHeadSprite = mScreen->getAtlas()->getSprite("coinhead");

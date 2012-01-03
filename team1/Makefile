@@ -36,5 +36,5 @@ distclean: clean
 $(ENGINE_OBJS): $(ENGINE)/*.cpp $(ENGINE)/*.h $(ENGINE)/*.sm
 	$(MAKE) --directory=$(ENGINE); done
 
-$(EXECUTABLE): $(ENGINE_OBJS) timer.o backgroundlayer.o gamelayer.o tripleflip.o Gorilla.o main.o 
+$(EXECUTABLE): $(ENGINE_OBJS) timer.o doubleuplogic.o backgroundlayer.o gamelayer.o doubleuplayer.o tripleflip.o Gorilla.o main.o 
 	${CXX} $^ ${LIBS} -o $@

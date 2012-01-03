@@ -4,13 +4,14 @@
 #include "GameMachine_sm.h"
 #include "globals.h"
 #include "gameplay.h"
+#include "userevents.h"
 
 class GamePlay;
 class Player;
-class UserEvents;
 
 
-class HeadsOrTailsGame : private FlipResult
+
+class HeadsOrTailsGame : private FlipResult, DoubleupChoiceResult
 {
 public:
     HeadsOrTailsGame(GamePlay& gamePlay, Player& player, UserEvents& events);
@@ -25,13 +26,16 @@ public: // State machine actions
     void bigWin();
     void gameWin();
     void gameLoss();
-    void doubleUp();
+    void doesUserWantToDoubleUp();
     void gameEnd();
     void doubleUpWin(bool win);
     void reset();
 
 private: // from FlipResult
     void flipResult(Side side);
+    
+private: // from DoubleupChoiceResult
+    void DoubleUp(bool doubleup);
 
 private:
     GamePlay& m_gamePlay;

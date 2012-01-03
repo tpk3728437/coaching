@@ -4,6 +4,8 @@
 #include "timer.h"
 #include "backgroundlayer.h"
 #include "gamelayer.h"
+#include "doubleuplayer.h"
+
 
 TripleFlipApp::TripleFlipApp() : 
     mCoinFlipResultCallback(0)
@@ -17,13 +19,14 @@ TripleFlipApp::TripleFlipApp() :
 
     createLayers();
     
-    createTripleFlipEngine();
+    createTripleFlipEngine();    
 }
   
 TripleFlipApp::~TripleFlipApp()
 {
     std::cout << "\n** Average FPS is " << mWindow->getAverageFPS() << "\n\n";
     delete mGameEngine;
+    delete mDoubleupLayer;
     delete mGameLayer;
     delete mBackgroundLayer;
     delete mSilverback;
@@ -59,6 +62,14 @@ bool TripleFlipApp::keyPressed( const OIS::KeyEvent &e )
     if (e.key == OIS::KC_P)   // P = play
     {
         play();
+    }
+    if (e.key == OIS::KC_Y) // double up
+    {
+        mDoubleupLogic.DoubleUp();
+    }
+    if (e.key == OIS::KC_N) // no double uo
+    {
+        mDoubleupLogic.CashOut();
     }
 
     return true;
@@ -138,6 +149,7 @@ void TripleFlipApp::createLayers()
 {
     createBackgroundLayer();
     createGameLayer();
+    createDoubleupLayer();
 }
 
 void TripleFlipApp::createBackgroundLayer()
@@ -150,9 +162,14 @@ void TripleFlipApp::createGameLayer()
     mGameLayer = new GameLayer(*mSilverback, *mViewport);
 }
 
+void TripleFlipApp::createDoubleupLayer()
+{
+    mDoubleupLayer = new DoubleupLayer(*mSilverback, *mViewport);
+}
+
 void TripleFlipApp::createTripleFlipEngine()
 {
-    mGameEngine = new HeadsOrTailsGame(*this, *this, *this);
+    mGameEngine = new HeadsOrTailsGame(*this, *this, mDoubleupLogic);
 }
 
 void TripleFlipApp::onCoinFlippedTimerElapse() 
@@ -214,11 +231,7 @@ void TripleFlipApp::onGameEnd()
 
 void TripleFlipApp::onDoubleUp(bool win)
 {
-}
-
-bool TripleFlipApp::DoubleUp()
-{
-    return false;
+    mDoubleupLayer->show();
 }
 
 void TripleFlipApp::play()

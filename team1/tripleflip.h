@@ -9,13 +9,15 @@
 #include "gameplay.h"
 #include "player.h"
 #include "userevents.h"
+#include "doubleuplogic.h"
 
 class BackgroundLayer;
 class GameLayer;
+class DoubleupLayer;
 
 
 class TripleFlipApp : public Ogre::FrameListener, public OIS::KeyListener, public OIS::MouseListener, 
-        public Player, public GamePlay, public UserEvents
+        public Player, public GamePlay
 {
 public:    
     TripleFlipApp();
@@ -42,9 +44,6 @@ private: // from Player
     void onGameEnd();
     void onDoubleUp(bool win);
 
-private: // UserEvents
-     bool DoubleUp();
-  
 private:  
     void initializeOgre();
     void initializeOIS();
@@ -52,6 +51,7 @@ private:
     void createLayers();
     void createBackgroundLayer();
     void createGameLayer();
+    void createDoubleupLayer();
     void createTripleFlipEngine();
     void onCoinFlippedTimerElapse();
     void play();
@@ -60,6 +60,7 @@ private:
     Gorilla::Silverback*    mSilverback;
     BackgroundLayer*        mBackgroundLayer;
     GameLayer*              mGameLayer;
+    DoubleupLayer*          mDoubleupLayer;
 
     Ogre::Root*             mRoot;
     Ogre::RenderWindow*     mWindow;
@@ -72,6 +73,10 @@ private:
     
     HeadsOrTailsGame*       mGameEngine;    
     FlipResult*             mCoinFlipResultCallback;
+    
+    DoubleUpLogic           mDoubleupLogic;
+    
+
 };
 
 #endif // TRIPLEFLIP_H

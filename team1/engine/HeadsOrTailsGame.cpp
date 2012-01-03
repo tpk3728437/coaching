@@ -64,16 +64,21 @@ void HeadsOrTailsGame::gameLoss()
     m_fsm.quit();
 }
 
-void HeadsOrTailsGame::doubleUp()
+void HeadsOrTailsGame::DoubleUp(bool doubleup)
 {
-    if ( m_events.DoubleUp())
+    if (doubleup)
     {
         m_fsm.doubleUp();
     }
     else
     {
         m_fsm.quit();
-    }
+    }    
+}
+
+void HeadsOrTailsGame::doesUserWantToDoubleUp()
+{
+    m_events.DoesUserWantToDoubleUp(*this);
 }
 
 void HeadsOrTailsGame::bigWin()
