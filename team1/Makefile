@@ -10,6 +10,7 @@ SMC_DIR = ../smc
 
 ENGINE = engine
 ENGINE_OBJS = $(ENGINE)/GameMachine_sm.o $(ENGINE)/HeadsOrTailsGame.o
+UI_OBJS = timer.o doubleuplogic.o coinfliplogic.o gamelayerresources.o backgroundlayer.o gamelayer.o doubleuplayer.o tripleflip.o Gorilla.o
 EXECUTABLE = tripleflip
 
 # Ogre 3d installed from distro package
@@ -36,5 +37,5 @@ distclean: clean
 $(ENGINE_OBJS): $(ENGINE)/*.cpp $(ENGINE)/*.h $(ENGINE)/*.sm
 	$(MAKE) --directory=$(ENGINE); done
 
-$(EXECUTABLE): $(ENGINE_OBJS) timer.o doubleuplogic.o coinfliplogic.o backgroundlayer.o gamelayer.o doubleuplayer.o tripleflip.o Gorilla.o main.o 
+$(EXECUTABLE): $(ENGINE_OBJS) $(UI_OBJS) main.o 
 	${CXX} $^ ${LIBS} -o $@

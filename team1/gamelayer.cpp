@@ -1,16 +1,11 @@
 #include "gamelayer.h"
+#include "gamelayerresources.h"
 
-GameLayer::GameLayer(Gorilla::Silverback& silverback, Ogre::Viewport& viewport)
+GameLayer::GameLayer(Gorilla::Silverback& silverback, Ogre::Viewport& viewport, GameLayerResources& resources) :
+    mResources(resources)
 {
-    silverback.loadAtlas("tripleflip");
-
-    mScreen = silverback.createScreen(&viewport, "tripleflip");
-    mScreen->setOrientation(Ogre::OR_PORTRAIT);
-    Ogre::Real vpWidth = mScreen->getWidth(); 
-    Ogre::Real vpHeight = mScreen->getHeight();
-
-    mLayer = mScreen->createLayer(1);    
-    Gorilla::Sprite* logoSprite = mScreen->getAtlas()->getSprite("logo"); 
+    mLayer = Screen().createLayer(1);    
+    Gorilla::Sprite* logoSprite = Screen().getAtlas()->getSprite("logo"); 
     Gorilla::Rectangle* logoRect = mLayer->createRectangle(100,0, logoSprite->spriteWidth, logoSprite->spriteHeight);
     logoRect->background_image(logoSprite);
 
@@ -36,11 +31,11 @@ void GameLayer::setCoinImage(int index, Side side)
     if (side == Heads) 
     {
         std::cout << "coin rect addr:" << mCoinRectangles[index] << std::endl;
-        mCoinRectangles[index]->background_image(mCoinHeadSprite);
+        mCoinRectangles[index]->background_image(&mResources.CoinHead());
     }
     else 
     {
-        mCoinRectangles[index]->background_image(mCoinTailSprite);
+        mCoinRectangles[index]->background_image(&mResources.CoinTail());
     }
 }
 
@@ -61,13 +56,12 @@ void GameLayer::showLoss()
 
 void GameLayer::createCoinSprites()
 {
-    mCoinHeadSprite = mScreen->getAtlas()->getSprite("coinhead");
-    mCoinTailSprite = mScreen->getAtlas()->getSprite("cointail");
+    Gorilla::Sprite& headSprite = mResources.CoinHead();
     
     for (int i = 0; i <= 2; ++i)
     {
         const int horizontalPosition = 100 + i * 300;
-        const Ogre::Vector2 coinSize(mCoinHeadSprite->spriteWidth, mCoinHeadSprite->spriteHeight);    
+        const Ogre::Vector2 coinSize(headSprite.spriteWidth, headSprite.spriteHeight);    
         
         Gorilla::Rectangle* coinRect = mLayer->createRectangle(Ogre::Vector2(horizontalPosition,300), coinSize);
         coinRect->background_image("opaque");
@@ -77,11 +71,16 @@ void GameLayer::createCoinSprites()
 
 void GameLayer::createWinLogos()
 {
-    mLoseSprite = mScreen->getAtlas()->getSprite("lose"); 
-    mWinSprite = mScreen->getAtlas()->getSprite("win"); 
-    mBigwinSprite = mScreen->getAtlas()->getSprite("bigwin"); 
+    mLoseSprite = Screen().getAtlas()->getSprite("lose"); 
+    mWinSprite = Screen().getAtlas()->getSprite("win"); 
+    mBigwinSprite = Screen().getAtlas()->getSprite("bigwin"); 
 
-    Ogre::Real vpHeight = mScreen->getHeight();
+    Ogre::Real vpHeight = Screen().getHeight();
     mResultRect = mLayer->createRectangle(100,vpHeight-200, mBigwinSprite->spriteWidth, mWinSprite->spriteHeight);
     mResultRect->background_image("opaque");
+}
+
+Gorilla::Screen& GameLayer::Screen()
+{
+    return mResources.Screen();
 }

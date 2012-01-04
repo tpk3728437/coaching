@@ -4,6 +4,7 @@
 #include "backgroundlayer.h"
 #include "gamelayer.h"
 #include "doubleuplayer.h"
+#include "gamelayerresources.h"
 
 
 TripleFlipApp::TripleFlipApp()
@@ -142,8 +143,15 @@ void TripleFlipApp::createGorilla()
 void TripleFlipApp::createLayers()
 {
     createBackgroundLayer();
+    
+    createGameLayerResources();
     createGameLayer();
     createDoubleupLayer();
+}
+
+void TripleFlipApp::createGameLayerResources()
+{
+    mGameResources = new GameLayerResources(*mSilverback, *mViewport);
 }
 
 void TripleFlipApp::createBackgroundLayer()
@@ -153,12 +161,12 @@ void TripleFlipApp::createBackgroundLayer()
 
 void TripleFlipApp::createGameLayer()
 {
-    mGameLayer = new GameLayer(*mSilverback, *mViewport);
+    mGameLayer = new GameLayer(*mSilverback, *mViewport, *mGameResources);
 }
 
 void TripleFlipApp::createDoubleupLayer()
 {
-    mDoubleupLayer = new DoubleupLayer(*mSilverback, *mViewport);
+    mDoubleupLayer = new DoubleupLayer(*mSilverback, *mViewport, *mGameResources);
 }
 
 void TripleFlipApp::createTripleFlipEngine()

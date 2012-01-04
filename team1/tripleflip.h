@@ -14,7 +14,7 @@
 class BackgroundLayer;
 class GameLayer;
 class DoubleupLayer;
-
+class GameLayerResources;
 
 class TripleFlipApp : public Ogre::FrameListener, public OIS::KeyListener, public OIS::MouseListener, 
         public Player
@@ -46,6 +46,7 @@ private:
     void initializeOIS();
     void createGorilla();
     void createLayers();
+    void createGameLayerResources();
     void createBackgroundLayer();
     void createGameLayer();
     void createDoubleupLayer();
@@ -56,6 +57,7 @@ private:
 private:
     Gorilla::Silverback*    mSilverback;
     BackgroundLayer*        mBackgroundLayer;
+    GameLayerResources*     mGameResources;
     GameLayer*              mGameLayer;
     DoubleupLayer*          mDoubleupLayer;
 

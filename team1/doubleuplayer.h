@@ -4,11 +4,12 @@
 #include "Gorilla.h"
 #include "globals.h"
 
+class GameLayerResources;
 
 class DoubleupLayer
 {
 public:
-    DoubleupLayer(Gorilla::Silverback& silverback, Ogre::Viewport& viewport);
+    DoubleupLayer(Gorilla::Silverback& silverback, Ogre::Viewport& viewport, GameLayerResources& resources);
     ~DoubleupLayer();
     void SetCoin(Side side);
     
@@ -18,9 +19,8 @@ public:
 private:
 
 private:
-    Gorilla::Screen*        mScreen;
     Gorilla::Layer*         mLayer;
-
+    GameLayerResources&     mResources;
 };
 
 #endif // DOUBLEUPLAYER_H

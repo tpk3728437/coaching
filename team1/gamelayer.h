@@ -4,11 +4,12 @@
 #include "Gorilla.h"
 #include "globals.h"
 
+class GameLayerResources;
 
 class GameLayer
 {
 public:
-    GameLayer(Gorilla::Silverback& silverback, Ogre::Viewport& viewport);
+    GameLayer(Gorilla::Silverback& silverback, Ogre::Viewport& viewport, GameLayerResources& resources);
     ~GameLayer();
     
     void ResetGraphics();
@@ -19,16 +20,14 @@ public:
     void showLoss();
 
 private:
+    Gorilla::Screen& Screen();
     void createCoinSprites();
     void createWinLogos();
 
 private:
-    Gorilla::Screen*        mScreen;
     Gorilla::Layer*         mLayer;
-    
-    Gorilla::Sprite*        mCoinHeadSprite;
-    Gorilla::Sprite*        mCoinTailSprite;
-    
+    GameLayerResources&     mResources;
+        
     typedef std::vector<Gorilla::Rectangle*> RectangleVector;
     RectangleVector mCoinRectangles;
     
