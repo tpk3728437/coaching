@@ -16,8 +16,11 @@ CPPFLAGS += -I$(GTEST_DIR)/include -I$(GMOCK_DIR)/include -I$(SMC_DIR)/lib/C++
 # flag to compile in 32-bit mode
 #CFLAGS += -m32
 
+# GCOV flags
+#GCOV_CFLAGS = -fprofile-arcs -ftest-coverage
+
 # Flags passed to the C++ compiler.
-CXXFLAGS += -g -Wall -Wextra
+CXXFLAGS += -g -Wall -Wextra $(GCOV_CFLAGS)
 
 # State Machine Compiler 
 SM_SOURCES = GameMachine.sm
@@ -65,7 +68,7 @@ graph : $(SM_SOURCES:%.sm=%_sm.dot)
 pdf : $(SM_SOURCES:%.sm=%_sm.pdf)
 
 clean :
-	rm -f $(TESTS) gmock.a gmock_main.a *.o 
+	rm -f $(TESTS) gmock.a gmock_main.a *.o *.gcda *.gcno *.gcov
 	
 distclean: clean
 	rm -f *_sm.h *_sm.cpp *_sm.pdf *_sm.dot
