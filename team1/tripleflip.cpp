@@ -161,12 +161,12 @@ void TripleFlipApp::createBackgroundLayer()
 
 void TripleFlipApp::createGameLayer()
 {
-    mGameLayer = new GameLayer(*mSilverback, *mViewport, *mGameResources);
+    mGameLayer = new GameLayer(*mGameResources);
 }
 
 void TripleFlipApp::createDoubleupLayer()
 {
-    mDoubleupLayer = new DoubleupLayer(*mSilverback, *mViewport, *mGameResources);
+    mDoubleupLayer = new DoubleupLayer(*mGameResources);
 }
 
 void TripleFlipApp::createTripleFlipEngine()
@@ -217,6 +217,7 @@ void TripleFlipApp::onGameEnd()
 
 void TripleFlipApp::onDoubleUp(bool win)
 {
+    mDoubleupLayer->Result(win);
 }
 
 void TripleFlipApp::play()

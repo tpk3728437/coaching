@@ -1,7 +1,7 @@
 #include "gamelayer.h"
 #include "gamelayerresources.h"
 
-GameLayer::GameLayer(Gorilla::Silverback& silverback, Ogre::Viewport& viewport, GameLayerResources& resources) :
+GameLayer::GameLayer(GameLayerResources& resources) :
     mResources(resources)
 {
     mLayer = Screen().createLayer(1);    
@@ -30,7 +30,6 @@ void GameLayer::setCoinImage(int index, Side side)
 {
     if (side == Heads) 
     {
-        std::cout << "coin rect addr:" << mCoinRectangles[index] << std::endl;
         mCoinRectangles[index]->background_image(&mResources.CoinHead());
     }
     else 
@@ -71,10 +70,8 @@ void GameLayer::createCoinRectangles()
 
 void GameLayer::createWinLogos()
 {
-    mBigwinSprite = Screen().getAtlas()->getSprite("bigwin"); 
-
     Ogre::Real vpHeight = Screen().getHeight();
-    mResultRect = mLayer->createRectangle(100,vpHeight-200, mBigwinSprite->spriteWidth, mResources.LoseText().spriteHeight);
+    mResultRect = mLayer->createRectangle(100,vpHeight-200, mResources.BigwinText().spriteWidth, mResources.LoseText().spriteHeight);
     mResultRect->background_image("opaque");
 }
 

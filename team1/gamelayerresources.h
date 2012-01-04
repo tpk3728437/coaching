@@ -14,6 +14,7 @@ public:
     Gorilla::Sprite& CoinHead();
     Gorilla::Sprite& CoinTail();
     
+    Gorilla::Sprite& BigwinText();
     Gorilla::Sprite& WinText();
     Gorilla::Sprite& LoseText();
 
@@ -26,6 +27,7 @@ private:
     Gorilla::Sprite*        mCoinHeadSprite;
     Gorilla::Sprite*        mCoinTailSprite;
     
+    Gorilla::Sprite* mBigWinSprite;
     Gorilla::Sprite* mWinSprite;
     Gorilla::Sprite* mLoseSprite;
 };

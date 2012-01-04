@@ -9,7 +9,7 @@ class GameLayerResources;
 class GameLayer
 {
 public:
-    GameLayer(Gorilla::Silverback& silverback, Ogre::Viewport& viewport, GameLayerResources& resources);
+    GameLayer(GameLayerResources& resources);
     ~GameLayer();
     
     void ResetGraphics();

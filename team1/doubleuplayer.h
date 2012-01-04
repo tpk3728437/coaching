@@ -9,12 +9,15 @@ class GameLayerResources;
 class DoubleupLayer
 {
 public:
-    DoubleupLayer(Gorilla::Silverback& silverback, Ogre::Viewport& viewport, GameLayerResources& resources);
+    DoubleupLayer(GameLayerResources& resources);
     ~DoubleupLayer();
+    void ResetGraphics();
     void SetCoin(Side side);
     
     void Show();
     void Hide();
+    
+    void Result(bool win);
 
 private:
 
@@ -23,6 +26,7 @@ private:
     GameLayerResources&     mResources;
     
     Gorilla::Rectangle* mCoinRect;
+    Gorilla::Rectangle* mResultRect;
 };
 
 #endif // DOUBLEUPLAYER_H
