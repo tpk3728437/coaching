@@ -45,6 +45,11 @@ void DoubleupLayer::SetCoin(Side side)
     }
 }
 
+bool DoubleupLayer::IsVisible()
+{
+    mLayer->isVisible();
+}
+
 void DoubleupLayer::Result(bool win)
 {
     if (win)

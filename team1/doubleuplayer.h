@@ -13,6 +13,7 @@ public:
     ~DoubleupLayer();
     void ResetGraphics();
     void SetCoin(Side side);
+    bool IsVisible();
     
     void Show();
     void Hide();

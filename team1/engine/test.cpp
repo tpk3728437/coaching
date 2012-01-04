@@ -207,7 +207,7 @@ TEST(FlipCoin, bigwin_with_heads_heads_heads_sequence)
     InSequence in;
     EXPECT_CALL(player, onPlayStarted());
     EXPECT_CALL(player, onCoinFlipped(AllOf(Ge(0), Le(2)), Heads)).Times(3);
-    EXPECT_CALL(player, onGameWin());
+    EXPECT_CALL(player, onGameWin()).Times(0);
     EXPECT_CALL(player, onBigWin());
     EXPECT_CALL(player, onGameLoss()).Times(0);
     EXPECT_CALL(player, onGameEnd()); }

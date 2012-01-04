@@ -146,12 +146,14 @@ void TripleFlipApp::onBigWin()
 void TripleFlipApp::onGameWin()
 {
     mDoubleupLayer->Show();
-    mGameLayer->showWin();
 }
 
 void TripleFlipApp::onGameLoss()
 {
-    mGameLayer->showLoss();
+    if (!mDoubleupLayer->IsVisible())
+    {
+        mGameLayer->showLoss();
+    }
 }
 
 void TripleFlipApp::onGameEnd()

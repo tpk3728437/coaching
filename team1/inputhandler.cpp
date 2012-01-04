@@ -72,4 +72,3 @@ bool InputHandler::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID
 {
     return true;
 }
-

@@ -32,7 +32,6 @@ private:
     RectangleVector mCoinRectangles;
     
     Gorilla::Rectangle* mResultRect;
-    Gorilla::Sprite* mBigwinSprite;
 };
 
 #endif // GAMELAYER_H

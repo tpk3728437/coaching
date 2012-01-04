@@ -68,7 +68,7 @@ Entry { gameLoss(); }
 }
 
 BigWinState
-Entry { gameWin(); bigWin(); }
+Entry { bigWin(); }
 {
                 quit            GameEndState        {}
 }

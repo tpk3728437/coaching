@@ -40,7 +40,7 @@ void GameLayer::setCoinImage(int index, Side side)
 
 void GameLayer::showBigWin()
 {
-    mResultRect->background_image(mBigwinSprite);
+    mResultRect->background_image(&mResources.BigwinText());
 }
 
 void GameLayer::showWin()
