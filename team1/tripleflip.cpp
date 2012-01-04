@@ -201,6 +201,7 @@ void TripleFlipApp::onBigWin()
 
 void TripleFlipApp::onGameWin()
 {
+    mDoubleupLayer->Show();
     mGameLayer->showWin();
 }
 
@@ -216,7 +217,6 @@ void TripleFlipApp::onGameEnd()
 
 void TripleFlipApp::onDoubleUp(bool win)
 {
-    mDoubleupLayer->Show();
 }
 
 void TripleFlipApp::play()
