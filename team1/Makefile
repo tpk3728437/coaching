@@ -10,7 +10,10 @@ SMC_DIR = ../smc
 
 ENGINE = engine
 ENGINE_OBJS = $(ENGINE)/GameMachine_sm.o $(ENGINE)/HeadsOrTailsGame.o
-UI_OBJS = timer.o doubleuplogic.o coinfliplogic.o gamelayerresources.o backgroundlayer.o gamelayer.o doubleuplayer.o tripleflip.o Gorilla.o
+UI_UTIL_OBJS = timer.o
+UI_LOGIC_OBJS = doubleuplogic.o coinfliplogic.o inputhandler.o
+UI_LAYER_OBJ = gamelayerresources.o backgroundlayer.o gamelayer.o doubleuplayer.o 
+UI_OBJS = $(UI_UTIL_OBJS) $(UI_LOGIC_OBJS) $(UI_LAYER_OBJ)  tripleflip.o Gorilla.o
 EXECUTABLE = tripleflip
 
 # Ogre 3d installed from distro package

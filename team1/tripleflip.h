@@ -2,35 +2,29 @@
 #define TRIPLEFLIP_H
 
 #include <OGRE/Ogre.h>
-#include <OIS/OIS.h>
 #include "Gorilla.h"
 
 #include "HeadsOrTailsGame.h"
 #include "player.h"
-#include "userevents.h"
 #include "doubleuplogic.h"
 #include "coinfliplogic.h"
+#include "inputhandler.h"
+
 
 class BackgroundLayer;
 class GameLayer;
 class DoubleupLayer;
 class GameLayerResources;
 
-class TripleFlipApp : public Ogre::FrameListener, public OIS::KeyListener, public OIS::MouseListener, 
-        public Player
+class TripleFlipApp : public Ogre::FrameListener, private Player, private UserCommandObserver
 {
 public:    
     TripleFlipApp();
     ~TripleFlipApp();  
     void start();
  
-private:
+private: // from Ogre::FrameListener
     bool frameStarted(const Ogre::FrameEvent& evt);
-    bool keyPressed( const OIS::KeyEvent &e );
-    bool keyReleased( const OIS::KeyEvent &e );
-    bool mouseMoved( const OIS::MouseEvent &arg );
-    bool mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
-    bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
   
 private: // from Player
     void onPlayStarted();
@@ -41,9 +35,15 @@ private: // from Player
     void onGameEnd();
     void onDoubleUp(bool win);
 
+private: // from UserCommandObserver
+    void QuitButtonPressed();
+    void PlayButtonPressed();
+    void DoubleUpButtonPressed();
+    void PayoutButtonPressed();
+
 private:  
     void initializeOgre();
-    void initializeOIS();
+    void initializeInputHandler();
     void createGorilla();
     void createLayers();
     void createGameLayerResources();
@@ -51,10 +51,8 @@ private:
     void createGameLayer();
     void createDoubleupLayer();
     void createTripleFlipEngine();
-    void onCoinFlippedTimerElapse();
-    void play();
-
-private:
+ 
+private:    
     Gorilla::Silverback*    mSilverback;
     BackgroundLayer*        mBackgroundLayer;
     GameLayerResources*     mGameResources;
@@ -66,16 +64,14 @@ private:
     Ogre::Viewport*         mViewport;
     Ogre::SceneManager*     mSceneMgr;
     Ogre::Camera*           mCamera;
-    OIS::InputManager*      mInputManager;
-    OIS::Keyboard*          mKeyboard;
-    OIS::Mouse*             mMouse; 
     
+    InputHandler*           mInputHandler;
+    bool                    mShutDown;
+
     HeadsOrTailsGame*       mGameEngine;    
     
     DoubleUpLogic           mDoubleupLogic;
     CoinFlipLogic           mCoinFlipLogic;
-    
-
 };
 
 #endif // TRIPLEFLIP_H

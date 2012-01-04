@@ -7,10 +7,11 @@
 #include "gamelayerresources.h"
 
 
-TripleFlipApp::TripleFlipApp()
+TripleFlipApp::TripleFlipApp() : mShutDown(false)
 {
     initializeOgre();
-    initializeOIS();
+    
+    initializeInputHandler();
 
     createGorilla();
 
@@ -26,6 +27,7 @@ TripleFlipApp::~TripleFlipApp()
     delete mDoubleupLayer;
     delete mGameLayer;
     delete mBackgroundLayer;
+    delete mInputHandler;
     delete mSilverback;
     delete mRoot;
 }
@@ -39,59 +41,16 @@ bool TripleFlipApp::frameStarted(const Ogre::FrameEvent& evt)
 {
     ::Timer::getInstance()->processQueue();
 
-    if (mWindow->isClosed())
+    if (mWindow->isClosed() || mShutDown)
     {
         return false;
     }
     
-    mKeyboard->capture();
-    if (mKeyboard->isKeyDown(OIS::KC_ESCAPE))
-    {
-        return false;
-    }
-    
-    mMouse->capture();
-    return true;
-}
-  
-bool TripleFlipApp::keyPressed( const OIS::KeyEvent &e )
-{
-    if (e.key == OIS::KC_P)   // P = play
-    {
-        play();
-    }
-    if (e.key == OIS::KC_Y) // double up
-    {
-        mDoubleupLogic.DoubleUp();
-    }
-    if (e.key == OIS::KC_N) // no double uo
-    {
-        mDoubleupLogic.CashOut();
-    }
+    mInputHandler->Capture();
 
     return true;
 }
 
-bool TripleFlipApp::keyReleased( const OIS::KeyEvent &e )
-{
-    return true;
-}
-
-bool TripleFlipApp::mouseMoved( const OIS::MouseEvent &arg )
-{
-    return true;
-}
-
-bool TripleFlipApp::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
-{
-    return true;
-}
-
-bool TripleFlipApp::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
-{
-    return true;
-}
-  
 void TripleFlipApp::initializeOgre()
 {
     mRoot = new Ogre::Root("","");
@@ -115,24 +74,9 @@ void TripleFlipApp::initializeOgre()
     rgm->initialiseAllResourceGroups();
 }
   
-void TripleFlipApp::initializeOIS()
+void TripleFlipApp::initializeInputHandler()
 {
-    OIS::ParamList pl;
-    size_t windowHnd = 0;
-    std::ostringstream windowHndStr;
-    mWindow->getCustomAttribute("WINDOW", &windowHnd);
-    windowHndStr << windowHnd;
-    pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
-
-    mInputManager = OIS::InputManager::createInputSystem( pl );
-
-    mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject(OIS::OISKeyboard, true));
-    mKeyboard->setEventCallback(this);
-
-    mMouse = static_cast<OIS::Mouse*>(mInputManager->createInputObject(OIS::OISMouse, true));
-    mMouse->setEventCallback(this);
-    mMouse->getMouseState().width = mViewport->getActualWidth();
-    mMouse->getMouseState().height = mViewport->getActualHeight();
+    mInputHandler = new InputHandler(*mWindow, mViewport->getActualWidth(), mViewport->getActualHeight(), *this);
 }
 
 void TripleFlipApp::createGorilla()
@@ -220,11 +164,24 @@ void TripleFlipApp::onDoubleUp(bool win)
     mDoubleupLayer->Result(win);
 }
 
-void TripleFlipApp::play()
+void TripleFlipApp::QuitButtonPressed()
 {
-    std::cout << "play started" << std::endl;
+    mShutDown = true;
+}
 
+void TripleFlipApp::PlayButtonPressed()
+{
     mDoubleupLayer->Hide();
     mGameLayer->ResetGraphics();
-    mGameEngine->Play();      
+    mGameEngine->Play();          
+}
+
+void TripleFlipApp::DoubleUpButtonPressed()
+{
+    mDoubleupLogic.DoubleUp();
+}
+
+void TripleFlipApp::PayoutButtonPressed()
+{
+    mDoubleupLogic.CashOut();
 }
