@@ -21,6 +21,8 @@ private:
 private:
     Gorilla::Layer*         mLayer;
     GameLayerResources&     mResources;
+    
+    Gorilla::Rectangle* mCoinRect;
 };
 
 #endif // DOUBLEUPLAYER_H

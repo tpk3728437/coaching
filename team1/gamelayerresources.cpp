@@ -9,7 +9,9 @@ GameLayerResources::GameLayerResources(Gorilla::Silverback& silverback, Ogre::Vi
     
     mCoinHeadSprite = mScreen->getAtlas()->getSprite("coinhead");
     mCoinTailSprite = mScreen->getAtlas()->getSprite("cointail");
-
+    
+    mLoseSprite = Screen().getAtlas()->getSprite("lose"); 
+    mWinSprite = Screen().getAtlas()->getSprite("win"); 
 }
 
 GameLayerResources::~GameLayerResources()
@@ -29,4 +31,14 @@ Gorilla::Sprite& GameLayerResources::CoinHead()
 Gorilla::Sprite& GameLayerResources::CoinTail()
 {
     return *mCoinTailSprite;
+}
+
+Gorilla::Sprite& GameLayerResources::WinText()
+{
+    return *mWinSprite;
+}
+
+Gorilla::Sprite& GameLayerResources::LoseText()
+{
+    return *mLoseSprite;
 }

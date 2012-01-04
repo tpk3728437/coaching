@@ -13,6 +13,9 @@ public:
     Gorilla::Screen& Screen();
     Gorilla::Sprite& CoinHead();
     Gorilla::Sprite& CoinTail();
+    
+    Gorilla::Sprite& WinText();
+    Gorilla::Sprite& LoseText();
 
 private:
 
@@ -22,7 +25,9 @@ private:
     
     Gorilla::Sprite*        mCoinHeadSprite;
     Gorilla::Sprite*        mCoinTailSprite;
-
+    
+    Gorilla::Sprite* mWinSprite;
+    Gorilla::Sprite* mLoseSprite;
 };
 
 #endif // GAMELAYERRESOURCES_H

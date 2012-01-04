@@ -9,7 +9,7 @@ GameLayer::GameLayer(Gorilla::Silverback& silverback, Ogre::Viewport& viewport, 
     Gorilla::Rectangle* logoRect = mLayer->createRectangle(100,0, logoSprite->spriteWidth, logoSprite->spriteHeight);
     logoRect->background_image(logoSprite);
 
-    createCoinSprites();
+    createCoinRectangles();
     createWinLogos();
 }
 
@@ -46,15 +46,15 @@ void GameLayer::showBigWin()
 
 void GameLayer::showWin()
 {
-    mResultRect->background_image(mWinSprite);
+    mResultRect->background_image(&mResources.WinText());
 }
 
 void GameLayer::showLoss()
 {
-    mResultRect->background_image(mLoseSprite);
+    mResultRect->background_image(&mResources.LoseText());
 }
 
-void GameLayer::createCoinSprites()
+void GameLayer::createCoinRectangles()
 {
     Gorilla::Sprite& headSprite = mResources.CoinHead();
     
@@ -71,12 +71,10 @@ void GameLayer::createCoinSprites()
 
 void GameLayer::createWinLogos()
 {
-    mLoseSprite = Screen().getAtlas()->getSprite("lose"); 
-    mWinSprite = Screen().getAtlas()->getSprite("win"); 
     mBigwinSprite = Screen().getAtlas()->getSprite("bigwin"); 
 
     Ogre::Real vpHeight = Screen().getHeight();
-    mResultRect = mLayer->createRectangle(100,vpHeight-200, mBigwinSprite->spriteWidth, mWinSprite->spriteHeight);
+    mResultRect = mLayer->createRectangle(100,vpHeight-200, mBigwinSprite->spriteWidth, mResources.LoseText().spriteHeight);
     mResultRect->background_image("opaque");
 }
 

@@ -21,7 +21,7 @@ public:
 
 private:
     Gorilla::Screen& Screen();
-    void createCoinSprites();
+    void createCoinRectangles();
     void createWinLogos();
 
 private:
@@ -32,8 +32,6 @@ private:
     RectangleVector mCoinRectangles;
     
     Gorilla::Rectangle* mResultRect;
-    Gorilla::Sprite* mLoseSprite;
-    Gorilla::Sprite* mWinSprite;
     Gorilla::Sprite* mBigwinSprite;
 };
 
