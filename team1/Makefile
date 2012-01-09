@@ -10,7 +10,7 @@ SMC_DIR = ../smc
 
 ENGINE = engine
 ENGINE_OBJS = $(ENGINE)/GameMachine_sm.o $(ENGINE)/HeadsOrTailsGame.o
-UI_UTIL_OBJS = timer.o
+UI_UTIL_OBJS = timer.o OISParamBuilder.o
 UI_LOGIC_OBJS = doubleuplogic.o coinfliplogic.o inputhandler.o
 UI_LAYER_OBJ = gamelayerresources.o backgroundlayer.o gamelayer.o doubleuplayer.o 
 UI_OBJS = $(UI_UTIL_OBJS) $(UI_LOGIC_OBJS) $(UI_LAYER_OBJ)  tripleflip.o Gorilla.o
@@ -23,15 +23,22 @@ EXECUTABLE = tripleflip
 #OGRE_RENDERER=/usr/lib64/OGRE/RenderSystem_GL.so
 
 LIBS=-lOgreMain -lOIS
-CXXFLAGS= -g -I. -I$(ENGINE) -I$(SMC_DIR)/lib/C++ ${OGRE_INCDIR} -DOGRE_RENDERER="\"${OGRE_RENDERER}\""
+CXXFLAGS= -g -I. -I$(ENGINE) -I$(SMC_DIR)/lib/C++ $(OGRE_INCDIR) -DOGRE_RENDERER="\"$(OGRE_RENDERER)\""
 
 vpath %.cpp .
 
 .PHONY: $(EXECUTABLE) $(ENGINE) clean
 all:	$(EXECUTABLE) 
+	$(MAKE) --directory=apptests; done
+
+test:
+	cd apptests; $(MAKE) test; cd .. done
+	cd $(ENGINE); $(MAKE) test; cd .. done
+
 clean:
 	-rm $(EXECUTABLE)
 	-rm *.o 
+	$(MAKE) --directory=apptests clean; done
 	$(MAKE) --directory=$(ENGINE) clean; done
 
 distclean: clean

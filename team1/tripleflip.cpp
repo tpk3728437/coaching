@@ -5,6 +5,7 @@
 #include "gamelayer.h"
 #include "doubleuplayer.h"
 #include "gamelayerresources.h"
+#include "OISParamBuilder.h"
 
 
 TripleFlipApp::TripleFlipApp() : mShutDown(false)
@@ -76,7 +77,8 @@ void TripleFlipApp::initializeOgre()
   
 void TripleFlipApp::initializeInputHandler()
 {
-    mInputHandler = new InputHandler(*mWindow, mViewport->getActualWidth(), mViewport->getActualHeight(), *this);
+    OISParamBuilder builder(*mWindow);
+    mInputHandler = new InputHandler(builder.Build(), mViewport->getActualWidth(), mViewport->getActualHeight(), *this);
 }
 
 void TripleFlipApp::createGorilla()

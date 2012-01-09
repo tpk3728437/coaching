@@ -1,16 +1,9 @@
 #include "inputhandler.h"
 
-InputHandler::InputHandler(Ogre::RenderWindow& window, int viewPortWidth, int viewPortHeight, UserCommandObserver& observer) :
+InputHandler::InputHandler(OIS::ParamList params, int viewPortWidth, int viewPortHeight, UserCommandObserver& observer) :
     mObserver(observer)
 {
-    OIS::ParamList pl;
-    size_t windowHnd = 0;
-    std::ostringstream windowHndStr;
-    window.getCustomAttribute("WINDOW", &windowHnd);
-    windowHndStr << windowHnd;
-    pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
-
-    mInputManager = OIS::InputManager::createInputSystem( pl );
+    mInputManager = OIS::InputManager::createInputSystem( params );
 
     mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject(OIS::OISKeyboard, true));
     mKeyboard->setEventCallback(this);
@@ -53,22 +46,22 @@ bool InputHandler::keyPressed( const OIS::KeyEvent &e )
     return true;
 }
 
-bool InputHandler::keyReleased( const OIS::KeyEvent &e )
+bool InputHandler::keyReleased( const OIS::KeyEvent& /*e*/ )
 {
     return true;
 }
 
-bool InputHandler::mouseMoved( const OIS::MouseEvent &arg )
+bool InputHandler::mouseMoved( const OIS::MouseEvent& /*arg*/ )
 {
     return true;
 }
 
-bool InputHandler::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
+bool InputHandler::mousePressed( const OIS::MouseEvent& /*arg*/, OIS::MouseButtonID /*id*/ )
 {
     return true;
 }
 
-bool InputHandler::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
+bool InputHandler::mouseReleased( const OIS::MouseEvent& /*arg*/, OIS::MouseButtonID /*id*/ )
 {
     return true;
 }

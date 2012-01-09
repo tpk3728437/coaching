@@ -2,7 +2,6 @@
 #define INPUTHANDLER_H
 
 #include <OIS/OIS.h>
-#include <OGRE/Ogre.h>
 
 class UserCommandObserver
 {
@@ -13,11 +12,10 @@ public:
     virtual void PayoutButtonPressed() =0;
 };
 
-
 class InputHandler : public OIS::KeyListener, public OIS::MouseListener
 {
 public:    
-    InputHandler(Ogre::RenderWindow& window, int viewPortWidth, int viewPortHeight, UserCommandObserver& observer);
+    InputHandler(OIS::ParamList params, int viewPortWidth, int viewPortHeight, UserCommandObserver& observer);
     ~InputHandler();  
     
     void Capture();
