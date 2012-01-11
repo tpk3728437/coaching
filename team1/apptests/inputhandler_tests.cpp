@@ -1,29 +1,14 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include "inputhandler.h"
+#include "mock_usercommandobserver.h"
+#include "mock_inputmanager.h"
 #include <memory>
 
 using ::testing::_;
 using ::testing::SaveArg;
 using ::testing::Invoke;
 using ::testing::An;
-
-class MockUserCommandObserver : public UserCommandObserver
-{
-public:
-    MOCK_METHOD0(QuitButtonPressed, void());
-    MOCK_METHOD0(PlayButtonPressed, void());
-    MOCK_METHOD0(DoubleUpButtonPressed, void());
-    MOCK_METHOD0(PayoutButtonPressed, void());
-};
-
-class MockInputManager : public InputManager
-{
-public:
-    MOCK_METHOD1(setKeyboardEventCallback, void(OIS::KeyListener& listener));
-    MOCK_METHOD1(setMouseEventCallback, void(OIS::MouseListener& listener));
-    MOCK_METHOD0(Capture, void());
-};
 
 class TriggerKey
 {
@@ -57,6 +42,18 @@ public:
         EXPECT_CALL(observer, QuitButtonPressed()); 
     }
     
+    void EXPECT_PLAY_BUTTON_PRESS() { 
+        EXPECT_CALL(observer, PlayButtonPressed());
+    }
+    
+    void EXPECT_DOUBLEUP_BUTTON_PRESS() { 
+        EXPECT_CALL(observer, DoubleUpButtonPressed());
+    }
+
+    void EXPECT_PAYOUT_BUTTON_PRESS() { 
+        EXPECT_CALL(observer, PayoutButtonPressed());
+    }
+    
     void TRIGGER_KEY(const OIS::KeyCode keyCode) {
         ASSERT_TRUE(trigger == NULL);
         trigger = new TriggerKey(*inputHandler, keyCode);
@@ -79,4 +76,25 @@ TEST_F(KeyhandlingTest, quit_button_pressed)
     EXPECT_QUIT_BUTTON_PRESS();
     
     TRIGGER_KEY(OIS::KC_ESCAPE);
+}
+
+TEST_F(KeyhandlingTest, play_button_pressed)
+{
+    EXPECT_PLAY_BUTTON_PRESS();
+    
+    TRIGGER_KEY(OIS::KC_P);
+}
+
+TEST_F(KeyhandlingTest, doubleup_button_pressed)
+{
+    EXPECT_DOUBLEUP_BUTTON_PRESS();
+    
+    TRIGGER_KEY(OIS::KC_Y);
+}
+
+TEST_F(KeyhandlingTest, payout_button_pressed)
+{
+    EXPECT_PAYOUT_BUTTON_PRESS();
+    
+    TRIGGER_KEY(OIS::KC_N);
 }
