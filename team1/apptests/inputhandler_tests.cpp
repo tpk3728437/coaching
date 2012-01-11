@@ -38,18 +38,45 @@ private:
     const OIS::KeyCode mKeyCode;
 };
 
-TEST(KeyhandlingTests, quit_button_pressed)
+class KeyhandlingTest : public ::testing::Test
 {
-    MockUserCommandObserver observer;
-    EXPECT_CALL(observer, QuitButtonPressed());
-    
-    MockInputManager* inputManager = new MockInputManager;
-    EXPECT_CALL(*inputManager, setKeyboardEventCallback(An<OIS::KeyListener&>()));
-    EXPECT_CALL(*inputManager, setMouseEventCallback(_));
-    
-    InputHandler inputHandler(std::auto_ptr<InputManager>(inputManager), observer);
-    TriggerKey trigger(inputHandler, OIS::KC_ESCAPE);
-    EXPECT_CALL(*inputManager, Capture()).WillOnce(Invoke(trigger));
+public:
+    KeyhandlingTest() : ::testing::Test(), inputManager(0), inputHandler(0), trigger(0) {
+        inputManager = new MockInputManager;
+        EXPECT_CALL(*inputManager, setKeyboardEventCallback(An<OIS::KeyListener&>()));
+        EXPECT_CALL(*inputManager, setMouseEventCallback(_));
+        
+        inputHandler = new InputHandler(std::auto_ptr<InputManager>(inputManager), observer);
+    }
+    ~KeyhandlingTest() {
+        delete trigger;
+        delete inputHandler;
+    }
 
-    inputHandler.Capture();
+    void EXPECT_QUIT_BUTTON_PRESS() { 
+        EXPECT_CALL(observer, QuitButtonPressed()); 
+    }
+    
+    void TRIGGER_KEY(const OIS::KeyCode keyCode) {
+        ASSERT_TRUE(trigger == NULL);
+        trigger = new TriggerKey(*inputHandler, keyCode);
+        
+        EXPECT_CALL(*inputManager, Capture()).WillOnce(Invoke(*trigger));
+        Capture();
+    }
+    
+    void Capture() { inputHandler->Capture(); }
+
+private:
+    MockUserCommandObserver observer;
+    MockInputManager* inputManager; // ref: ownership passed to inputHandler
+    InputHandler* inputHandler;
+    TriggerKey* trigger;
+};
+
+TEST_F(KeyhandlingTest, quit_button_pressed)
+{
+    EXPECT_QUIT_BUTTON_PRESS();
+    
+    TRIGGER_KEY(OIS::KC_ESCAPE);
 }
