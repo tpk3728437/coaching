@@ -1,17 +1,10 @@
 #include "inputhandler.h"
 
-InputHandler::InputHandler(OIS::ParamList params, int viewPortWidth, int viewPortHeight, UserCommandObserver& observer) :
-    mObserver(observer)
+InputHandler::InputHandler(std::auto_ptr<InputManager> inputManager, UserCommandObserver& observer) :
+    mInputManager(inputManager), mObserver(observer)
 {
-    mInputManager = OIS::InputManager::createInputSystem( params );
-
-    mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject(OIS::OISKeyboard, true));
-    mKeyboard->setEventCallback(this);
-
-    mMouse = static_cast<OIS::Mouse*>(mInputManager->createInputObject(OIS::OISMouse, true));
-    mMouse->setEventCallback(this);
-    mMouse->getMouseState().width = viewPortWidth; 
-    mMouse->getMouseState().height = viewPortHeight;
+    mInputManager->setKeyboardEventCallback(*this);
+    mInputManager->setMouseEventCallback(*this);    
 }
 
 InputHandler::~InputHandler()
@@ -20,8 +13,7 @@ InputHandler::~InputHandler()
 
 void InputHandler::Capture()
 {
-    mKeyboard->capture();
-    mMouse->capture();
+    mInputManager->Capture();
 }
 
 bool InputHandler::keyPressed( const OIS::KeyEvent &e )

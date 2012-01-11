@@ -2,6 +2,8 @@
 #define INPUTHANDLER_H
 
 #include <OIS/OIS.h>
+#include <memory>
+#include "inputmanager.h"
 
 class UserCommandObserver
 {
@@ -15,7 +17,7 @@ public:
 class InputHandler : public OIS::KeyListener, public OIS::MouseListener
 {
 public:    
-    InputHandler(OIS::ParamList params, int viewPortWidth, int viewPortHeight, UserCommandObserver& observer);
+    InputHandler(std::auto_ptr<InputManager> inputManager, UserCommandObserver& observer);
     ~InputHandler();  
     
     void Capture();
@@ -28,10 +30,7 @@ private:
     bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
     
 private:
-    OIS::InputManager*      mInputManager;
-    OIS::Keyboard*          mKeyboard;
-    OIS::Mouse*             mMouse; 
-    
+    std::auto_ptr<InputManager> mInputManager;
     UserCommandObserver& mObserver;
 };
 
