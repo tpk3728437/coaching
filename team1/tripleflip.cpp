@@ -1,6 +1,5 @@
 #include "tripleflip.h"
-#include <sstream>
-#include "timer.h"
+#include "graphics.h"
 #include "backgroundlayer.h"
 #include "gamelayer.h"
 #include "doubleuplayer.h"
@@ -9,83 +8,42 @@
 #include <memory>
 #include <utility>
 
-TripleFlipApp::TripleFlipApp() : mShutDown(false)
+TripleFlipApp::TripleFlipApp()
 {
-    initializeOgre();
-    
-    initializeInputHandler();
-
-    createGorilla();
-
-    createLayers();
-    
     createTripleFlipEngine();    
+    initializeGraphics();
+    initializeInputHandler();
+    createLayers();
 }
   
 TripleFlipApp::~TripleFlipApp()
 {
-    std::cout << "\n** Average FPS is " << mWindow->getAverageFPS() << "\n\n";
     delete mGameEngine;
     delete mDoubleupLayer;
     delete mGameLayer;
     delete mBackgroundLayer;
     delete mInputHandler;
-    delete mSilverback;
-    delete mRoot;
+    delete mGraphics;
 }
   
 void TripleFlipApp::start()
 {
-    mRoot->startRendering();
+    mGraphics->startRendering();
+    std::cout << "ended rendering" << std::endl;
 }
-  
-bool TripleFlipApp::frameStarted(const Ogre::FrameEvent& evt)
+
+void TripleFlipApp::initializeGraphics()
 {
-    ::Timer::getInstance()->processQueue();
-
-    if (mWindow->isClosed() || mShutDown)
-    {
-        return false;
-    }
-    
-    mInputHandler->Capture();
-
-    return true;
+    mGraphics = new Graphics();
 }
 
-void TripleFlipApp::initializeOgre()
-{
-    mRoot = new Ogre::Root("","");
-    mRoot->addFrameListener(this);
-
-    mRoot->loadPlugin(OGRE_RENDERER);
-
-    mRoot->setRenderSystem(mRoot->getAvailableRenderers()[0]);
-
-    Ogre::ResourceGroupManager* rgm = Ogre::ResourceGroupManager::getSingletonPtr();
-    rgm->addResourceLocation(".", "FileSystem");
-
-    mRoot->initialise(false);
-
-    mWindow = mRoot->createRenderWindow("Gorilla", 1024, 768, false);
-    mSceneMgr = mRoot->createSceneManager(Ogre::ST_GENERIC);
-    mCamera = mSceneMgr->createCamera("Camera");
-    mViewport = mWindow->addViewport(mCamera);
-    mViewport->setBackgroundColour(Gorilla::webcolour(Gorilla::Colours::FireBrick));
-
-    rgm->initialiseAllResourceGroups();
-}
-  
 void TripleFlipApp::initializeInputHandler()
 {
-    std::pair<int,int> viewportSize(mViewport->getActualWidth(), mViewport->getActualHeight());
-    std::auto_ptr<InputManager> inputManager(new OISInputManager(*mWindow, viewportSize));
+    ViewportSize size = mGraphics->getViewportSize();
+    std::auto_ptr<InputManager> inputManager(new OISInputManager(mGraphics->getWindow(), size));
     mInputHandler = new InputHandler(inputManager, *this);
-}
-
-void TripleFlipApp::createGorilla()
-{
-    mSilverback = new Gorilla::Silverback();
+    
+    mGraphics->setInputInspector(*mInputHandler);
 }
 
 void TripleFlipApp::createLayers()
@@ -99,12 +57,12 @@ void TripleFlipApp::createLayers()
 
 void TripleFlipApp::createGameLayerResources()
 {
-    mGameResources = new GameLayerResources(*mSilverback, *mViewport);
+    mGameResources = new GameLayerResources(mGraphics->getSilverback(), mGraphics->getViewport());
 }
 
 void TripleFlipApp::createBackgroundLayer()
 {
-    mBackgroundLayer = new BackgroundLayer(*mSilverback, *mViewport);
+    mBackgroundLayer = new BackgroundLayer(mGraphics->getSilverback(), mGraphics->getViewport());
 }
 
 void TripleFlipApp::createGameLayer()
@@ -172,7 +130,7 @@ void TripleFlipApp::onDoubleUp(bool win)
 
 void TripleFlipApp::QuitButtonPressed()
 {
-    mShutDown = true;
+    mGraphics->Quit();
 }
 
 void TripleFlipApp::PlayButtonPressed()

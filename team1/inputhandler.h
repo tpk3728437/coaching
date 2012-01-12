@@ -14,12 +14,22 @@ public:
     virtual void PayoutButtonPressed() =0;
 };
 
-class InputHandler : public OIS::KeyListener, public OIS::MouseListener
+class InputInspector
+{
+public:
+    virtual void Capture() =0;
+
+protected:
+    virtual ~InputInspector() {}
+};
+
+class InputHandler : public InputInspector, public OIS::KeyListener, public OIS::MouseListener
 {
 public:    
     InputHandler(std::auto_ptr<InputManager> inputManager, UserCommandObserver& observer);
     ~InputHandler();  
-    
+
+public: // from InputInspector
     void Capture();
         
 private:

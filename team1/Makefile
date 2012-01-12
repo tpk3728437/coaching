@@ -12,7 +12,7 @@ ENGINE = engine
 ENGINE_OBJS = $(ENGINE)/GameMachine_sm.o $(ENGINE)/HeadsOrTailsGame.o
 UI_UTIL_OBJS = timer.o
 UI_LOGIC_OBJS = doubleuplogic.o coinfliplogic.o inputhandler.o oisinputmanager.o
-UI_LAYER_OBJ = gamelayerresources.o backgroundlayer.o gamelayer.o doubleuplayer.o 
+UI_LAYER_OBJ = graphics.o gamelayerresources.o backgroundlayer.o gamelayer.o doubleuplayer.o 
 UI_OBJS = $(UI_UTIL_OBJS) $(UI_LOGIC_OBJS) $(UI_LAYER_OBJ)  tripleflip.o Gorilla.o
 EXECUTABLE = tripleflip
 

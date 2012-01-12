@@ -1,4 +1,5 @@
 #include "inputhandler.h"
+#include <iostream>
 
 InputHandler::InputHandler(std::auto_ptr<InputManager> inputManager, UserCommandObserver& observer) :
     mInputManager(inputManager), mObserver(observer)
