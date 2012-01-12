@@ -17,19 +17,22 @@ public:
     Gorilla::Sprite& BigwinText();
     Gorilla::Sprite& WinText();
     Gorilla::Sprite& LoseText();
-
-private:
+    
+    Gorilla::Sprite& YesBox();
+    Gorilla::Sprite& NoBox();
 
 private:
     Gorilla::Screen*        mScreen;
-    Gorilla::Layer*         mLayer;
-    
-    Gorilla::Sprite*        mCoinHeadSprite;
-    Gorilla::Sprite*        mCoinTailSprite;
+
+    Gorilla::Sprite* mCoinHeadSprite;
+    Gorilla::Sprite* mCoinTailSprite;
     
     Gorilla::Sprite* mBigWinSprite;
     Gorilla::Sprite* mWinSprite;
     Gorilla::Sprite* mLoseSprite;
+    
+    Gorilla::Sprite* mYesBoxSprite;
+    Gorilla::Sprite* mNoBoxSprite;
 };
 
 #endif // GAMELAYERRESOURCES_H

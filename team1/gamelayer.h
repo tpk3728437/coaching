@@ -18,20 +18,26 @@ public:
     void showBigWin();
     void showWin();
     void showLoss();
+    void showDoubleupQueryBoxes();
 
 private:
     Gorilla::Screen& Screen();
     void createCoinRectangles();
     void createWinLogos();
+    void createDoubleupBoxes();
 
 private:
     Gorilla::Layer*         mLayer;
     GameLayerResources&     mResources;
+    Gorilla::Sprite*        mLogoSprite;
         
     typedef std::vector<Gorilla::Rectangle*> RectangleVector;
     RectangleVector mCoinRectangles;
     
     Gorilla::Rectangle* mResultRect;
+    
+    Gorilla::Rectangle* mYesBoxRect;
+    Gorilla::Rectangle* mNoBoxRect;
 };
 
 #endif // GAMELAYER_H

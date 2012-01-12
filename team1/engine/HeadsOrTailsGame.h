@@ -11,7 +11,7 @@ class Player;
 
 
 
-class HeadsOrTailsGame : private FlipResult, DoubleupChoiceResult
+class HeadsOrTailsGame : private FlipResult, private DoubleupChoiceResult
 {
 public:
     HeadsOrTailsGame(GamePlay& gamePlay, Player& player, UserEvents& events);

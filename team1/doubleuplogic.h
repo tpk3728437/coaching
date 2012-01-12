@@ -19,8 +19,6 @@ public:
     
 private: // UserEvents
      void DoesUserWantToDoubleUp(DoubleupChoiceResult& result);
-    
-private:
 
 private:
     DummyDoubleupChoiceResult   mDummyObject;

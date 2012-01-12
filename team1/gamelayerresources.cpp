@@ -13,10 +13,20 @@ GameLayerResources::GameLayerResources(Gorilla::Silverback& silverback, Ogre::Vi
     mLoseSprite = Screen().getAtlas()->getSprite("lose"); 
     mWinSprite = Screen().getAtlas()->getSprite("win"); 
     mBigWinSprite = Screen().getAtlas()->getSprite("bigwin"); 
+    
+    mYesBoxSprite = Screen().getAtlas()->getSprite("yesbox");
+    mNoBoxSprite = Screen().getAtlas()->getSprite("nobox");
 }
 
 GameLayerResources::~GameLayerResources()
 {
+    delete mNoBoxSprite;
+    delete mYesBoxSprite;
+    delete mBigWinSprite;
+    delete mWinSprite;
+    delete mLoseSprite;
+    delete mCoinTailSprite;
+    delete mCoinHeadSprite;
 }
 
 Gorilla::Screen& GameLayerResources::Screen()
@@ -47,4 +57,14 @@ Gorilla::Sprite& GameLayerResources::WinText()
 Gorilla::Sprite& GameLayerResources::LoseText()
 {
     return *mLoseSprite;
+}
+
+Gorilla::Sprite& GameLayerResources::YesBox()
+{
+    return *mYesBoxSprite;
+}
+
+Gorilla::Sprite& GameLayerResources::NoBox()
+{
+    return *mNoBoxSprite;
 }
