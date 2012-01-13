@@ -5,6 +5,9 @@
 #include <memory>
 #include "inputmanager.h"
 
+/**
+ * A high-level user command callback interface.
+ */
 class UserCommandObserver
 {
 public:
@@ -12,17 +15,27 @@ public:
     virtual void PlayButtonPressed() =0;
     virtual void DoubleUpButtonPressed() =0;
     virtual void PayoutButtonPressed() =0;
+protected:
+    virtual ~UserCommandObserver() {}
 };
 
+/**
+ * Interface for triggering the capturing of user input events.
+ */
 class InputInspector
 {
 public:
     virtual void Capture() =0;
-
+    
 protected:
     virtual ~InputInspector() {}
 };
 
+/**
+ * This class is responsible for capturing low-level user input events 
+ * and relaying them as high-level command events through the  
+ * UserCommandObserver interface.
+ */
 class InputHandler : public InputInspector, public OIS::KeyListener, public OIS::MouseListener
 {
 public:    

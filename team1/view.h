@@ -1,15 +1,21 @@
 #ifndef VIEW_H
 #define VIEW_H
 
-#include "graphics.h"
 #include "globals.h"
+#include "uitypes.h"
+#include <string>
 
+class Graphics;
 class BackgroundLayer;
 class GameLayer;
 class DoubleupLayer;
 class GameLayerResources;
+class InputInspector;
 
-
+/**
+ * This class is responsible for displaying the application
+ * user interface.
+ */
 class View
 {
 public:

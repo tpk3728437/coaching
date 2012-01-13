@@ -9,7 +9,12 @@
 class HeadsOrTailsGame;
 class View;
 
-
+/**
+ * This class is responsible for controlling the application 
+ * user interface and the game engine. 
+ * The user commands and game engine events drive the application
+ * user interface through this class.
+ */
 class Controller : public Player, private UserCommandObserver
 {
 public:

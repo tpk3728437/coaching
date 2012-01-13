@@ -2,9 +2,10 @@
 #define OISINPUTMANAGER_H
 
 #include "inputmanager.h"
-#include <OGRE/Ogre.h>
-#include <utility>
 
+/**
+ * This class encapsulates the OIS related objects.
+ */
 class OISInputManager : public InputManager
 {
 public:    

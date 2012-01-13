@@ -3,6 +3,9 @@
 
 #include <OIS/OIS.h>
 
+/**
+ * Interface for capturing and relaying user events from devices.
+ */ 
 class InputManager
 {
 public:    
