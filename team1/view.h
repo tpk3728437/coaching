@@ -29,7 +29,7 @@ public:
     void ShowDoubleUpCoin(Side side);
     
     ViewportSize getViewportSize() const;
-    Ogre::RenderWindow& getWindow() const;
+    std::string windowHandle() const;
     
 private:
     void initializeGraphics();

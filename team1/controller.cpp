@@ -28,7 +28,7 @@ UserEvents& Controller::userEventsHandler()
 void Controller::initializeInputHandler()
 {
     ViewportSize size = mView.getViewportSize();
-    std::auto_ptr<InputManager> inputManager(new OISInputManager(mView.getWindow(), size));
+    std::auto_ptr<InputManager> inputManager(new OISInputManager(mView.windowHandle(), size));
     mInputHandler = new InputHandler(inputManager, *this);
     
     mView.setInputInspector(*mInputHandler);

@@ -8,7 +8,7 @@
 class OISInputManager : public InputManager
 {
 public:    
-    OISInputManager(Ogre::RenderWindow& window, std::pair<int,int> viewportSize);
+    OISInputManager(const std::string& windowHandle, std::pair<int,int> viewportSize);
     ~OISInputManager();  
 
 public: // from InputManager
@@ -17,7 +17,7 @@ public: // from InputManager
     void Capture();
     
 private:
-    OIS::ParamList buildOISParameters(Ogre::RenderWindow& window);
+    OIS::ParamList buildOISParameters(const std::string& windowHandle);
             
 private:
     OIS::InputManager*      mInputManager;

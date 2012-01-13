@@ -1,8 +1,8 @@
 #include "oisinputmanager.h"
 
-OISInputManager::OISInputManager(Ogre::RenderWindow& window, std::pair<int,int> viewportSize)
+OISInputManager::OISInputManager(const std::string& windowHandle, std::pair<int,int> viewportSize)
 {
-    OIS::ParamList params = buildOISParameters(window);
+    OIS::ParamList params = buildOISParameters(windowHandle);
     mInputManager = OIS::InputManager::createInputSystem( params );
     
     mKeyboard = static_cast<OIS::Keyboard*>(mInputManager->createInputObject(OIS::OISKeyboard, true));
@@ -38,13 +38,9 @@ void OISInputManager::Capture()
     mMouse->capture();
 }
 
-OIS::ParamList OISInputManager::buildOISParameters(Ogre::RenderWindow& window)
+OIS::ParamList OISInputManager::buildOISParameters(const std::string& windowHandle)
 {
     OIS::ParamList pl;
-    size_t windowHnd = 0;
-    std::ostringstream windowHndStr;
-    window.getCustomAttribute("WINDOW", &windowHnd);
-    windowHndStr << windowHnd;
-    pl.insert(std::make_pair(std::string("WINDOW"), windowHndStr.str()));
+    pl.insert(std::make_pair(std::string("WINDOW"), windowHandle));
     return pl;
 }

@@ -17,8 +17,8 @@ public:
     void Quit();
     
     ViewportSize getViewportSize() const;
-    
-    Ogre::RenderWindow& getWindow() const;
+    std::string windowHandle() const;
+
     Ogre::Viewport& getViewport() const;
     Gorilla::Silverback& getSilverback() const;
     

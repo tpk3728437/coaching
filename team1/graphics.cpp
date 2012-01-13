@@ -34,9 +34,13 @@ ViewportSize Graphics::getViewportSize() const
      return ViewportSize(mViewport->getActualWidth(), mViewport->getActualHeight());
 }
 
-Ogre::RenderWindow& Graphics::getWindow() const
+std::string Graphics::windowHandle() const
 {
-    return *mWindow;
+    size_t windowHnd = 0;
+    std::ostringstream windowHndStr;
+    mWindow->getCustomAttribute("WINDOW", &windowHnd);
+    windowHndStr << windowHnd;
+    return windowHndStr.str();
 }
 
 Ogre::Viewport& Graphics::getViewport() const

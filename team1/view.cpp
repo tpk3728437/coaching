@@ -84,9 +84,9 @@ ViewportSize View::getViewportSize() const
     return mGraphics->getViewportSize();
 }
 
-Ogre::RenderWindow& View::getWindow() const
+std::string View::windowHandle() const
 {
-    return mGraphics->getWindow();
+    return mGraphics->windowHandle();
 }
 
 void View::initializeGraphics()
