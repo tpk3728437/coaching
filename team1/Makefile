@@ -8,9 +8,16 @@ OGRE_RENDERER=/usr/local/lib/OGRE/RenderSystem_GL.so
 
 SMC_DIR = ../smc
 
+
+ifdef USEMOCKFLIP
+  COINFLIPLOGIC = mockcoinfliplogic.o
+else
+  COINFLIPLOGIC = coinfliplogic.o
+endif
+
 ENGINE = engine
 ENGINE_OBJS = $(ENGINE)/GameMachine_sm.o $(ENGINE)/HeadsOrTailsGame.o
-UI_UTIL_OBJS = timer.o coinfliplogic.o
+UI_UTIL_OBJS = timer.o $(COINFLIPLOGIC)
 UI_LOGIC_OBJS = controller.o doubleuplogic.o inputhandler.o oisinputmanager.o
 UI_LAYER_OBJ = view.o graphics.o gamelayerresources.o backgroundlayer.o gamelayer.o doubleuplayer.o 
 UI_OBJS = $(UI_UTIL_OBJS) $(UI_LOGIC_OBJS) $(UI_LAYER_OBJ)  tripleflip.o Gorilla.o
