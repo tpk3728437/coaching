@@ -10,7 +10,7 @@ USER_DIR = ..
 TEST_DIR = .
 
 # Flags passed to the preprocessor.
-CPPFLAGS += -I$(GTEST_DIR)/include -I$(GMOCK_DIR)/include -I.. -I/usr/local/include
+CPPFLAGS += -I$(GTEST_DIR)/include -I$(GMOCK_DIR)/include -I.. -I/usr/local/include -I../engine
 
 # flag to compile in 32-bit mode
 #CFLAGS += -m32
@@ -94,5 +94,11 @@ inputhandler_tests.o : $(TEST_DIR)/inputhandler_tests.cpp $(GMOCK_HEADERS)
 inputhandler.o: $(USER_DIR)/inputhandler.cpp $(GMOCK_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/inputhandler.cpp
 
-$(TESTS) : gmock_main.a inputhandler_tests.o inputhandler.o
+doubleuplogic_tests.o : $(TEST_DIR)/doubleuplogic_tests.cpp $(GMOCK_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(TEST_DIR)/doubleuplogic_tests.cpp
+
+doubleuplogic.o: $(USER_DIR)/doubleuplogic.cpp $(GMOCK_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/doubleuplogic.cpp
+
+$(TESTS) : gmock_main.a inputhandler_tests.o inputhandler.o doubleuplogic_tests.o doubleuplogic.o
 	${CXX} $^ $(LIBS) -pthread -o $@

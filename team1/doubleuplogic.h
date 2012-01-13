@@ -5,9 +5,15 @@
 
 class DummyDoubleupChoiceResult : public DoubleupChoiceResult
 {
-    void DoubleUp(bool doubleup) {}
+    void DoubleUp(bool /*doubleup*/) {}
 };
 
+/**
+ * This class is responsible for routing the user doubleup
+ * selection to the UserEvents interface callback. 
+ * When no query is active, the call is simply ignored by 
+ * the dummy object. 
+ */ 
 class DoubleUpLogic : public UserEvents
 {
 public:
