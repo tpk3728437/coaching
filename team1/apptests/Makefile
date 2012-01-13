@@ -100,5 +100,11 @@ doubleuplogic_tests.o : $(TEST_DIR)/doubleuplogic_tests.cpp $(GMOCK_HEADERS)
 doubleuplogic.o: $(USER_DIR)/doubleuplogic.cpp $(GMOCK_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/doubleuplogic.cpp
 
-$(TESTS) : gmock_main.a inputhandler_tests.o inputhandler.o doubleuplogic_tests.o doubleuplogic.o
+resultreader_tests.o : $(TEST_DIR)/resultreader_tests.cpp $(GMOCK_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(TEST_DIR)/resultreader_tests.cpp
+
+resultreader.o: $(USER_DIR)/resultreader.cpp $(GMOCK_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/resultreader.cpp
+
+$(TESTS) : gmock_main.a inputhandler_tests.o inputhandler.o doubleuplogic_tests.o doubleuplogic.o resultreader_tests.o resultreader.o
 	${CXX} $^ $(LIBS) -pthread -o $@

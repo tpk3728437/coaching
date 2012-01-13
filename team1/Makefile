@@ -10,7 +10,7 @@ SMC_DIR = ../smc
 
 
 ifdef USEMOCKFLIP
-  COINFLIPLOGIC = mockcoinfliplogic.o
+  COINFLIPLOGIC = mockcoinfliplogic.o resultreader.o
 else
   COINFLIPLOGIC = coinfliplogic.o
 endif
