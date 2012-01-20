@@ -30,7 +30,7 @@ SMC_HEADERS = $(SMC_DIR)/lib/C++/*.h
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = test1
+TESTS = engine_test
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -101,9 +101,6 @@ gmock_main.o : $(GMOCK_SRCS_)
 	$(CXX) $(CPPFLAGS) $(CFLAGS) -I$(GTEST_DIR) -I$(GMOCK_DIR) $(CXXFLAGS) \
             -c $(GMOCK_DIR)/src/gmock_main.cc
 
-gmock.a : gmock-all.o gtest-all.o
-	$(AR) $(ARFLAGS) $@ $^
-
 gmock_main.a : gmock-all.o gtest-all.o gmock_main.o
 	$(AR) $(ARFLAGS) $@ $^
 
@@ -112,11 +109,11 @@ gmock_main.a : gmock-all.o gtest-all.o gmock_main.o
 GameMachine_sm.o : $(SM_SOURCES:.sm=_sm.cpp) $(SMC_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/$(SM_SOURCES:.sm=_sm.cpp)
 
-test.o : $(USER_DIR)/test.cpp $(GMOCK_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/test.cpp
+HeadsOrTailsGame_tests.o : $(USER_DIR)/HeadsOrTailsGame_tests.cpp $(GMOCK_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/HeadsOrTailsGame_tests.cpp
 
 HeadsOrTailsGame.o: $(USER_DIR)/HeadsOrTailsGame.cpp $(GMOCK_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/HeadsOrTailsGame.cpp
 
-$(TESTS) : gmock_main.a GameMachine_sm.o test.o HeadsOrTailsGame.o 
+$(TESTS) : gmock_main.a GameMachine_sm.o HeadsOrTailsGame_tests.o HeadsOrTailsGame.o 
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -pthread $^ -o $@

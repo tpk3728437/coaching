@@ -40,7 +40,7 @@ gmock-1.6.0/test/.deps/
 
 *.a
 team1/tripleflip
-team1/engine/test1
+team1/engine/engine_test
 *_sm.h
 *_sm.cpp
 *_sm.dot
