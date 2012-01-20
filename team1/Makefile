@@ -4,10 +4,11 @@
 
 # Ogre 3d installed from source
 OGRE_INCDIR=-I/usr/local/include
-OGRE_RENDERER=/usr/local/lib/OGRE/RenderSystem_GL.so
+
+OGRE_PLUGIN_PATH = $(shell pkg-config --variable=plugindir OGRE)
+OGRE_RENDERER=$(OGRE_PLUGIN_PATH)/RenderSystem_GL.so
 
 SMC_DIR = ../smc
-
 
 # flag to compile in 32-bit mode
 #CFLAGS += -m32
