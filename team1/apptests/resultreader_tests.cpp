@@ -39,3 +39,11 @@ TEST(ResultReaderTest, read_head_tail_tail)
     EXPECT_EQ("tail", reader.results()[1]);
     EXPECT_EQ("tail", reader.results()[2]);
 }
+
+TEST(ResultReaderTest, invalid_input)
+{
+	std::stringstream input;
+	input << "foo\nbar";
+	ResultReader reader(input);
+	EXPECT_EQ(0, reader.results().size());
+}
