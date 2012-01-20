@@ -2,12 +2,13 @@
 #define CONTROLLER_H
 
 #include "player.h"
-#include "inputhandler.h"
 #include "doubleuplogic.h"
 #include "coinfliplogic.h"
+#include "uitypes.h"
+#include "usercommandobserver.h"
 
-class HeadsOrTailsGame;
-class View;
+class Game;
+class ViewInterface;
 
 /**
  * This class is responsible for controlling the application 
@@ -15,15 +16,15 @@ class View;
  * The user commands and game engine events drive the application
  * user interface through this class.
  */
-class Controller : public Player, private UserCommandObserver
+class Controller : public Player, public UserCommandObserver
 {
 public:
-    Controller(View& view);
+    Controller(ViewInterface& view);
     ~Controller();    
-    void setEngine(HeadsOrTailsGame& gameEngine);
+    void setEngine(Game& gameEngine);
     UserEvents& userEventsHandler();
     
-private: // from Player
+protected: // from Player
     void onPlayStarted();
     void onCoinFlipped(int index, Side side);
     void onBigWin();
@@ -32,20 +33,16 @@ private: // from Player
     void onGameEnd();
     void onDoubleUp(bool win);
 
-private: // from UserCommandObserver
+protected: // from UserCommandObserver
     void QuitButtonPressed();
     void PlayButtonPressed();
     void DoubleUpButtonPressed();
     void PayoutButtonPressed();    
-    
-private:
-    void initializeInputHandler();
-    
-private:
-    View&                   mView;
+
+protected:
+    ViewInterface&          mView;
     DoubleUpLogic           mDoubleupLogic;
-    InputHandler*           mInputHandler;
-    HeadsOrTailsGame*       mGameEngine;
+    Game*                   mGameEngine;
 };
 
 #endif // CONTROLLER_H

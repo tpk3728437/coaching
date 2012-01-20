@@ -9,14 +9,19 @@
 class GamePlay;
 class Player;
 
+class Game 
+{
+public:
+    virtual void Play() =0;
+};
 
-
-class HeadsOrTailsGame : private FlipResult, private DoubleupChoiceResult
+class HeadsOrTailsGame : public Game, private FlipResult, private DoubleupChoiceResult
 {
 public:
     HeadsOrTailsGame(GamePlay& gamePlay, Player& player, UserEvents& events);
     virtual ~HeadsOrTailsGame();
 
+public: // from game
     void Play();
     
 public: // State machine actions

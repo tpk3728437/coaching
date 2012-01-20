@@ -2,10 +2,11 @@
 #define TRIPLEFLIP_H
 
 #include "coinfliplogic.h"
+#include "oisinputmanager.h"
+#include "oiscontroller.h"
 
-class Controller;
 class HeadsOrTailsGame;
-class View;
+class ViewInterface;
 
 /**
  * Triple flip application class. Application uses
@@ -24,9 +25,10 @@ public:
 private:
     CoinFlipLogic           mCoinFlipLogic;
 
-    Controller*             mController;
+    typedef OISController<OISInputManager> AppController;
+    AppController*          mController;
     HeadsOrTailsGame*       mGameEngine; 
-    View*                   mView;
+    ViewInterface*          mView;
 };
 
 #endif // TRIPLEFLIP_H

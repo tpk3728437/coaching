@@ -5,12 +5,14 @@ GMOCK_DIR = ../../gmock-1.6.0
 # a copy of Google Test at a different location.
 GTEST_DIR = $(GMOCK_DIR)/gtest
 
+SMC_DIR = ../../smc
+
 # Where to find user code.
 USER_DIR = ..
 TEST_DIR = .
 
 # Flags passed to the preprocessor.
-CPPFLAGS += -I$(GTEST_DIR)/include -I$(GMOCK_DIR)/include -I.. -I/usr/local/include -I../engine
+CPPFLAGS += -I$(GTEST_DIR)/include -I$(GMOCK_DIR)/include -I.. -I/usr/local/include -I../engine -I$(SMC_DIR)/lib/C++
 
 # flag to compile in 32-bit mode
 #CFLAGS += -m32
@@ -106,5 +108,20 @@ resultreader_tests.o : $(TEST_DIR)/resultreader_tests.cpp $(GMOCK_HEADERS)
 resultreader.o: $(USER_DIR)/resultreader.cpp $(GMOCK_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/resultreader.cpp
 
-$(TESTS) : gmock_main.a inputhandler_tests.o inputhandler.o doubleuplogic_tests.o doubleuplogic.o resultreader_tests.o resultreader.o
+controller_tests.o : $(TEST_DIR)/controller_tests.cpp $(GMOCK_HEADERS) $(USER_DIR)/controller.h
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(TEST_DIR)/controller_tests.cpp
+
+controller.o: $(USER_DIR)/controller.cpp $(GMOCK_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/controller.cpp
+
+oiscontroller_tests.o : $(TEST_DIR)/oiscontroller_tests.cpp $(GMOCK_HEADERS) $(USER_DIR)/controller.h
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(TEST_DIR)/oiscontroller_tests.cpp
+
+GameMachine_sm.o : $(USER_DIR)/engine/GameMachine_sm.cpp $(SMC_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/engine/GameMachine_sm.cpp
+
+HeadsOrTailsGame.o: $(USER_DIR)/engine/HeadsOrTailsGame.cpp $(GMOCK_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/engine/HeadsOrTailsGame.cpp
+
+$(TESTS) : gmock_main.a inputhandler_tests.o inputhandler.o doubleuplogic_tests.o doubleuplogic.o resultreader_tests.o resultreader.o controller_tests.o controller.o HeadsOrTailsGame.o GameMachine_sm.o oiscontroller_tests.o
 	${CXX} $^ $(LIBS) -pthread -o $@

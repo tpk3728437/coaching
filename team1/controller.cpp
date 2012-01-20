@@ -1,21 +1,18 @@
 #include "controller.h"
-#include "oisinputmanager.h"
 #include "HeadsOrTailsGame.h"
 #include <memory>
 #include "view.h"
 
 
-Controller::Controller(View& view) : mView(view), mGameEngine(0), mInputHandler(0)
+Controller::Controller(ViewInterface& view) : mView(view), mGameEngine(0)
 {
-    initializeInputHandler();
 }
 
 Controller::~Controller()
 {
-    delete mInputHandler;
 }
 
-void Controller::setEngine(HeadsOrTailsGame& gameEngine)
+void Controller::setEngine(Game& gameEngine)
 {
     mGameEngine = &gameEngine;
 }
@@ -23,15 +20,6 @@ void Controller::setEngine(HeadsOrTailsGame& gameEngine)
 UserEvents& Controller::userEventsHandler()
 {
     return mDoubleupLogic;
-}
-
-void Controller::initializeInputHandler()
-{
-    ViewportSize size = mView.getViewportSize();
-    std::auto_ptr<InputManager> inputManager(new OISInputManager(mView.windowHandle(), size));
-    mInputHandler = new InputHandler(inputManager, *this);
-    
-    mView.setInputInspector(*mInputHandler);
 }
 
 void Controller::onPlayStarted()
@@ -44,7 +32,7 @@ void Controller::onCoinFlipped(int index, Side side)
     {
         mView.ShowBaseGameCoin(index, side);
     }
-    else
+    else if (index > 2)
     {
         mView.ShowDoubleUpCoin(side);
     }
@@ -82,7 +70,9 @@ void Controller::QuitButtonPressed()
 void Controller::PlayButtonPressed()
 {
     mView.ResetGraphics();
-    mGameEngine->Play();          
+    if (mGameEngine) {
+        mGameEngine->Play();
+    }
 }
 
 void Controller::DoubleUpButtonPressed()

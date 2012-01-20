@@ -1,26 +1,25 @@
 #ifndef VIEW_H
 #define VIEW_H
 
-#include "globals.h"
-#include "uitypes.h"
-#include <string>
+#include "viewinterface.h"
 
 class Graphics;
 class BackgroundLayer;
 class GameLayer;
 class DoubleupLayer;
 class GameLayerResources;
-class InputInspector;
 
 /**
  * This class is responsible for displaying the application
  * user interface.
  */
-class View
+class View : public ViewInterface
 {
 public:
     View();
     ~View();
+
+public: // from ViewInterface
     void startRendering(); 
     void Quit();   
     void setInputInspector(InputInspector& inputInspector);
