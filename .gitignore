@@ -38,3 +38,12 @@ gmock-1.6.0/src/gmock-all.lo
 gmock-1.6.0/src/gmock_main.lo
 gmock-1.6.0/test/.deps/
 
+*.a
+team1/tripleflip
+team1/engine/test1
+*_sm.h
+*_sm.cpp
+*_sm.dot
+*_sm.pdf
+Ogre.log
+team1/apptests/tests
