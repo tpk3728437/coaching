@@ -1,7 +1,6 @@
 #include "coinfliplogic.h"
 #include "timer.h"
-#include <boost/function.hpp>
-
+#include <tr1/functional>
 
 CoinFlipLogic::CoinFlipLogic() :
     mCoinFlipResultCallback(0)
@@ -18,7 +17,7 @@ void CoinFlipLogic::Flip(FlipResult& result)
     // save the interface
     mCoinFlipResultCallback = &result;
     
-    boost::function<void ()> callback(boost::bind(&CoinFlipLogic::onCoinFlippedTimerElapse, this));
+    std::tr1::function<void ()> callback(std::tr1::bind(&CoinFlipLogic::onCoinFlippedTimerElapse, this));
     
     ::Timer::getInstance()->delay(callback, 1000);
 }
