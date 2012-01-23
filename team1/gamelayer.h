@@ -36,8 +36,7 @@ private:
     
     Gorilla::Rectangle* mResultRect;
     
-    Gorilla::Rectangle* mYesBoxRect;
-    Gorilla::Rectangle* mNoBoxRect;
+    Gorilla::Rectangle* mDoubleUpRect;
 };
 
 #endif // GAMELAYER_H

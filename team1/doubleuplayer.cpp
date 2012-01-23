@@ -7,8 +7,8 @@ DoubleupLayer::DoubleupLayer(GameLayerResources& resources) :
 {
     mLayer = resources.Screen().createLayer(2);
     mLayer->setAlphaModifier(0.95);
-    Gorilla::Rectangle* dimmingRect = mLayer->createRectangle(100, 150, 800, 500);
-    dimmingRect->background_gradient(Gorilla::Gradient_Diagonal, Gorilla::rgb(140,52, 21), Gorilla::rgb(156,39,3));
+    Gorilla::Rectangle* dimmingRect = mLayer->createRectangle(0, 0, 1024, 768);
+    dimmingRect->background_gradient(Gorilla::Gradient_Diagonal, Gorilla::rgb(128,128,128), Gorilla::rgb(130,126,120));
 
     const Ogre::Real coinTopLeftx = resources.Screen().getWidth()/2 - resources.CoinHead().spriteWidth/2;
     const Ogre::Real coinTopLefty = resources.Screen().getHeight()/2 - resources.CoinHead().spriteHeight/2;

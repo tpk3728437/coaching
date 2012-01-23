@@ -26,8 +26,7 @@ void GameLayer::ResetGraphics()
         (*i)->background_image("opaque");
     }
     mResultRect->background_image("opaque");
-    mYesBoxRect->background_image("opaque");
-    mNoBoxRect->background_image("opaque");
+    mDoubleUpRect->background_image("opaque");
 }
 
 void GameLayer::setCoinImage(int index, Side side)
@@ -59,8 +58,7 @@ void GameLayer::showLoss()
 
 void GameLayer::showDoubleupQueryBoxes()
 {
-    mYesBoxRect->background_image(&mResources.YesBox());
-    mNoBoxRect->background_image(&mResources.NoBox());
+    mDoubleUpRect->background_image(&mResources.DoubleupText());
 }
 
 void GameLayer::createCoinRectangles()
@@ -88,11 +86,8 @@ void GameLayer::createWinLogos()
 void GameLayer::createDoubleupBoxes()
 {
     Ogre::Real vpHeight = Screen().getHeight();
-    mYesBoxRect = mLayer->createRectangle(300,vpHeight-200, mResources.YesBox().spriteWidth, mResources.YesBox().spriteHeight);
-    mYesBoxRect->background_image("opaque");
-
-    mNoBoxRect = mLayer->createRectangle(500,vpHeight-200, mResources.NoBox().spriteWidth, mResources.NoBox().spriteHeight);
-    mNoBoxRect->background_image("opaque");
+    mDoubleUpRect = mLayer->createRectangle(300,vpHeight-200, mResources.DoubleupText().spriteWidth, mResources.DoubleupText().spriteHeight);
+    mDoubleUpRect->background_image("opaque");
 }
 
 Gorilla::Screen& GameLayer::Screen()

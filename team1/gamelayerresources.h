@@ -18,8 +18,7 @@ public:
     Gorilla::Sprite& WinText();
     Gorilla::Sprite& LoseText();
     
-    Gorilla::Sprite& YesBox();
-    Gorilla::Sprite& NoBox();
+    Gorilla::Sprite& DoubleupText();
 
 private:
     Gorilla::Screen*        mScreen;
@@ -31,8 +30,7 @@ private:
     Gorilla::Sprite* mWinSprite;
     Gorilla::Sprite* mLoseSprite;
     
-    Gorilla::Sprite* mYesBoxSprite;
-    Gorilla::Sprite* mNoBoxSprite;
+    Gorilla::Sprite* mDoubleupSprite;
 };
 
 #endif // GAMELAYERRESOURCES_H
