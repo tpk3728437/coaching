@@ -11,7 +11,7 @@ GameLayer::GameLayer(GameLayerResources& resources) :
 
     createCoinRectangles();
     createWinLogos();
-    createDoubleupBoxes();
+    createDoubleupBox();
 }
 
 GameLayer::~GameLayer()
@@ -83,7 +83,7 @@ void GameLayer::createWinLogos()
     mResultRect->background_image("opaque");
 }
 
-void GameLayer::createDoubleupBoxes()
+void GameLayer::createDoubleupBox()
 {
     Ogre::Real vpHeight = Screen().getHeight();
     mDoubleUpRect = mLayer->createRectangle(300,vpHeight-200, mResources.DoubleupText().spriteWidth, mResources.DoubleupText().spriteHeight);

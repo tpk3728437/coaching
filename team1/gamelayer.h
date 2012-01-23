@@ -24,7 +24,7 @@ private:
     Gorilla::Screen& Screen();
     void createCoinRectangles();
     void createWinLogos();
-    void createDoubleupBoxes();
+    void createDoubleupBox();
 
 private:
     Gorilla::Layer*         mLayer;

@@ -6,7 +6,7 @@ DoubleupLayer::DoubleupLayer(GameLayerResources& resources) :
     mResources(resources)
 {
     mLayer = resources.Screen().createLayer(2);
-    mLayer->setAlphaModifier(0.95);
+    mLayer->setAlphaModifier(0.9);
     Gorilla::Rectangle* dimmingRect = mLayer->createRectangle(0, 0, 1024, 768);
     dimmingRect->background_gradient(Gorilla::Gradient_Diagonal, Gorilla::rgb(128,128,128), Gorilla::rgb(130,126,120));
 
@@ -20,6 +20,9 @@ DoubleupLayer::DoubleupLayer(GameLayerResources& resources) :
     mResultRect = mLayer->createRectangle(100,vpHeight-400, mResources.LoseText().spriteWidth, mResources.LoseText().spriteHeight);
     mResultRect->background_image("opaque");
 
+    mDoubleUpRect = mLayer->createRectangle(300,vpHeight-200, mResources.DoubleupText().spriteWidth, mResources.DoubleupText().spriteHeight);
+    mDoubleUpRect->background_image("opaque");
+
     mLayer->hide();
 }
 
@@ -29,6 +32,7 @@ DoubleupLayer::~DoubleupLayer()
 
 void DoubleupLayer::ResetGraphics()
 {
+    mDoubleUpRect->background_image("opaque");
     mCoinRect->background_image("opaque");
     mResultRect->background_image("opaque");
 }
@@ -55,6 +59,7 @@ void DoubleupLayer::Result(bool win)
     if (win)
     {
         mResultRect->background_image(&mResources.WinText());
+        ShowDoubleUpQuery();
     }
     else
     {
@@ -65,6 +70,11 @@ void DoubleupLayer::Result(bool win)
 void DoubleupLayer::Show()
 {
     mLayer->show();
+}
+
+void DoubleupLayer::ShowDoubleUpQuery()
+{
+    mDoubleUpRect->background_image(&mResources.DoubleupText());
 }
 
 void DoubleupLayer::Hide()

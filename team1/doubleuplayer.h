@@ -21,6 +21,7 @@ public:
     void Result(bool win);
 
 private:
+    void ShowDoubleUpQuery();
 
 private:
     Gorilla::Layer*         mLayer;
@@ -28,6 +29,7 @@ private:
     
     Gorilla::Rectangle* mCoinRect;
     Gorilla::Rectangle* mResultRect;
+    Gorilla::Rectangle* mDoubleUpRect;
 };
 
 #endif // DOUBLEUPLAYER_H
