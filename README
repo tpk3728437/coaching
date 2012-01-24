@@ -1,1 +1,33 @@
-TDD coaching material
+TDD coaching harjoitus
+
+
+SÄÄNNÖT
+------------------------------------------------------------------------
+Pelissä heitettään kolme kolikkoa perä jälkeen
+-kahdella kruunalla voittaa, järjestyksellä ei ole väliä
+ -voiton jälkeen on mahdollisuus tuplata yhdellä kolikolla
+   -kruunalla tuplauksen voittaa
+   -voitetun tuplauksen jälkeen voi vielä tuplata
+
+-kolmella kruunalla tulee big win
+ -jonka jälkeen ei ole mahdollisuutta tuplata
+
+-kahdella peräkkäisellä klaavalla häviää heti
+ -kolmatta kolikkoa ei edes heitetä
+
+-kaikilla muilla kombinaatioilla häviää
+
+HARJOITUS
+------------------------------------------------------------------------
+Pelin sääntöjä noudattaen ala toteuttaa peliä testivetoisesti. 
+
+Prioriteettijärjestys:
+ - Kahdella klaavalla häviää pelin
+ - Kahdella kruunalla voittaa
+ - Kolmella kruunalla voittaa jackpotin
+ - Jos ensimmäinen ja toinen kolikko on klaava, ei kolmatta edes heitetä
+ - Voitetun pelin jälkeen pääsee tuplaamaan
+ - Tuplauksen voittaa kruunalla ja häviää klaavalla (peli loppuu)
+ - Voitetusta tuplauksesta voi vielä tuplata
+ - Kolmella kruunulla ei pääse tuplaamaan
+ 
