@@ -4,7 +4,7 @@
 GameLayer::GameLayer(GameLayerResources& resources) :
     mResources(resources)
 {
-    mLayer = Screen().createLayer(1);    
+    mLayer = resources.CreateLayer(1);    
     mLogoSprite = Screen().getAtlas()->getSprite("logo"); 
     Gorilla::Rectangle* logoRect = mLayer->createRectangle(100,0, mLogoSprite->spriteWidth, mLogoSprite->spriteHeight);
     logoRect->background_image(mLogoSprite);

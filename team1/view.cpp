@@ -7,8 +7,12 @@
 
 View::View()
 {
-    initializeGraphics();
-    createLayers();
+    mGraphics = new Graphics();
+
+    mBackgroundLayer = new BackgroundLayer(mGraphics->getSilverback(), mGraphics->getViewport());
+    mGameResources = new GameLayerResources(mGraphics->getSilverback(), mGraphics->getViewport());
+    mGameLayer = new GameLayer(*mGameResources);
+    mDoubleupLayer = new DoubleupLayer(*mGameResources);
 }
 
 View::~View()
@@ -87,38 +91,4 @@ ViewportSize View::getViewportSize() const
 std::string View::windowHandle() const
 {
     return mGraphics->windowHandle();
-}
-
-void View::initializeGraphics()
-{
-    mGraphics = new Graphics();
-}
-
-void View::createLayers()
-{
-    createBackgroundLayer();
-    
-    createGameLayerResources();
-    createGameLayer();
-    createDoubleupLayer();
-}
-
-void View::createGameLayerResources()
-{
-    mGameResources = new GameLayerResources(mGraphics->getSilverback(), mGraphics->getViewport());
-}
-
-void View::createBackgroundLayer()
-{
-    mBackgroundLayer = new BackgroundLayer(mGraphics->getSilverback(), mGraphics->getViewport());
-}
-
-void View::createGameLayer()
-{
-    mGameLayer = new GameLayer(*mGameResources);
-}
-
-void View::createDoubleupLayer()
-{
-    mDoubleupLayer = new DoubleupLayer(*mGameResources);
 }

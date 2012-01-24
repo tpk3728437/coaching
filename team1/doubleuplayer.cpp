@@ -5,7 +5,7 @@
 DoubleupLayer::DoubleupLayer(GameLayerResources& resources) :
     mResources(resources)
 {
-    mLayer = resources.Screen().createLayer(2);
+    mLayer = resources.CreateLayer(2);
     mLayer->setAlphaModifier(0.9);
     Gorilla::Rectangle* dimmingRect = mLayer->createRectangle(0, 0, 1024, 768);
     dimmingRect->background_gradient(Gorilla::Gradient_Diagonal, Gorilla::rgb(128,128,128), Gorilla::rgb(130,126,120));

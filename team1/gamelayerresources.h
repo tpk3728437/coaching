@@ -10,6 +10,8 @@ public:
     GameLayerResources(Gorilla::Silverback& silverback, Ogre::Viewport& viewport);
     ~GameLayerResources();
     
+    Gorilla::Layer* CreateLayer(int order);
+    
     Gorilla::Screen& Screen();
     Gorilla::Sprite& CoinHead();
     Gorilla::Sprite& CoinTail();

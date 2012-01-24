@@ -91,4 +91,6 @@ void Graphics::initializeOgre()
 void Graphics::createGorilla()
 {
     mSilverback = new Gorilla::Silverback();
+    mSilverback->loadAtlas("tripleflip");
+    mSilverback->loadAtlas("background");
 }

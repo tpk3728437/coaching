@@ -21,7 +21,7 @@ public:
 
 public: // from ViewInterface
     void startRendering(); 
-    void Quit();   
+    void Quit();
     void setInputInspector(InputInspector& inputInspector);
     
     void ResetGraphics();
@@ -36,14 +36,6 @@ public: // from ViewInterface
     ViewportSize getViewportSize() const;
     std::string windowHandle() const;
     
-private:
-    void initializeGraphics();
-    void createLayers();
-    void createGameLayerResources();
-    void createBackgroundLayer();
-    void createGameLayer();
-    void createDoubleupLayer();
-
 private:
     Graphics*               mGraphics;
     BackgroundLayer*        mBackgroundLayer;

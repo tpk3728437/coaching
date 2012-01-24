@@ -2,8 +2,6 @@
 
 GameLayerResources::GameLayerResources(Gorilla::Silverback& silverback, Ogre::Viewport& viewport)
 {
-    silverback.loadAtlas("tripleflip");
-
     mScreen = silverback.createScreen(&viewport, "tripleflip");
     mScreen->setOrientation(Ogre::OR_PORTRAIT);
     
@@ -25,6 +23,11 @@ GameLayerResources::~GameLayerResources()
     delete mLoseSprite;
     delete mCoinTailSprite;
     delete mCoinHeadSprite;
+}
+
+Gorilla::Layer* GameLayerResources::CreateLayer(int order)
+{
+    return mScreen->createLayer(order);
 }
 
 Gorilla::Screen& GameLayerResources::Screen()

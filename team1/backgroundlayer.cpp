@@ -3,8 +3,6 @@
 BackgroundLayer::BackgroundLayer(Gorilla::Silverback& silverback, Ogre::Viewport& viewport) :
     mSilverback(silverback)
 {
-    silverback.loadAtlas("background");
-
     mBackgroundScreen = silverback.createScreen(&viewport, "background");
     mBackgroundScreen->setOrientation(Ogre::OR_PORTRAIT);
     Ogre::Real vpWidth = mBackgroundScreen->getWidth(); 
