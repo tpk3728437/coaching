@@ -45,6 +45,10 @@ test:
 	cd apptests; $(MAKE) test; cd .. done
 	cd $(ENGINE); $(MAKE) test; cd .. done
 
+valgrind:
+	cd apptests; $(MAKE) valgrind; cd .. done
+	cd $(ENGINE); $(MAKE) valgrind; cd .. done
+
 clean:
 	-rm $(EXECUTABLE)
 	-rm *.o 
