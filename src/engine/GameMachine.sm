@@ -5,7 +5,7 @@
 %}
 
 %class HeadsOrTailsGame
-%header   HeadsOrTailsGame.h
+%header   headsortailsgame.h
 %include "globals.h"
 %start MainMap::StartState
 

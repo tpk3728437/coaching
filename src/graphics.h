@@ -2,7 +2,7 @@
 #define GRAPHICS_H
 
 #include <OGRE/Ogre.h>
-#include "Gorilla.h"
+#include "gorilla.h"
 #include "uitypes.h"
 
 class InputInspector;

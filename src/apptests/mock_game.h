@@ -2,7 +2,7 @@
 #define MOCK_GAME_H
 
 #include <gmock/gmock.h>
-#include "HeadsOrTailsGame.h"
+#include "headsortailsgame.h"
 
 
 class MockGame : public Game

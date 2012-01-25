@@ -120,8 +120,8 @@ oiscontroller_tests.o : $(TEST_DIR)/oiscontroller_tests.cpp $(GMOCK_HEADERS) $(U
 GameMachine_sm.o : $(USER_DIR)/engine/GameMachine_sm.cpp $(SMC_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/engine/GameMachine_sm.cpp
 
-HeadsOrTailsGame.o: $(USER_DIR)/engine/HeadsOrTailsGame.cpp $(GMOCK_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/engine/HeadsOrTailsGame.cpp
+headsortailsgame.o: $(USER_DIR)/engine/headsortailsgame.cpp $(GMOCK_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/engine/headsortailsgame.cpp
 
-$(TESTS) : gmock_main.a inputhandler_tests.o inputhandler.o doubleuplogic_tests.o doubleuplogic.o resultreader_tests.o resultreader.o controller_tests.o controller.o HeadsOrTailsGame.o GameMachine_sm.o oiscontroller_tests.o
+$(TESTS) : gmock_main.a inputhandler_tests.o inputhandler.o doubleuplogic_tests.o doubleuplogic.o resultreader_tests.o resultreader.o controller_tests.o controller.o headsortailsgame.o GameMachine_sm.o oiscontroller_tests.o
 	${CXX} $^ $(LIBS) -pthread -o $@

@@ -2,7 +2,7 @@
 #include <gmock/gmock.h>
 #include "controller.h"
 #include "viewinterface.h"
-#include "HeadsOrTailsGame.h"
+#include "headsortailsgame.h"
 #include "inputhandler.h"
 #include "mock_game.h"
 #include "mock_view.h"

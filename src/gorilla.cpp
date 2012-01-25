@@ -29,7 +29,7 @@
     
 */
 
-#include "Gorilla.h"
+#include "gorilla.h"
 
 #pragma warning ( disable : 4244 )
 

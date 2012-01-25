@@ -1,7 +1,7 @@
 #ifndef DOUBLEUPLAYER_H
 #define DOUBLEUPLAYER_H
 
-#include "Gorilla.h"
+#include "gorilla.h"
 #include "globals.h"
 
 class GameLayerResources;

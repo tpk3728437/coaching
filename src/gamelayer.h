@@ -1,7 +1,7 @@
 #ifndef GAMELAYER_H
 #define GAMELAYER_H
 
-#include "Gorilla.h"
+#include "gorilla.h"
 #include "globals.h"
 
 class GameLayerResources;

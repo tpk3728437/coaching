@@ -1,7 +1,7 @@
 #ifndef GAMELAYERRESOURCES_H
 #define GAMELAYERRESOURCES_H
 
-#include "Gorilla.h"
+#include "gorilla.h"
 
 
 class GameLayerResources

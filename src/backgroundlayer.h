@@ -1,7 +1,7 @@
 #ifndef BACKGROUNDLAYER_H
 #define BACKGROUNDLAYER_H
 
-#include "Gorilla.h"
+#include "gorilla.h"
 
 
 class BackgroundLayer

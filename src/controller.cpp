@@ -1,5 +1,5 @@
 #include "controller.h"
-#include "HeadsOrTailsGame.h"
+#include "headsortailsgame.h"
 #include <memory>
 #include "view.h"
 

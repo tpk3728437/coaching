@@ -109,11 +109,11 @@ gmock_main.a : gmock-all.o gtest-all.o gmock_main.o
 GameMachine_sm.o : $(SM_SOURCES:.sm=_sm.cpp) $(SMC_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/$(SM_SOURCES:.sm=_sm.cpp)
 
-HeadsOrTailsGame_tests.o : $(USER_DIR)/HeadsOrTailsGame_tests.cpp $(GMOCK_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/HeadsOrTailsGame_tests.cpp
+headsortailsgame_tests.o : $(USER_DIR)/headsortailsgame_tests.cpp $(GMOCK_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/headsortailsgame_tests.cpp
 
-HeadsOrTailsGame.o: $(USER_DIR)/HeadsOrTailsGame.cpp $(GMOCK_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/HeadsOrTailsGame.cpp
+headsortailsgame.o: $(USER_DIR)/headsortailsgame.cpp $(GMOCK_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/headsortailsgame.cpp
 
-$(TESTS) : gmock_main.a GameMachine_sm.o HeadsOrTailsGame_tests.o HeadsOrTailsGame.o 
+$(TESTS) : gmock_main.a GameMachine_sm.o headsortailsgame_tests.o headsortailsgame.o 
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -pthread $^ -o $@

@@ -1,4 +1,4 @@
-#include "HeadsOrTailsGame.h"
+#include "headsortailsgame.h"
 #include <time.h>
 #include <stdlib.h>
 #include "gameplay.h"

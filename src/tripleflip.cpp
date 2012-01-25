@@ -1,6 +1,6 @@
 #include "tripleflip.h"
 #include "view.h"
-#include "HeadsOrTailsGame.h"
+#include "headsortailsgame.h"
 
 
 TripleFlipApp::TripleFlipApp()

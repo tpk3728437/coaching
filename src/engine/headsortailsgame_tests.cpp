@@ -1,7 +1,7 @@
 #include <limits.h>
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include "HeadsOrTailsGame.h"
+#include "headsortailsgame.h"
 #include "mock_gameplay.h"
 #include "mock_player.h"
 #include "mock_userevents.h"

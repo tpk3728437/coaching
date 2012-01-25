@@ -1,8 +1,3 @@
-# Simple GNU make makefile
-#
-# Comment out / in the settings applicable to your system.
-
-# Ogre 3d installed from source
 OGRE_INCDIR=-I/usr/local/include
 
 OGRE_PLUGIN_PATH = $(shell pkg-config --variable=plugindir OGRE)
@@ -19,18 +14,12 @@ else
 endif
 
 ENGINE = engine
-ENGINE_OBJS = $(ENGINE)/GameMachine_sm.o $(ENGINE)/HeadsOrTailsGame.o
+ENGINE_OBJS = $(ENGINE)/GameMachine_sm.o $(ENGINE)/headsortailsgame.o
 UI_UTIL_OBJS = timer.o $(COINFLIPLOGIC)
 UI_LOGIC_OBJS = controller.o doubleuplogic.o inputhandler.o oisinputmanager.o
 UI_LAYER_OBJ = view.o graphics.o gamelayerresources.o backgroundlayer.o gamelayer.o doubleuplayer.o 
-UI_OBJS = $(UI_UTIL_OBJS) $(UI_LOGIC_OBJS) $(UI_LAYER_OBJ)  tripleflip.o Gorilla.o
+UI_OBJS = $(UI_UTIL_OBJS) $(UI_LOGIC_OBJS) $(UI_LAYER_OBJ)  tripleflip.o gorilla.o
 EXECUTABLE = tripleflip
-
-# Ogre 3d installed from distro package
-#OGRE_RENDERER=/usr/lib/OGRE/RenderSystem_GL.so
-
-# Ogre 3d installed from 64bit distro package
-#OGRE_RENDERER=/usr/lib64/OGRE/RenderSystem_GL.so
 
 LIBS=-lOgreMain -lOIS
 CXXFLAGS= -g -I. -I$(ENGINE) -I$(SMC_DIR)/lib/C++ $(OGRE_INCDIR) -DOGRE_RENDERER="\"$(OGRE_RENDERER)\""
