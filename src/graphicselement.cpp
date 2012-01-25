@@ -12,6 +12,14 @@ namespace {
     { 
         return lhs.second->spriteHeight < rhs.second->spriteHeight; 
     }
+
+    struct NameComparator
+    {
+        NameComparator(std::string name) : mName(name) {}
+        bool operator()(const ElementPair& elem) const { return mName.compare(elem.first) == 0; }
+    private:
+        std::string mName;
+    };
 };
 
 
@@ -82,14 +90,6 @@ int GraphicsElement::maxSpriteHeight() const
     ElementMap::const_iterator it = std::max_element(mSpriteMap.begin(), mSpriteMap.end(), heightCompare);
     return (*it).second->spriteHeight;
 }
-
-struct NameComparator
-{
-    NameComparator(std::string name) : mName(name) {}
-    bool operator()(const ElementPair& elem) const { return mName.compare(elem.first) == 0; }
-private:
-    std::string mName;
-};
 
 Gorilla::Sprite* GraphicsElement::find(std::string name) const
 {
