@@ -3,16 +3,16 @@
 #include "backgroundlayer.h"
 #include "gamelayer.h"
 #include "doubleuplayer.h"
-#include "gamelayerresources.h"
+#include "layerfactory.h"
 
 View::View()
 {
     mGraphics = new Graphics();
 
     mBackgroundLayer = new BackgroundLayer(mGraphics->getSilverback(), mGraphics->getViewport());
-    mGameResources = new GameLayerResources(mGraphics->getSilverback(), mGraphics->getViewport());
-    mGameLayer = new GameLayer(*mGameResources);
-    mDoubleupLayer = new DoubleupLayer(*mGameResources);
+    mLayerFactory = new LayerFactory(mGraphics->getSilverback(), mGraphics->getViewport());
+    mGameLayer = new GameLayer(*mLayerFactory);
+    mDoubleupLayer = new DoubleupLayer(*mLayerFactory);
 }
 
 View::~View()

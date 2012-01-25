@@ -7,7 +7,7 @@ class Graphics;
 class BackgroundLayer;
 class GameLayer;
 class DoubleupLayer;
-class GameLayerResources;
+class LayerFactory;
 
 /**
  * This class is responsible for displaying the application
@@ -39,7 +39,7 @@ public: // from ViewInterface
 private:
     Graphics*               mGraphics;
     BackgroundLayer*        mBackgroundLayer;
-    GameLayerResources*     mGameResources;
+    LayerFactory*           mLayerFactory;
     GameLayer*              mGameLayer;
     DoubleupLayer*          mDoubleupLayer;    
 };

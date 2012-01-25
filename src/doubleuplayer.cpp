@@ -1,51 +1,44 @@
 #include "doubleuplayer.h"
-#include "gamelayerresources.h"
+#include "layerfactory.h"
+#include "graphicselement.h"
 
 
-DoubleupLayer::DoubleupLayer(GameLayerResources& resources) :
-    mResources(resources)
+DoubleupLayer::DoubleupLayer(LayerFactory& factory)
 {
-    mLayer = resources.CreateLayer(2);
+    mLayer = factory.CreateLayer(2);
     mLayer->setAlphaModifier(0.9);
     Gorilla::Rectangle* dimmingRect = mLayer->createRectangle(0, 0, 1024, 768);
     dimmingRect->background_gradient(Gorilla::Gradient_Diagonal, Gorilla::rgb(128,128,128), Gorilla::rgb(130,126,120));
 
-    const Ogre::Real coinTopLeftx = resources.Screen().getWidth()/2 - resources.CoinHead().spriteWidth/2;
-    const Ogre::Real coinTopLefty = resources.Screen().getHeight()/2 - resources.CoinHead().spriteHeight/2;
-
-    mCoinRect = mLayer->createRectangle(coinTopLeftx, coinTopLefty, resources.CoinHead().spriteWidth, resources.CoinHead().spriteHeight);
-    mCoinRect->background_image("opaque");
-
-    Ogre::Real vpHeight = mResources.Screen().getHeight();
-    mResultRect = mLayer->createRectangle(100,vpHeight-400, mResources.LoseText().spriteWidth, mResources.LoseText().spriteHeight);
-    mResultRect->background_image("opaque");
-
-    mDoubleUpRect = mLayer->createRectangle(300,vpHeight-200, mResources.DoubleupText().spriteWidth, mResources.DoubleupText().spriteHeight);
-    mDoubleUpRect->background_image("opaque");
+    createCoins(factory);
+    createResultElements(factory);
+    createDoubleupBox(factory);
 
     mLayer->hide();
 }
 
 DoubleupLayer::~DoubleupLayer()
 {
+    delete mDoubleUp;
+    delete mCoin;
 }
 
 void DoubleupLayer::ResetGraphics()
 {
-    mDoubleUpRect->background_image("opaque");
-    mCoinRect->background_image("opaque");
-    mResultRect->background_image("opaque");
+    mDoubleUp->SetVisibility(false);
+    mCoin->SetVisibility(false);
+    mResult->SetVisibility(false);
 }
 
 void DoubleupLayer::SetCoin(Side side)
 {
     if (side == Heads)
     {
-        mCoinRect->background_image(&mResources.CoinHead());
+        mCoin->Show("coinhead");
     }
     else
     {
-        mCoinRect->background_image(&mResources.CoinTail());
+        mCoin->Show("cointail");
     }
 }
 
@@ -58,12 +51,12 @@ void DoubleupLayer::Result(bool win)
 {
     if (win)
     {
-        mResultRect->background_image(&mResources.WinText());
+        mResult->Show("win");
         ShowDoubleUpQuery();
     }
     else
     {
-        mResultRect->background_image(&mResources.LoseText());
+        mResult->Show("lose");
     }
 }
 
@@ -74,11 +67,41 @@ void DoubleupLayer::Show()
 
 void DoubleupLayer::ShowDoubleUpQuery()
 {
-    mDoubleUpRect->background_image(&mResources.DoubleupText());
+    mDoubleUp->SetVisibility(true);
 }
 
 void DoubleupLayer::Hide()
 {
     ResetGraphics();
     mLayer->hide();
+}
+
+void DoubleupLayer::createCoins(LayerFactory& factory)
+{
+    const Ogre::Real coinX = factory.ScreenWidth()/2 - 50;
+    const Ogre::Real coinY = factory.ScreenHeight()/2 - 100;
+
+    std::vector<std::string> names;
+    names.push_back("coinhead");
+    names.push_back("cointail");
+    mCoin = factory.createGraphicsElement(*mLayer, names, coinX, coinY);
+    mCoin->SetVisibility(false);
+}
+
+void DoubleupLayer::createResultElements(LayerFactory& factory)
+{
+    std::vector<std::string> names;
+    names.push_back("win");
+    names.push_back("lose");
+ 
+    Ogre::Real vpHeight = factory.ScreenHeight();
+    mResult = factory.createGraphicsElement(*mLayer, names, 100, vpHeight-400);
+    mResult->SetVisibility(false);
+}
+
+void DoubleupLayer::createDoubleupBox(LayerFactory& factory)
+{
+    Ogre::Real vpHeight = factory.ScreenHeight();
+    mDoubleUp = factory.createGraphicsElement(*mLayer, "doubleup", 300, vpHeight-200);
+    mDoubleUp->SetVisibility(false);
 }

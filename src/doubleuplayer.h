@@ -4,12 +4,14 @@
 #include "gorilla.h"
 #include "globals.h"
 
-class GameLayerResources;
+class LayerFactory;
+class GraphicsElement;
+
 
 class DoubleupLayer
 {
 public:
-    DoubleupLayer(GameLayerResources& resources);
+    DoubleupLayer(LayerFactory& factory);
     ~DoubleupLayer();
     void ResetGraphics();
     void SetCoin(Side side);
@@ -22,14 +24,16 @@ public:
 
 private:
     void ShowDoubleUpQuery();
+    void createCoins(LayerFactory& factory);
+    void createResultElements(LayerFactory& factory);
+    void createDoubleupBox(LayerFactory& factory);
 
 private:
     Gorilla::Layer*         mLayer;
-    GameLayerResources&     mResources;
     
-    Gorilla::Rectangle* mCoinRect;
-    Gorilla::Rectangle* mResultRect;
-    Gorilla::Rectangle* mDoubleUpRect;
+    GraphicsElement* mCoin;
+    GraphicsElement* mResult;
+    GraphicsElement* mDoubleUp;
 };
 
 #endif // DOUBLEUPLAYER_H

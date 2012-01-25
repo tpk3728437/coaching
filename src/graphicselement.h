@@ -7,13 +7,21 @@ class GraphicsElement
 {
 public:
     GraphicsElement(Gorilla::Screen& screen, Gorilla::Layer& layer, std::string name, int x, int y);
+    GraphicsElement(Gorilla::Screen& screen, Gorilla::Layer& layer, std::vector<std::string>& names, int x, int y);
     virtual ~GraphicsElement();
     
-    virtual void SetVisibility(bool isVisible);
+    void SetVisibility(bool isVisible);
+    void Show(std::string name);
+    
+protected:
+    int maxSpriteWidth() const; 
+    int maxSpriteHeight() const;
+    Gorilla::Sprite* find(std::string name) const;
     
 private:
-    Gorilla::Sprite* mSprite;
+    std::map<std::string, Gorilla::Sprite*> mSpriteMap;
     Gorilla::Rectangle* mRectangle;
+    std::string mActiveImageName;
 };
 
 #endif // GRAPHICSELEMENT_H

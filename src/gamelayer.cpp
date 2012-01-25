@@ -1,31 +1,35 @@
 #include "gamelayer.h"
-#include "gamelayerresources.h"
+#include "layerfactory.h"
 #include "graphicselement.h"
 
-GameLayer::GameLayer(GameLayerResources& resources) :
-    mResources(resources)
+GameLayer::GameLayer(LayerFactory& factory)
 {
-    mLayer = resources.CreateLayer(1);
-    mLogo = resources.createGraphicsElement(*mLayer, "logo", 100, 0);   
+    mLayer = factory.CreateLayer(1);
+    mLogo = factory.createGraphicsElement(*mLayer, "logo", 100, 0);   
 
-    createCoinRectangles();
-    createWinLogos();
-    createDoubleupBox();
+    createCoinRectangles(factory);
+    createWinLogos(factory);
+    createDoubleupBox(factory);
 }
 
 GameLayer::~GameLayer()
 {
     delete mDoubleUp;
+    delete mResult;
+    for (GraphicsElementVector::iterator it = mCoins.begin(); it != mCoins.end(); ++it)
+    {
+        delete *it;
+    }
     delete mLogo;
 }
 
 void GameLayer::ResetGraphics()
 {
-    for (RectangleVector::iterator i = mCoinRectangles.begin(); i != mCoinRectangles.end(); ++i)
+    for(GraphicsElementVector::iterator i = mCoins.begin(); i != mCoins.end(); ++i)
     {
-        (*i)->background_image("opaque");
+        (*i)->SetVisibility(false);
     }
-    mResultRect->background_image("opaque");
+    mResult->SetVisibility(false);
     mDoubleUp->SetVisibility(false);
 }
 
@@ -33,27 +37,22 @@ void GameLayer::setCoinImage(int index, Side side)
 {
     if (side == Heads) 
     {
-        mCoinRectangles[index]->background_image(&mResources.CoinHead());
+        mCoins[index]->Show("coinhead");
     }
     else 
     {
-        mCoinRectangles[index]->background_image(&mResources.CoinTail());
+        mCoins[index]->Show("cointail");
     }
 }
 
 void GameLayer::showBigWin()
 {
-    mResultRect->background_image(&mResources.BigwinText());
-}
-
-void GameLayer::showWin()
-{
-    mResultRect->background_image(&mResources.WinText());
+    mResult->Show("bigwin");
 }
 
 void GameLayer::showLoss()
 {
-    mResultRect->background_image(&mResources.LoseText());
+    mResult->Show("lose");
 }
 
 void GameLayer::showDoubleupQueryBoxes()
@@ -61,36 +60,34 @@ void GameLayer::showDoubleupQueryBoxes()
     mDoubleUp->SetVisibility(true);
 }
 
-void GameLayer::createCoinRectangles()
+void GameLayer::createCoinRectangles(LayerFactory& factory)
 {
-    Gorilla::Sprite& headSprite = mResources.CoinHead();
-    
+    std::vector<std::string> names;
+    names.push_back("coinhead");
+    names.push_back("cointail");
     for (int i = 0; i <= 2; ++i)
     {
-        const int horizontalPosition = 100 + i * 300;
-        const Ogre::Vector2 coinSize(headSprite.spriteWidth, headSprite.spriteHeight);    
-        
-        Gorilla::Rectangle* coinRect = mLayer->createRectangle(Ogre::Vector2(horizontalPosition,300), coinSize);
-        coinRect->background_image("opaque");
-        mCoinRectangles.push_back(coinRect);
-    }
+        const int xPos = 100 + i * 300;
+        GraphicsElement* coin = factory.createGraphicsElement(*mLayer, names, xPos, 300);
+        coin->SetVisibility(false);
+        mCoins.push_back(coin);
+    }    
 }
 
-void GameLayer::createWinLogos()
+void GameLayer::createWinLogos(LayerFactory& factory)
 {
-    Ogre::Real vpHeight = Screen().getHeight();
-    mResultRect = mLayer->createRectangle(100,vpHeight-200, mResources.BigwinText().spriteWidth, mResources.LoseText().spriteHeight);
-    mResultRect->background_image("opaque");
+    std::vector<std::string> names;
+    names.push_back("bigwin");
+    names.push_back("lose");
+    names.push_back("win");
+    const Ogre::Real yPos = factory.ScreenHeight() - 200;
+    mResult = factory.createGraphicsElement(*mLayer, names, 100, yPos);
+    mResult->SetVisibility(false);
 }
 
-void GameLayer::createDoubleupBox()
+void GameLayer::createDoubleupBox(LayerFactory& factory)
 {
-    Ogre::Real yPos = Screen().getHeight() - 200;
-    mDoubleUp = mResources.createGraphicsElement(*mLayer, "doubleup", 300, yPos);
+    const Ogre::Real yPos = factory.ScreenHeight() - 200;
+    mDoubleUp = factory.createGraphicsElement(*mLayer, "doubleup", 300, yPos);
     mDoubleUp->SetVisibility(false);
-}
-
-Gorilla::Screen& GameLayer::Screen()
-{
-    return mResources.Screen();
 }
