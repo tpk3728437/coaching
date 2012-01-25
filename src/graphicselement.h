@@ -19,7 +19,8 @@ protected:
     Gorilla::Sprite* find(std::string name) const;
     
 private:
-    std::map<std::string, Gorilla::Sprite*> mSpriteMap;
+    typedef std::map<std::string, Gorilla::Sprite*> ElementMap;
+    ElementMap mSpriteMap;
     Gorilla::Rectangle* mRectangle;
     std::string mActiveImageName;
 };

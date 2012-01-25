@@ -6,7 +6,7 @@ LayerFactory::LayerFactory(Gorilla::Silverback& silverback, Ogre::Viewport& view
 {
     mScreen = silverback.createScreen(&viewport, "tripleflip");
     mScreen->setOrientation(Ogre::OR_PORTRAIT);
-}    
+}
 
 LayerFactory::~LayerFactory()
 {

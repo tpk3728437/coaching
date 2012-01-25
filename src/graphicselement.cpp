@@ -1,10 +1,25 @@
 #include "graphicselement.h"
 
+typedef std::pair<std::string, Gorilla::Sprite*> ElementPair;
+
+namespace {
+    bool widthCompare(const ElementPair& lhs, const ElementPair& rhs) 
+    { 
+        return lhs.second->spriteWidth < rhs.second->spriteWidth; 
+    }
+
+    bool heightCompare(const ElementPair& lhs, const ElementPair& rhs) 
+    { 
+        return lhs.second->spriteHeight < rhs.second->spriteHeight; 
+    }
+};
+
+
 GraphicsElement::GraphicsElement(Gorilla::Screen& screen, Gorilla::Layer& layer, std::string name, int x, int y) : 
         mRectangle(0), mActiveImageName(name)
 {
     Gorilla::Sprite* sprite = screen.getAtlas()->getSprite(name); 
-    mSpriteMap.insert(std::pair<std::string, Gorilla::Sprite*>(name, sprite));
+    mSpriteMap.insert(ElementPair(name, sprite));
     mRectangle = layer.createRectangle(x, y, sprite->spriteWidth, sprite->spriteHeight);
     mRectangle->background_image(sprite);
 }
@@ -16,7 +31,7 @@ GraphicsElement::GraphicsElement(Gorilla::Screen& screen, Gorilla::Layer& layer,
     {
         const std::string spriteName = *i;
         Gorilla::Sprite* sprite = screen.getAtlas()->getSprite(spriteName);         
-        mSpriteMap.insert(std::pair<std::string, Gorilla::Sprite*>(spriteName, sprite));
+        mSpriteMap.insert(ElementPair(spriteName, sprite));
     }
     mRectangle = layer.createRectangle(x, y, maxSpriteWidth(), maxSpriteHeight());
     Gorilla::Sprite* sprite = find(mActiveImageName);
@@ -25,7 +40,7 @@ GraphicsElement::GraphicsElement(Gorilla::Screen& screen, Gorilla::Layer& layer,
 
 GraphicsElement::~GraphicsElement()
 {
-    for(std::map<std::string, Gorilla::Sprite*>::iterator it = mSpriteMap.begin(); it != mSpriteMap.end(); ++it)
+    for(ElementMap::iterator it = mSpriteMap.begin(); it != mSpriteMap.end(); ++it)
     {
         delete (*it).second;
     }
@@ -56,41 +71,22 @@ void GraphicsElement::Show(std::string name)
     }
 }
 
-struct MaxWidthFinder
-{
-    MaxWidthFinder(int& width) : max(width) {}
-    void operator()(const std::pair<std::string, Gorilla::Sprite*>& elem) { if (elem.second->spriteWidth > max) { max = elem.second->spriteWidth; } }
-private:
-    int& max;
-};
-
-struct MaxHeightFinder
-{
-    MaxHeightFinder(int& height) : max(height) {}
-    void operator()(const std::pair<std::string, Gorilla::Sprite*>& elem) { if (elem.second->spriteHeight > max) { max = elem.second->spriteHeight; } }
-private:
-    int& max;
-};
-
-
 int GraphicsElement::maxSpriteWidth() const
 {
-    int width = 0;
-    std::for_each(mSpriteMap.begin(), mSpriteMap.end(), MaxWidthFinder(width));
-    return width;
+    ElementMap::const_iterator it = std::max_element(mSpriteMap.begin(), mSpriteMap.end(), widthCompare);
+    return (*it).second->spriteWidth;
 }
 
 int GraphicsElement::maxSpriteHeight() const
 {
-    int height = 0;
-    std::for_each(mSpriteMap.begin(), mSpriteMap.end(), MaxHeightFinder(height));
-    return height;
+    ElementMap::const_iterator it = std::max_element(mSpriteMap.begin(), mSpriteMap.end(), heightCompare);
+    return (*it).second->spriteHeight;
 }
 
 struct NameComparator
 {
     NameComparator(std::string name) : mName(name) {}
-    bool operator()(const std::pair<std::string, Gorilla::Sprite*>& elem) const { return mName.compare(elem.first) == 0; }
+    bool operator()(const ElementPair& elem) const { return mName.compare(elem.first) == 0; }
 private:
     std::string mName;
 };
@@ -98,7 +94,7 @@ private:
 Gorilla::Sprite* GraphicsElement::find(std::string name) const
 {
     NameComparator pred(name);
-    std::map<std::string, Gorilla::Sprite*>::const_iterator iter = std::find_if(mSpriteMap.begin(), mSpriteMap.end(), pred);
+    ElementMap::const_iterator iter = std::find_if(mSpriteMap.begin(), mSpriteMap.end(), pred);
     Gorilla::Sprite* sprite = (*iter).second;
     assert(sprite);
     return sprite;
