@@ -45,7 +45,7 @@ void doubleUpFalseResult(DoubleupChoiceResult& result)
     result.DoubleUp(false);
 }
 
-class FlipCoin : public ::testing::Test
+class HeadsOrTailsGameTest : public ::testing::Test
 {
 public:
     void NO_DOUBLEUP_USER_EVENT(MockUserEvents& events)
@@ -65,7 +65,7 @@ public:
     MockUserEvents events;
 };
 
-TEST_F(FlipCoin, lose_with_two_tails)
+TEST_F(HeadsOrTailsGameTest, lose_with_two_tails)
 {    
     EXPECT_CALL(play, Flip(_)).Times(2).WillRepeatedly(Invoke(tailsFlipResult)); 
 
@@ -83,7 +83,7 @@ TEST_F(FlipCoin, lose_with_two_tails)
     game.Play();    
 }
 
-TEST_F(FlipCoin, lose_with_heads_then_two_tails)
+TEST_F(HeadsOrTailsGameTest, lose_with_heads_then_two_tails)
 {
     EXPECT_CALL(play, Flip(_)).Times(3)
         .WillOnce(Invoke(headsFlipResult))
@@ -105,7 +105,7 @@ TEST_F(FlipCoin, lose_with_heads_then_two_tails)
     game.Play();    
 }
 
-TEST_F(FlipCoin, lose_with_tails_heads_tails_sequence)
+TEST_F(HeadsOrTailsGameTest, lose_with_tails_heads_tails_sequence)
 {
     EXPECT_CALL(play, Flip(_)).Times(3)
         .WillOnce(Invoke(tailsFlipResult))
@@ -128,7 +128,7 @@ TEST_F(FlipCoin, lose_with_tails_heads_tails_sequence)
     game.Play();    
 }
 
-TEST_F(FlipCoin, win_with_heads_heads_tails_sequence)
+TEST_F(HeadsOrTailsGameTest, win_with_heads_heads_tails_sequence)
 {
     EXPECT_CALL(play, Flip(_)).Times(3)
         .WillOnce(Invoke(headsFlipResult))
@@ -152,7 +152,7 @@ TEST_F(FlipCoin, win_with_heads_heads_tails_sequence)
     game.Play();
 }
 
-TEST_F(FlipCoin, win_with_tails_heads_heads_sequence)
+TEST_F(HeadsOrTailsGameTest, win_with_tails_heads_heads_sequence)
 {
     EXPECT_CALL(play, Flip(_)).Times(3)
         .WillOnce(Invoke(tailsFlipResult))
@@ -175,7 +175,7 @@ TEST_F(FlipCoin, win_with_tails_heads_heads_sequence)
     game.Play();    
 }
 
-TEST_F(FlipCoin, win_with_heads_tails_heads_sequence)
+TEST_F(HeadsOrTailsGameTest, win_with_heads_tails_heads_sequence)
 {
     EXPECT_CALL(play, Flip(_)).Times(3)
         .WillOnce(Invoke(headsFlipResult))
@@ -198,7 +198,7 @@ TEST_F(FlipCoin, win_with_heads_tails_heads_sequence)
     game.Play();    
 }
 
-TEST_F(FlipCoin, bigwin_with_heads_heads_heads_sequence)
+TEST_F(HeadsOrTailsGameTest, bigwin_with_heads_heads_heads_sequence)
 {
     MockGamePlay play;
     EXPECT_CALL(play, Flip(_)).Times(3)
@@ -218,7 +218,7 @@ TEST_F(FlipCoin, bigwin_with_heads_heads_heads_sequence)
     game.Play();    
 }
 
-TEST_F(FlipCoin, doubleup_lose_with_tails)
+TEST_F(HeadsOrTailsGameTest, doubleup_lose_with_tails)
 {
     EXPECT_CALL(play, Flip(_)).Times(4)
         .WillOnce(Invoke(tailsFlipResult))
@@ -244,7 +244,7 @@ TEST_F(FlipCoin, doubleup_lose_with_tails)
     game.Play();    
 }
 
-TEST_F(FlipCoin, doubleup_win_with_heads)
+TEST_F(HeadsOrTailsGameTest, doubleup_win_with_heads)
 {
     EXPECT_CALL(play, Flip(_)).Times(4)
         .WillOnce(Invoke(tailsFlipResult))
@@ -271,7 +271,7 @@ TEST_F(FlipCoin, doubleup_win_with_heads)
     game.Play();    
 }
 
-TEST_F(FlipCoin, doubleup_twice_win_with_heads_then_lose_with_tails)
+TEST_F(HeadsOrTailsGameTest, doubleup_twice_win_with_heads_then_lose_with_tails)
 {
     EXPECT_CALL(play, Flip(_)).Times(5)
         .WillOnce(Invoke(tailsFlipResult))
@@ -300,7 +300,7 @@ TEST_F(FlipCoin, doubleup_twice_win_with_heads_then_lose_with_tails)
     game.Play();    
 }
 
-TEST_F(FlipCoin, doubleup_twice_win_with_heads_heads)
+TEST_F(HeadsOrTailsGameTest, doubleup_twice_win_with_heads_heads)
 {
     EXPECT_CALL(play, Flip(_)).Times(5)
         .WillOnce(Invoke(tailsFlipResult))
@@ -327,7 +327,7 @@ TEST_F(FlipCoin, doubleup_twice_win_with_heads_heads)
     game.Play();    
 }
 
-TEST_F(FlipCoin, doubleup_twice_win_with_heads_heads_lose_with_tails)
+TEST_F(HeadsOrTailsGameTest, doubleup_twice_win_with_heads_heads_lose_with_tails)
 {
     EXPECT_CALL(play, Flip(_)).Times(6)
         .WillOnce(Invoke(tailsFlipResult))
@@ -358,7 +358,7 @@ TEST_F(FlipCoin, doubleup_twice_win_with_heads_heads_lose_with_tails)
     game.Play();    
 }
 
-TEST_F(FlipCoin, replay)
+TEST_F(HeadsOrTailsGameTest, replay)
 {    
     EXPECT_CALL(play, Flip(_)).Times(4).WillRepeatedly(Invoke(tailsFlipResult)); 
 
