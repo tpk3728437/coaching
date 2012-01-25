@@ -1,13 +1,12 @@
 #include "gamelayer.h"
 #include "gamelayerresources.h"
+#include "graphicselement.h"
 
 GameLayer::GameLayer(GameLayerResources& resources) :
     mResources(resources)
 {
-    mLayer = resources.CreateLayer(1);    
-    mLogoSprite = Screen().getAtlas()->getSprite("logo"); 
-    Gorilla::Rectangle* logoRect = mLayer->createRectangle(100,0, mLogoSprite->spriteWidth, mLogoSprite->spriteHeight);
-    logoRect->background_image(mLogoSprite);
+    mLayer = resources.CreateLayer(1);
+    mLogo = resources.createGraphicsElement(*mLayer, "logo", 100, 0);   
 
     createCoinRectangles();
     createWinLogos();
@@ -16,7 +15,8 @@ GameLayer::GameLayer(GameLayerResources& resources) :
 
 GameLayer::~GameLayer()
 {
-    delete mLogoSprite;
+    delete mDoubleUp;
+    delete mLogo;
 }
 
 void GameLayer::ResetGraphics()
@@ -26,7 +26,7 @@ void GameLayer::ResetGraphics()
         (*i)->background_image("opaque");
     }
     mResultRect->background_image("opaque");
-    mDoubleUpRect->background_image("opaque");
+    mDoubleUp->SetVisibility(false);
 }
 
 void GameLayer::setCoinImage(int index, Side side)
@@ -58,7 +58,7 @@ void GameLayer::showLoss()
 
 void GameLayer::showDoubleupQueryBoxes()
 {
-    mDoubleUpRect->background_image(&mResources.DoubleupText());
+    mDoubleUp->SetVisibility(true);
 }
 
 void GameLayer::createCoinRectangles()
@@ -85,9 +85,9 @@ void GameLayer::createWinLogos()
 
 void GameLayer::createDoubleupBox()
 {
-    Ogre::Real vpHeight = Screen().getHeight();
-    mDoubleUpRect = mLayer->createRectangle(300,vpHeight-200, mResources.DoubleupText().spriteWidth, mResources.DoubleupText().spriteHeight);
-    mDoubleUpRect->background_image("opaque");
+    Ogre::Real yPos = Screen().getHeight() - 200;
+    mDoubleUp = mResources.createGraphicsElement(*mLayer, "doubleup", 300, yPos);
+    mDoubleUp->SetVisibility(false);
 }
 
 Gorilla::Screen& GameLayer::Screen()

@@ -5,6 +5,7 @@
 #include "globals.h"
 
 class GameLayerResources;
+class GraphicsElement;
 
 class GameLayer
 {
@@ -29,14 +30,14 @@ private:
 private:
     Gorilla::Layer*         mLayer;
     GameLayerResources&     mResources;
-    Gorilla::Sprite*        mLogoSprite;
+    GraphicsElement*        mLogo;
         
     typedef std::vector<Gorilla::Rectangle*> RectangleVector;
     RectangleVector mCoinRectangles;
     
     Gorilla::Rectangle* mResultRect;
     
-    Gorilla::Rectangle* mDoubleUpRect;
+    GraphicsElement* mDoubleUp;
 };
 
 #endif // GAMELAYER_H

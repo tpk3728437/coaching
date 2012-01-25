@@ -3,6 +3,7 @@
 
 #include "gorilla.h"
 
+class GraphicsElement;
 
 class GameLayerResources
 {
@@ -11,6 +12,7 @@ public:
     ~GameLayerResources();
     
     Gorilla::Layer* CreateLayer(int order);
+    GraphicsElement* createGraphicsElement(Gorilla::Layer& layer, std::string name, int x, int y);
     
     Gorilla::Screen& Screen();
     Gorilla::Sprite& CoinHead();

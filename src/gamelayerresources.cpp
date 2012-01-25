@@ -1,4 +1,5 @@
 #include "gamelayerresources.h"
+#include "graphicselement.h"
 
 GameLayerResources::GameLayerResources(Gorilla::Silverback& silverback, Ogre::Viewport& viewport)
 {
@@ -28,6 +29,11 @@ GameLayerResources::~GameLayerResources()
 Gorilla::Layer* GameLayerResources::CreateLayer(int order)
 {
     return mScreen->createLayer(order);
+}
+
+GraphicsElement* GameLayerResources::createGraphicsElement(Gorilla::Layer& layer, std::string name, int x, int y)
+{
+    return new GraphicsElement(*mScreen, layer, name, x, y);
 }
 
 Gorilla::Screen& GameLayerResources::Screen()
