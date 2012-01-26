@@ -22,7 +22,7 @@ CPPFLAGS += -I$(GTEST_DIR)/include -I$(GMOCK_DIR)/include -I.. -I/usr/local/incl
 
 # Flags passed to the C++ compiler.
 LIBS = -lOIS
-CXXFLAGS += -g -Wall -Wextra $(GCOV_CFLAGS)
+CXXFLAGS += -g -Wall -Wextra -Wno-sign-compare $(GCOV_CFLAGS)
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
