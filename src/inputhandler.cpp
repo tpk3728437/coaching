@@ -12,28 +12,28 @@ InputHandler::~InputHandler()
 {
 }
 
-void InputHandler::Capture()
+void InputHandler::capture()
 {
-    mInputManager->Capture();
+    mInputManager->capture();
 }
 
 bool InputHandler::keyPressed( const OIS::KeyEvent &e )
 {
     if (e.key == OIS::KC_ESCAPE)
     {   
-        mObserver.QuitButtonPressed();
+        mObserver.quitButtonPressed();
     }    
     if (e.key == OIS::KC_P)
     {
-        mObserver.PlayButtonPressed();
+        mObserver.playButtonPressed();
     }
     if (e.key == OIS::KC_Y) 
     {
-        mObserver.DoubleUpButtonPressed();
+        mObserver.doubleUpButtonPressed();
     }
     if (e.key == OIS::KC_N)
     {
-        mObserver.PayoutButtonPressed();
+        mObserver.payoutButtonPressed();
     }
 
     return true;

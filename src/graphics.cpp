@@ -24,7 +24,7 @@ void Graphics::startRendering()
 {
     mRoot->startRendering();
 }
-void Graphics::Quit()
+void Graphics::quit()
 {
     mShutDown = true;
 }
@@ -62,7 +62,7 @@ bool Graphics::frameStarted(const Ogre::FrameEvent& evt)
         return false;
     }
     
-    mInputInspector->Capture();
+    mInputInspector->capture();
 
     return true;
 }

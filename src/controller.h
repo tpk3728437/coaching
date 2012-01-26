@@ -34,10 +34,10 @@ protected: // from Player
     void onDoubleUp(bool win);
 
 protected: // from UserCommandObserver
-    void QuitButtonPressed();
-    void PlayButtonPressed();
-    void DoubleUpButtonPressed();
-    void PayoutButtonPressed();    
+    void quitButtonPressed();
+    void playButtonPressed();
+    void doubleUpButtonPressed();
+    void payoutButtonPressed();
 
 protected:
     ViewInterface&          mView;

@@ -12,17 +12,17 @@ class ViewInterface
 public:
     virtual ~ViewInterface() {}
     virtual void startRendering() =0; 
-    virtual void Quit() =0;   
+    virtual void quit() =0;   
     virtual void setInputInspector(InputInspector& inputInspector) =0;
     
-    virtual void ResetGraphics() =0;
-    virtual void ShowDoubleUpScreen() =0;
-    virtual void ResetDoubleUpScreenGraphics() =0;
-    virtual void ShowDoubleupResult(bool win) =0;
-    virtual void ShowGameLoss() =0;
-    virtual void ShowBigWin() =0;
-    virtual void ShowBaseGameCoin(int index, Side side) =0;
-    virtual void ShowDoubleUpCoin(Side side) =0;
+    virtual void resetGraphics() =0;
+    virtual void showDoubleUpScreen() =0;
+    virtual void resetDoubleUpScreenGraphics() =0;
+    virtual void showDoubleupResult(bool win) =0;
+    virtual void showGameLoss() =0;
+    virtual void showBigWin() =0;
+    virtual void showBaseGameCoin(int index, Side side) =0;
+    virtual void showDoubleUpCoin(Side side) =0;
     
     virtual ViewportSize getViewportSize() const =0;
     virtual std::string windowHandle() const =0;

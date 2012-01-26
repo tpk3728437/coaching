@@ -10,7 +10,7 @@ public:
     ~CoinFlipLogic();
 
 private: // from GamePlay  
-    void Flip(FlipResult& result);
+    void flip(FlipResult& result);
     
 private:
     void onCoinFlippedTimerElapse();

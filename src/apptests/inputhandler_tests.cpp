@@ -39,30 +39,30 @@ public:
     }
 
     void EXPECT_QUIT_BUTTON_PRESS() { 
-        EXPECT_CALL(observer, QuitButtonPressed()); 
+        EXPECT_CALL(observer, quitButtonPressed()); 
     }
     
     void EXPECT_PLAY_BUTTON_PRESS() { 
-        EXPECT_CALL(observer, PlayButtonPressed());
+        EXPECT_CALL(observer, playButtonPressed());
     }
     
     void EXPECT_DOUBLEUP_BUTTON_PRESS() { 
-        EXPECT_CALL(observer, DoubleUpButtonPressed());
+        EXPECT_CALL(observer, doubleUpButtonPressed());
     }
 
     void EXPECT_PAYOUT_BUTTON_PRESS() { 
-        EXPECT_CALL(observer, PayoutButtonPressed());
+        EXPECT_CALL(observer, payoutButtonPressed());
     }
     
     void TRIGGER_KEY(const OIS::KeyCode keyCode) {
         ASSERT_TRUE(trigger == NULL);
         trigger = new TriggerKey(*inputHandler, keyCode);
         
-        EXPECT_CALL(*inputManager, Capture()).WillOnce(Invoke(*trigger));
+        EXPECT_CALL(*inputManager, capture()).WillOnce(Invoke(*trigger));
         Capture();
     }
     
-    void Capture() { inputHandler->Capture(); }
+    void Capture() { inputHandler->capture(); }
 
 private:
     MockUserCommandObserver observer;

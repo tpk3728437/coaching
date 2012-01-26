@@ -32,7 +32,7 @@ void OISInputManager::setMouseEventCallback(OIS::MouseListener& listener)
     mMouse->setEventCallback(&listener);
 }
 
-void OISInputManager::Capture()
+void OISInputManager::capture()
 {
     mKeyboard->capture();
     mMouse->capture();

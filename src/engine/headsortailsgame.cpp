@@ -19,7 +19,7 @@ HeadsOrTailsGame::~HeadsOrTailsGame()
 {
 }
 
-void HeadsOrTailsGame::Play()
+void HeadsOrTailsGame::play()
 {
     if (&m_fsm.getState() == &MainMap::GameEndState ) {
         m_fsm.restart();
@@ -37,7 +37,7 @@ void HeadsOrTailsGame::playStarted()
 void HeadsOrTailsGame::flipCoin() 
 {
     // gives an asyncronous callback to the client
-    m_gamePlay.Flip(*this);
+    m_gamePlay.flip(*this);
 }
 
 void HeadsOrTailsGame::flipResult(Side side)
@@ -64,7 +64,7 @@ void HeadsOrTailsGame::gameLoss()
     m_fsm.quit();
 }
 
-void HeadsOrTailsGame::DoubleUp(bool doubleup)
+void HeadsOrTailsGame::doubleUp(bool doubleup)
 {
     if (doubleup)
     {
@@ -78,7 +78,7 @@ void HeadsOrTailsGame::DoubleUp(bool doubleup)
 
 void HeadsOrTailsGame::doesUserWantToDoubleUp()
 {
-    m_events.DoesUserWantToDoubleUp(*this);
+    m_events.doesUserWantToDoubleUp(*this);
 }
 
 void HeadsOrTailsGame::bigWin()

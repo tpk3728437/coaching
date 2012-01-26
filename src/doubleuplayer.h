@@ -13,17 +13,17 @@ class DoubleupLayer
 public:
     DoubleupLayer(LayerFactory& factory);
     ~DoubleupLayer();
-    void ResetGraphics();
-    void SetCoin(Side side);
-    bool IsVisible();
+    void resetGraphics();
+    void setCoin(Side side);
+    bool isVisible();
     
-    void Show();
-    void Hide();
+    void show();
+    void hide();
     
-    void Result(bool win);
+    void result(bool win);
 
 private:
-    void ShowDoubleUpQuery();
+    void showDoubleUpQuery();
     void createCoins(LayerFactory& factory);
     void createResultElements(LayerFactory& factory);
     void createDoubleupBox(LayerFactory& factory);

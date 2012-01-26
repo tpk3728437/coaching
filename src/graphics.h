@@ -18,7 +18,7 @@ public:
     ~Graphics();
     void setInputInspector(InputInspector& inputInspector);
     void startRendering();
-    void Quit();
+    void quit();
     
     ViewportSize getViewportSize() const;
     std::string windowHandle() const;

@@ -16,7 +16,7 @@ public:
      * Asyncronous flip function, result or coin flip is reported through
      * FlipResult interface.
      */ 
-    virtual void Flip(FlipResult& result) =0;
+    virtual void flip(FlipResult& result) =0;
 };
 
 #endif // GAMEPLAY_H

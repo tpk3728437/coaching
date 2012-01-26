@@ -12,7 +12,7 @@
 class InputInspector
 {
 public:
-    virtual void Capture() =0;
+    virtual void capture() =0;
     
 protected:
     virtual ~InputInspector() {}
@@ -30,7 +30,7 @@ public:
     ~InputHandler();  
 
 public: // from InputInspector
-    void Capture();
+    void capture();
         
 private:
     bool keyPressed( const OIS::KeyEvent &e );

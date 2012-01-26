@@ -11,12 +11,12 @@ public:
     LayerFactory(Gorilla::Silverback& silverback, Ogre::Viewport& viewport);
     ~LayerFactory();
     
-    Gorilla::Layer* CreateLayer(int order);
+    Gorilla::Layer* createLayer(int order);
     GraphicsElement* createGraphicsElement(Gorilla::Layer& layer, std::string name, int x, int y);
     GraphicsElement* createGraphicsElement(Gorilla::Layer& layer, std::vector<std::string> names, int x, int y);
     
-    int ScreenWidth() const;
-    int ScreenHeight() const;
+    int screenWidth() const;
+    int screenHeight() const;
 
 private:
     Gorilla::Screen*        mScreen;

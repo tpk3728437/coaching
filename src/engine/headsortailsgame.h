@@ -12,7 +12,7 @@ class Player;
 class Game 
 {
 public:
-    virtual void Play() =0;
+    virtual void play() =0;
 };
 
 class HeadsOrTailsGame : public Game, private FlipResult, private DoubleupChoiceResult
@@ -22,7 +22,7 @@ public:
     virtual ~HeadsOrTailsGame();
 
 public: // from game
-    void Play();
+    void play();
     
 public: // State machine actions
     void playStarted();
@@ -40,7 +40,7 @@ private: // from FlipResult
     void flipResult(Side side);
     
 private: // from DoubleupChoiceResult
-    void DoubleUp(bool doubleup);
+    void doubleUp(bool doubleup);
 
 private:
     GamePlay& m_gamePlay;

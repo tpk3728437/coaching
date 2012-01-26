@@ -30,27 +30,27 @@ void Controller::onCoinFlipped(int index, Side side)
 {
     if (index >= 0 && index <= 2)
     {
-        mView.ShowBaseGameCoin(index, side);
+        mView.showBaseGameCoin(index, side);
     }
     else if (index > 2)
     {
-        mView.ShowDoubleUpCoin(side);
+        mView.showDoubleUpCoin(side);
     }
 }
 
 void Controller::onBigWin()
 {
-    mView.ShowBigWin();
+    mView.showBigWin();
 }
 
 void Controller::onGameWin()
 {
-    mView.ShowDoubleUpScreen();
+    mView.showDoubleUpScreen();
 }
 
 void Controller::onGameLoss()
 {
-    mView.ShowGameLoss();
+    mView.showGameLoss();
 }
 
 void Controller::onGameEnd()
@@ -59,30 +59,30 @@ void Controller::onGameEnd()
 
 void Controller::onDoubleUp(bool win)
 {
-    mView.ShowDoubleupResult(win);
+    mView.showDoubleupResult(win);
 }
 
-void Controller::QuitButtonPressed()
+void Controller::quitButtonPressed()
 {
-    mView.Quit();
+    mView.quit();
 }
 
-void Controller::PlayButtonPressed()
+void Controller::playButtonPressed()
 {
-    mView.ResetGraphics();
+    mView.resetGraphics();
     if (mGameEngine) {
-        mGameEngine->Play();
+        mGameEngine->play();
     }
 }
 
-void Controller::DoubleUpButtonPressed()
+void Controller::doubleUpButtonPressed()
 {
-    mView.ResetDoubleUpScreenGraphics();
-    mDoubleupLogic.DoubleUp();
+    mView.resetDoubleUpScreenGraphics();
+    mDoubleupLogic.doubleUp();
 }
 
-void Controller::PayoutButtonPressed()
+void Controller::payoutButtonPressed()
 {
-    mDoubleupLogic.CashOut();
-    mView.ResetGraphics();
+    mDoubleupLogic.cashOut();
+    mView.resetGraphics();
 }

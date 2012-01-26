@@ -12,7 +12,7 @@ public:
     virtual ~InputManager() {}
     virtual void setKeyboardEventCallback(OIS::KeyListener& listener) =0;
     virtual void setMouseEventCallback(OIS::MouseListener& listener) =0;    
-    virtual void Capture() =0;
+    virtual void capture() =0;
 };
 
 #endif // INPUTMANAGER_H

@@ -8,7 +8,7 @@
 class MockUserEvents : public UserEvents
 {
 public:
-    MOCK_METHOD1(DoesUserWantToDoubleUp, void(DoubleupChoiceResult& result));
+    MOCK_METHOD1(doesUserWantToDoubleUp, void(DoubleupChoiceResult& result));
 };
 
 #endif // MOCKUSEREVENTS_H

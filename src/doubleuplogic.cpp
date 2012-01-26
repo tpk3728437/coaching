@@ -10,19 +10,19 @@ DoubleUpLogic::~DoubleUpLogic()
 {
 }
 
-void DoubleUpLogic::DoubleUp()
+void DoubleUpLogic::doubleUp()
 {
-    mDoubleUpUserChoiceResultCallback->DoubleUp(true);
+    mDoubleUpUserChoiceResultCallback->doubleUp(true);
     mDoubleUpUserChoiceResultCallback = &mDummyObject;
 }
 
-void DoubleUpLogic::CashOut()
+void DoubleUpLogic::cashOut()
 {
-    mDoubleUpUserChoiceResultCallback->DoubleUp(false);
+    mDoubleUpUserChoiceResultCallback->doubleUp(false);
     mDoubleUpUserChoiceResultCallback = &mDummyObject;
 }
 
-void DoubleUpLogic::DoesUserWantToDoubleUp(DoubleupChoiceResult& result)
+void DoubleUpLogic::doesUserWantToDoubleUp(DoubleupChoiceResult& result)
 {
     mDoubleUpUserChoiceResultCallback = &result;
 }

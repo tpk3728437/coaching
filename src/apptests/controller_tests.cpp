@@ -15,10 +15,10 @@ class ButtonDriver
 {
 public:
     ButtonDriver(UserCommandObserver& userCommandObserver) : mUserCommandObserver(userCommandObserver) {}
-    void PressQuitButton() { mUserCommandObserver.QuitButtonPressed(); }
-    void PressPlayButton() { mUserCommandObserver.PlayButtonPressed(); }
-    void PressDoubleUpButton() { mUserCommandObserver.DoubleUpButtonPressed(); }
-    void PressPayoutButton() { mUserCommandObserver.PayoutButtonPressed(); }
+    void pressQuitButton() { mUserCommandObserver.quitButtonPressed(); }
+    void pressPlayButton() { mUserCommandObserver.playButtonPressed(); }
+    void pressDoubleUpButton() { mUserCommandObserver.doubleUpButtonPressed(); }
+    void pressPayoutButton() { mUserCommandObserver.payoutButtonPressed(); }
 
 private:
     UserCommandObserver& mUserCommandObserver;
@@ -28,12 +28,12 @@ class GameDriver
 {
 public:
     GameDriver(Player& player) : mPlayer(player){}
-    void FlipCoin(int index, Side side) { mPlayer.onCoinFlipped(index, side); }
-    void TriggerBigWinEvent() { mPlayer.onBigWin(); }
-    void TriggerGameWinEvent() { mPlayer.onGameWin(); }
-    void TriggerGameLossEvent() { mPlayer.onGameLoss(); }  
-    void TriggerDoubleUpWinEvent() { mPlayer.onDoubleUp(true); }
-    void TriggerDoubleUpLoseEvent() { mPlayer.onDoubleUp(false); }
+    void flipCoin(int index, Side side) { mPlayer.onCoinFlipped(index, side); }
+    void triggerBigWinEvent() { mPlayer.onBigWin(); }
+    void triggerGameWinEvent() { mPlayer.onGameWin(); }
+    void triggerGameLossEvent() { mPlayer.onGameLoss(); }
+    void triggerDoubleUpWinEvent() { mPlayer.onDoubleUp(true); }
+    void triggerDoubleUpLoseEvent() { mPlayer.onDoubleUp(false); }
           
 private:
     Player& mPlayer; 
@@ -45,7 +45,7 @@ class ControllerTest : public ::testing::Test
 public:
     ControllerTest() {}
     ~ControllerTest() {}
-    MockView& View() { return mockView; }
+    MockView& view() { return mockView; }
 private:
     MockView mockView;
     ViewportSize size;
@@ -53,117 +53,117 @@ private:
 
 TEST_F(ControllerTest, initialization)
 {        
-    Controller controller(View());
+    Controller controller(view());
 }
 
 TEST_F(ControllerTest, quit_button_press_quits_view_rendering)
 {
-    Controller controller(View());
-    EXPECT_CALL(View(), Quit());
+    Controller controller(view());
+    EXPECT_CALL(view(), quit());
     ButtonDriver driver(controller);
-    driver.PressQuitButton();
+    driver.pressQuitButton();
 }
 
 TEST_F(ControllerTest, play_button_press_resets_graphics_and_start_new_game)
 {
-    Controller controller(View());
-    EXPECT_CALL(View(), ResetGraphics()).Times(2);
+    Controller controller(view());
+    EXPECT_CALL(view(), resetGraphics()).Times(2);
     ButtonDriver driver(controller);
-    driver.PressPlayButton();
+    driver.pressPlayButton();
 
     MockGame mockGame;
-    EXPECT_CALL(mockGame, Play());
+    EXPECT_CALL(mockGame, play());
     controller.setEngine(mockGame);
-    driver.PressPlayButton();
+    driver.pressPlayButton();
 }
 
 TEST_F(ControllerTest, doubleup_button_press_resets_doubleup_graphics)
 {
-    Controller controller(View());
-    EXPECT_CALL(View(), ResetDoubleUpScreenGraphics());
+    Controller controller(view());
+    EXPECT_CALL(view(), resetDoubleUpScreenGraphics());
     ButtonDriver driver(controller);
-    driver.PressDoubleUpButton();
+    driver.pressDoubleUpButton();
 }
 
 TEST_F(ControllerTest, payout_button_press_resets_all_graphics)
 {
-    Controller controller(View());
-    EXPECT_CALL(View(), ResetGraphics());
+    Controller controller(view());
+    EXPECT_CALL(view(), resetGraphics());
     ButtonDriver driver(controller);
-    driver.PressPayoutButton();
+    driver.pressPayoutButton();
 }
 
 TEST_F(ControllerTest, coin_flip_results_invalid_index)
 {
-    Controller controller(View());
+    Controller controller(view());
     GameDriver driver(controller);
-    driver.FlipCoin(-1, Heads);
-    driver.FlipCoin(-2, Heads);
+    driver.flipCoin(-1, Heads);
+    driver.flipCoin(-2, Heads);
 }
 
 TEST_F(ControllerTest, coin_flip_results_base_game)
 {
-    Controller controller(View());
-    EXPECT_CALL(View(), ShowBaseGameCoin(0, Heads));
-    EXPECT_CALL(View(), ShowBaseGameCoin(1, Tails));
-    EXPECT_CALL(View(), ShowBaseGameCoin(2, Heads));
+    Controller controller(view());
+    EXPECT_CALL(view(), showBaseGameCoin(0, Heads));
+    EXPECT_CALL(view(), showBaseGameCoin(1, Tails));
+    EXPECT_CALL(view(), showBaseGameCoin(2, Heads));
 
     GameDriver driver(controller);
-    driver.FlipCoin(0, Heads);
-    driver.FlipCoin(1, Tails);
-    driver.FlipCoin(2, Heads);
+    driver.flipCoin(0, Heads);
+    driver.flipCoin(1, Tails);
+    driver.flipCoin(2, Heads);
 }
 
 TEST_F(ControllerTest, coin_flip_results_doubleup_game)
 {
-    Controller controller(View());
-    EXPECT_CALL(View(), ShowDoubleUpCoin(Heads)).Times(2);
+    Controller controller(view());
+    EXPECT_CALL(view(), showDoubleUpCoin(Heads)).Times(2);
     GameDriver driver(controller);
-    driver.FlipCoin(3, Heads);
-    driver.FlipCoin(4, Heads);
+    driver.flipCoin(3, Heads);
+    driver.flipCoin(4, Heads);
 }
 
 TEST_F(ControllerTest, on_big_win_event)
 {
-    Controller controller(View());
-    EXPECT_CALL(View(), ShowBigWin());
+    Controller controller(view());
+    EXPECT_CALL(view(), showBigWin());
 
     GameDriver driver(controller);
-    driver.TriggerBigWinEvent();
+    driver.triggerBigWinEvent();
 }
 
 TEST_F(ControllerTest, on_game_win_event)
 {
-    Controller controller(View());
-    EXPECT_CALL(View(), ShowDoubleUpScreen());
+    Controller controller(view());
+    EXPECT_CALL(view(), showDoubleUpScreen());
 
     GameDriver driver(controller);
-    driver.TriggerGameWinEvent();
+    driver.triggerGameWinEvent();
 }
 
 TEST_F(ControllerTest, on_loss_event)
 {
-    Controller controller(View());
-    EXPECT_CALL(View(), ShowGameLoss());
+    Controller controller(view());
+    EXPECT_CALL(view(), showGameLoss());
 
     GameDriver driver(controller);
-    driver.TriggerGameLossEvent();
+    driver.triggerGameLossEvent();
 }
 
 TEST_F(ControllerTest, on_doubleup_lose_event)
 {
-    Controller controller(View());
-    EXPECT_CALL(View(), ShowDoubleupResult(false));
+    Controller controller(view());
+    EXPECT_CALL(view(), showDoubleupResult(false));
     
     GameDriver driver(controller);
-    driver.TriggerDoubleUpLoseEvent();
+    driver.triggerDoubleUpLoseEvent();
 }
 
 TEST_F(ControllerTest, on_doubleup_win_event)
 {
-    Controller controller(View());
-    EXPECT_CALL(View(), ShowDoubleupResult(true));
+    Controller controller(view());
+    EXPECT_CALL(view(), showDoubleupResult(true));
     
     GameDriver driver(controller);
-    driver.TriggerDoubleUpWinEvent();    
+    driver.triggerDoubleUpWinEvent();
 }

@@ -12,7 +12,7 @@ LayerFactory::~LayerFactory()
 {
 }
 
-Gorilla::Layer* LayerFactory::CreateLayer(int order)
+Gorilla::Layer* LayerFactory::createLayer(int order)
 {
     return mScreen->createLayer(order);
 }
@@ -27,12 +27,12 @@ GraphicsElement* LayerFactory::createGraphicsElement(Gorilla::Layer& layer, std:
     return new GraphicsElement(*mScreen, layer, names, x, y);
 }
 
-int LayerFactory::ScreenWidth() const
+int LayerFactory::screenWidth() const
 {
     return mScreen->getWidth();
 }
 
-int LayerFactory::ScreenHeight() const
+int LayerFactory::screenHeight() const
 {
     return mScreen->getHeight();
 }

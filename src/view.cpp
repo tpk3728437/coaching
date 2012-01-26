@@ -28,48 +28,48 @@ void View::startRendering()
     mGraphics->startRendering();
 }
 
-void View::Quit()
+void View::quit()
 {
-    mGraphics->Quit();
+    mGraphics->quit();
 }
 
-void View::ShowDoubleupResult(bool win)
+void View::showDoubleupResult(bool win)
 {
-    mDoubleupLayer->Show();
-    mDoubleupLayer->Result(win);
+    mDoubleupLayer->show();
+    mDoubleupLayer->result(win);
 }
 
-void View::ResetDoubleUpScreenGraphics()
+void View::resetDoubleUpScreenGraphics()
 {
-    mDoubleupLayer->ResetGraphics();
+    mDoubleupLayer->resetGraphics();
 }
 
-void View::ShowGameLoss()
+void View::showGameLoss()
 {
-    if (!mDoubleupLayer->IsVisible())
+    if (!mDoubleupLayer->isVisible())
     {
         mGameLayer->showLoss();
     }
 }
 
-void View::ShowDoubleUpScreen()
+void View::showDoubleUpScreen()
 {
     mGameLayer->showDoubleupQueryBoxes();
 }
 
-void View::ShowBigWin()
+void View::showBigWin()
 {
     mGameLayer->showBigWin();
 }
 
-void View::ShowBaseGameCoin(int index, Side side)
+void View::showBaseGameCoin(int index, Side side)
 {
     mGameLayer->setCoinImage(index, side);
 }
 
-void View::ShowDoubleUpCoin(Side side)
+void View::showDoubleUpCoin(Side side)
 {
-    mDoubleupLayer->SetCoin(side);
+    mDoubleupLayer->setCoin(side);
 }
 
 void View::setInputInspector(InputInspector& inputInspector)
@@ -77,10 +77,10 @@ void View::setInputInspector(InputInspector& inputInspector)
     mGraphics->setInputInspector(inputInspector);
 }
 
-void View::ResetGraphics()
+void View::resetGraphics()
 {
-    mDoubleupLayer->Hide();
-    mGameLayer->ResetGraphics();
+    mDoubleupLayer->hide();
+    mGameLayer->resetGraphics();
 }
 
 ViewportSize View::getViewportSize() const

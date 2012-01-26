@@ -11,8 +11,6 @@ public:
     ~BackgroundLayer();
     
 private:
-
-private:
     Gorilla::Silverback&    mSilverback;
     Gorilla::Screen*        mBackgroundScreen;
     Gorilla::Layer*         mBackgroundLayer;

@@ -5,7 +5,7 @@
 
 DoubleupLayer::DoubleupLayer(LayerFactory& factory)
 {
-    mLayer = factory.CreateLayer(2);
+    mLayer = factory.createLayer(2);
     mLayer->setAlphaModifier(0.9);
     Gorilla::Rectangle* dimmingRect = mLayer->createRectangle(0, 0, 1024, 768);
     dimmingRect->background_gradient(Gorilla::Gradient_Diagonal, Gorilla::rgb(128,128,128), Gorilla::rgb(130,126,120));
@@ -23,69 +23,69 @@ DoubleupLayer::~DoubleupLayer()
     delete mCoin;
 }
 
-void DoubleupLayer::ResetGraphics()
+void DoubleupLayer::resetGraphics()
 {
-    mDoubleUp->SetVisibility(false);
-    mCoin->SetVisibility(false);
-    mResult->SetVisibility(false);
+    mDoubleUp->setVisibility(false);
+    mCoin->setVisibility(false);
+    mResult->setVisibility(false);
 }
 
-void DoubleupLayer::SetCoin(Side side)
+void DoubleupLayer::setCoin(Side side)
 {
     if (side == Heads)
     {
-        mCoin->Show("coinhead");
+        mCoin->show("coinhead");
     }
     else
     {
-        mCoin->Show("cointail");
+        mCoin->show("cointail");
     }
 }
 
-bool DoubleupLayer::IsVisible()
+bool DoubleupLayer::isVisible()
 {
     mLayer->isVisible();
 }
 
-void DoubleupLayer::Result(bool win)
+void DoubleupLayer::result(bool win)
 {
     if (win)
     {
-        mResult->Show("win");
-        ShowDoubleUpQuery();
+        mResult->show("win");
+        showDoubleUpQuery();
     }
     else
     {
-        mResult->Show("lose");
+        mResult->show("lose");
     }
 }
 
-void DoubleupLayer::Show()
+void DoubleupLayer::show()
 {
     mLayer->show();
 }
 
-void DoubleupLayer::ShowDoubleUpQuery()
+void DoubleupLayer::showDoubleUpQuery()
 {
-    mDoubleUp->SetVisibility(true);
+    mDoubleUp->setVisibility(true);
 }
 
-void DoubleupLayer::Hide()
+void DoubleupLayer::hide()
 {
-    ResetGraphics();
+    resetGraphics();
     mLayer->hide();
 }
 
 void DoubleupLayer::createCoins(LayerFactory& factory)
 {
-    const Ogre::Real coinX = factory.ScreenWidth()/2 - 50;
-    const Ogre::Real coinY = factory.ScreenHeight()/2 - 100;
+    const Ogre::Real coinX = factory.screenWidth()/2 - 50;
+    const Ogre::Real coinY = factory.screenHeight()/2 - 100;
 
     std::vector<std::string> names;
     names.push_back("coinhead");
     names.push_back("cointail");
     mCoin = factory.createGraphicsElement(*mLayer, names, coinX, coinY);
-    mCoin->SetVisibility(false);
+    mCoin->setVisibility(false);
 }
 
 void DoubleupLayer::createResultElements(LayerFactory& factory)
@@ -94,14 +94,14 @@ void DoubleupLayer::createResultElements(LayerFactory& factory)
     names.push_back("win");
     names.push_back("lose");
  
-    Ogre::Real vpHeight = factory.ScreenHeight();
+    Ogre::Real vpHeight = factory.screenHeight();
     mResult = factory.createGraphicsElement(*mLayer, names, 100, vpHeight-400);
-    mResult->SetVisibility(false);
+    mResult->setVisibility(false);
 }
 
 void DoubleupLayer::createDoubleupBox(LayerFactory& factory)
 {
-    Ogre::Real vpHeight = factory.ScreenHeight();
+    Ogre::Real vpHeight = factory.screenHeight();
     mDoubleUp = factory.createGraphicsElement(*mLayer, "doubleup", 300, vpHeight-200);
-    mDoubleUp->SetVisibility(false);
+    mDoubleUp->setVisibility(false);
 }

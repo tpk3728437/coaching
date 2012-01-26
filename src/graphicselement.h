@@ -10,8 +10,8 @@ public:
     GraphicsElement(Gorilla::Screen& screen, Gorilla::Layer& layer, std::vector<std::string>& names, int x, int y);
     virtual ~GraphicsElement();
     
-    void SetVisibility(bool isVisible);
-    void Show(std::string name);
+    void setVisibility(bool isVisible);
+    void show(std::string name);
     
 protected:
     int maxSpriteWidth() const; 

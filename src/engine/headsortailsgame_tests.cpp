@@ -37,12 +37,12 @@ void headsFlipResult(FlipResult& result)
 
 void doubleUpTrueResult(DoubleupChoiceResult& result)
 {
-    result.DoubleUp(true);
+    result.doubleUp(true);
 }
 
 void doubleUpFalseResult(DoubleupChoiceResult& result)
 {
-    result.DoubleUp(false);
+    result.doubleUp(false);
 }
 
 class HeadsOrTailsGameTest : public ::testing::Test
@@ -50,12 +50,12 @@ class HeadsOrTailsGameTest : public ::testing::Test
 public:
     void NO_DOUBLEUP_USER_EVENT(MockUserEvents& events)
     {
-        EXPECT_CALL(events, DoesUserWantToDoubleUp(_)).Times(0);
+        EXPECT_CALL(events, doesUserWantToDoubleUp(_)).Times(0);
     }
 
     void EXPECT_DOUBLEUP_CALL_AND_PAYOUT_RESULT(MockUserEvents& events)
     {
-        EXPECT_CALL(events, DoesUserWantToDoubleUp(_))
+        EXPECT_CALL(events, doesUserWantToDoubleUp(_))
             .WillOnce(Invoke(doubleUpFalseResult));
     }
 
@@ -67,7 +67,7 @@ public:
 
 TEST_F(HeadsOrTailsGameTest, lose_with_two_tails)
 {    
-    EXPECT_CALL(play, Flip(_)).Times(2).WillRepeatedly(Invoke(tailsFlipResult)); 
+    EXPECT_CALL(play, flip(_)).Times(2).WillRepeatedly(Invoke(tailsFlipResult)); 
 
     EXPECT_CALL(player, onPlayStarted());
     EXPECT_CALL(player, onCoinFlipped(0, Tails));
@@ -80,12 +80,12 @@ TEST_F(HeadsOrTailsGameTest, lose_with_two_tails)
     NO_DOUBLEUP_USER_EVENT(events);
 
     HeadsOrTailsGame game(play, player, events);
-    game.Play();    
+    game.play();    
 }
 
 TEST_F(HeadsOrTailsGameTest, lose_with_heads_then_two_tails)
 {
-    EXPECT_CALL(play, Flip(_)).Times(3)
+    EXPECT_CALL(play, flip(_)).Times(3)
         .WillOnce(Invoke(headsFlipResult))
         .WillRepeatedly(Invoke(tailsFlipResult));
 
@@ -102,12 +102,12 @@ TEST_F(HeadsOrTailsGameTest, lose_with_heads_then_two_tails)
     NO_DOUBLEUP_USER_EVENT(events);
 
     HeadsOrTailsGame game(play, player, events);
-    game.Play();    
+    game.play();    
 }
 
 TEST_F(HeadsOrTailsGameTest, lose_with_tails_heads_tails_sequence)
 {
-    EXPECT_CALL(play, Flip(_)).Times(3)
+    EXPECT_CALL(play, flip(_)).Times(3)
         .WillOnce(Invoke(tailsFlipResult))
         .WillOnce(Invoke(headsFlipResult))
         .WillRepeatedly(Invoke(tailsFlipResult));
@@ -125,12 +125,12 @@ TEST_F(HeadsOrTailsGameTest, lose_with_tails_heads_tails_sequence)
     NO_DOUBLEUP_USER_EVENT(events);
 
     HeadsOrTailsGame game(play, player, events);
-    game.Play();    
+    game.play();    
 }
 
 TEST_F(HeadsOrTailsGameTest, win_with_heads_heads_tails_sequence)
 {
-    EXPECT_CALL(play, Flip(_)).Times(3)
+    EXPECT_CALL(play, flip(_)).Times(3)
         .WillOnce(Invoke(headsFlipResult))
         .WillOnce(Invoke(headsFlipResult))
         .WillRepeatedly(Invoke(tailsFlipResult));
@@ -149,12 +149,12 @@ TEST_F(HeadsOrTailsGameTest, win_with_heads_heads_tails_sequence)
     EXPECT_DOUBLEUP_CALL_AND_PAYOUT_RESULT(events);
 
     HeadsOrTailsGame game(play, player, events);
-    game.Play();
+    game.play();
 }
 
 TEST_F(HeadsOrTailsGameTest, win_with_tails_heads_heads_sequence)
 {
-    EXPECT_CALL(play, Flip(_)).Times(3)
+    EXPECT_CALL(play, flip(_)).Times(3)
         .WillOnce(Invoke(tailsFlipResult))
         .WillRepeatedly(Invoke(headsFlipResult));
 
@@ -172,12 +172,12 @@ TEST_F(HeadsOrTailsGameTest, win_with_tails_heads_heads_sequence)
     EXPECT_DOUBLEUP_CALL_AND_PAYOUT_RESULT(events);
 
     HeadsOrTailsGame game(play, player, events);
-    game.Play();    
+    game.play();    
 }
 
 TEST_F(HeadsOrTailsGameTest, win_with_heads_tails_heads_sequence)
 {
-    EXPECT_CALL(play, Flip(_)).Times(3)
+    EXPECT_CALL(play, flip(_)).Times(3)
         .WillOnce(Invoke(headsFlipResult))
         .WillOnce(Invoke(tailsFlipResult))
         .WillRepeatedly(Invoke(headsFlipResult));
@@ -195,13 +195,13 @@ TEST_F(HeadsOrTailsGameTest, win_with_heads_tails_heads_sequence)
     EXPECT_DOUBLEUP_CALL_AND_PAYOUT_RESULT(events);
 
     HeadsOrTailsGame game(play, player, events);
-    game.Play();    
+    game.play();    
 }
 
 TEST_F(HeadsOrTailsGameTest, bigwin_with_heads_heads_heads_sequence)
 {
     MockGamePlay play;
-    EXPECT_CALL(play, Flip(_)).Times(3)
+    EXPECT_CALL(play, flip(_)).Times(3)
         .WillRepeatedly(Invoke(headsFlipResult));
 
     { InSequence in;
@@ -215,12 +215,12 @@ TEST_F(HeadsOrTailsGameTest, bigwin_with_heads_heads_heads_sequence)
     NO_DOUBLEUP_USER_EVENT(events);
 
     HeadsOrTailsGame game(play, player, events);
-    game.Play();    
+    game.play();    
 }
 
 TEST_F(HeadsOrTailsGameTest, doubleup_lose_with_tails)
 {
-    EXPECT_CALL(play, Flip(_)).Times(4)
+    EXPECT_CALL(play, flip(_)).Times(4)
         .WillOnce(Invoke(tailsFlipResult))
         .WillOnce(Invoke(headsFlipResult))
         .WillOnce(Invoke(headsFlipResult))
@@ -237,16 +237,16 @@ TEST_F(HeadsOrTailsGameTest, doubleup_lose_with_tails)
     EXPECT_CALL(player, onGameEnd());
     EXPECT_CALL(player, onDoubleUp(false));
     
-    EXPECT_CALL(events, DoesUserWantToDoubleUp(_))
+    EXPECT_CALL(events, doesUserWantToDoubleUp(_))
         .WillOnce(Invoke(doubleUpTrueResult));
 
     HeadsOrTailsGame game(play, player, events);
-    game.Play();    
+    game.play();    
 }
 
 TEST_F(HeadsOrTailsGameTest, doubleup_win_with_heads)
 {
-    EXPECT_CALL(play, Flip(_)).Times(4)
+    EXPECT_CALL(play, flip(_)).Times(4)
         .WillOnce(Invoke(tailsFlipResult))
         .WillOnce(Invoke(headsFlipResult))
         .WillOnce(Invoke(headsFlipResult))
@@ -263,17 +263,17 @@ TEST_F(HeadsOrTailsGameTest, doubleup_win_with_heads)
     EXPECT_CALL(player, onGameEnd());
     EXPECT_CALL(player, onDoubleUp(true));
     
-    EXPECT_CALL(events, DoesUserWantToDoubleUp(_))
+    EXPECT_CALL(events, doesUserWantToDoubleUp(_))
         .WillOnce(Invoke(doubleUpTrueResult))
         .WillOnce(Invoke(doubleUpFalseResult));
 
     HeadsOrTailsGame game(play, player, events);
-    game.Play();    
+    game.play();    
 }
 
 TEST_F(HeadsOrTailsGameTest, doubleup_twice_win_with_heads_then_lose_with_tails)
 {
-    EXPECT_CALL(play, Flip(_)).Times(5)
+    EXPECT_CALL(play, flip(_)).Times(5)
         .WillOnce(Invoke(tailsFlipResult))
         .WillOnce(Invoke(headsFlipResult))
         .WillOnce(Invoke(headsFlipResult))
@@ -293,16 +293,16 @@ TEST_F(HeadsOrTailsGameTest, doubleup_twice_win_with_heads_then_lose_with_tails)
     EXPECT_CALL(player, onDoubleUp(true));
     EXPECT_CALL(player, onDoubleUp(false));
     
-    EXPECT_CALL(events, DoesUserWantToDoubleUp(_))
+    EXPECT_CALL(events, doesUserWantToDoubleUp(_))
         .WillRepeatedly(Invoke(doubleUpTrueResult));
 
     HeadsOrTailsGame game(play, player, events);
-    game.Play();    
+    game.play();    
 }
 
 TEST_F(HeadsOrTailsGameTest, doubleup_twice_win_with_heads_heads)
 {
-    EXPECT_CALL(play, Flip(_)).Times(5)
+    EXPECT_CALL(play, flip(_)).Times(5)
         .WillOnce(Invoke(tailsFlipResult))
         .WillRepeatedly(Invoke(headsFlipResult));
 
@@ -318,18 +318,18 @@ TEST_F(HeadsOrTailsGameTest, doubleup_twice_win_with_heads_heads)
     EXPECT_CALL(player, onGameEnd());
     EXPECT_CALL(player, onDoubleUp(true)).Times(2);
     
-    EXPECT_CALL(events, DoesUserWantToDoubleUp(_))
+    EXPECT_CALL(events, doesUserWantToDoubleUp(_))
         .WillOnce(Invoke(doubleUpTrueResult))
         .WillOnce(Invoke(doubleUpTrueResult))
         .WillOnce(Invoke(doubleUpFalseResult));
 
     HeadsOrTailsGame game(play, player, events);
-    game.Play();    
+    game.play();    
 }
 
 TEST_F(HeadsOrTailsGameTest, doubleup_twice_win_with_heads_heads_lose_with_tails)
 {
-    EXPECT_CALL(play, Flip(_)).Times(6)
+    EXPECT_CALL(play, flip(_)).Times(6)
         .WillOnce(Invoke(tailsFlipResult))
         .WillOnce(Invoke(headsFlipResult))
         .WillOnce(Invoke(headsFlipResult))
@@ -351,16 +351,16 @@ TEST_F(HeadsOrTailsGameTest, doubleup_twice_win_with_heads_heads_lose_with_tails
     EXPECT_CALL(player, onDoubleUp(true)).Times(2);
     EXPECT_CALL(player, onDoubleUp(false));
     
-    EXPECT_CALL(events, DoesUserWantToDoubleUp(_))
+    EXPECT_CALL(events, doesUserWantToDoubleUp(_))
         .WillRepeatedly(Invoke(doubleUpTrueResult));
 
     HeadsOrTailsGame game(play, player, events);
-    game.Play();    
+    game.play();    
 }
 
 TEST_F(HeadsOrTailsGameTest, replay)
 {    
-    EXPECT_CALL(play, Flip(_)).Times(4).WillRepeatedly(Invoke(tailsFlipResult)); 
+    EXPECT_CALL(play, flip(_)).Times(4).WillRepeatedly(Invoke(tailsFlipResult)); 
 
     EXPECT_CALL(player, onPlayStarted()).Times(2);
     EXPECT_CALL(player, onCoinFlipped(0, Tails)).Times(2);
@@ -373,6 +373,6 @@ TEST_F(HeadsOrTailsGameTest, replay)
     NO_DOUBLEUP_USER_EVENT(events);
 
     HeadsOrTailsGame game(play, player, events);
-    game.Play();
-    game.Play();
+    game.play();
+    game.play();
 }

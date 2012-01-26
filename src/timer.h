@@ -25,7 +25,7 @@ class Timer
 {
 public:
     static Timer* getInstance();
-    static void Release();
+    static void release();
  
     /**
      * \return Milliseconds since timer started

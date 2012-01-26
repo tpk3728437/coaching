@@ -24,7 +24,7 @@ CoinFlipLogic::~CoinFlipLogic()
 {
 }
 
-void CoinFlipLogic::Flip(FlipResult& result)
+void CoinFlipLogic::flip(FlipResult& result)
 {
     // save the interface
     mCoinFlipResultCallback = &result;

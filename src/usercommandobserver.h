@@ -7,10 +7,10 @@
 class UserCommandObserver
 {
 public:
-    virtual void QuitButtonPressed() =0;
-    virtual void PlayButtonPressed() =0;
-    virtual void DoubleUpButtonPressed() =0;
-    virtual void PayoutButtonPressed() =0;
+    virtual void quitButtonPressed() =0;
+    virtual void playButtonPressed() =0;
+    virtual void doubleUpButtonPressed() =0;
+    virtual void payoutButtonPressed() =0;
 protected:
     virtual ~UserCommandObserver() {}
 };

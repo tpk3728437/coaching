@@ -4,7 +4,7 @@
 class DoubleupChoiceResult
 {
 public:
-    virtual void DoubleUp(bool doubleup) =0;
+    virtual void doubleUp(bool doubleup) =0;
 };
 
 class UserEvents
@@ -15,7 +15,7 @@ public:
      * through DoubleupChoiceResult interface.
      */ 
 
-    virtual void DoesUserWantToDoubleUp(DoubleupChoiceResult& result) =0;
+    virtual void doesUserWantToDoubleUp(DoubleupChoiceResult& result) =0;
 };
 
 #endif

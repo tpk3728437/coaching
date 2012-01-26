@@ -16,7 +16,7 @@ public:
      
     void setKeyboardEventCallback(OIS::KeyListener&) {}
     void setMouseEventCallback(OIS::MouseListener&) {}  
-    void Capture() {}
+    void capture() {}
 };
 
 class OISControllerTest : public ::testing::Test

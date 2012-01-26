@@ -8,7 +8,7 @@
 class MockGame : public Game
 {
 public:
-    MOCK_METHOD0(Play, void());
+    MOCK_METHOD0(play, void());
 };
 
 #endif // MOCK_GAME_H

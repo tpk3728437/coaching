@@ -13,7 +13,7 @@ public:
     GameLayer(LayerFactory& factory);
     ~GameLayer();
     
-    void ResetGraphics();
+    void resetGraphics();
     void setCoinImage(int index, Side side);
     
     void showBigWin();
@@ -21,7 +21,7 @@ public:
     void showDoubleupQueryBoxes();
 
 private:
-    Gorilla::Screen& Screen();
+    Gorilla::Screen& screen();
     void createCoinRectangles(LayerFactory& factory);
     void createWinLogos(LayerFactory& factory);
     void createDoubleupBox(LayerFactory& factory);

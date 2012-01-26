@@ -54,7 +54,7 @@ GraphicsElement::~GraphicsElement()
     }
 }
 
-void GraphicsElement::SetVisibility(bool isVisible)
+void GraphicsElement::setVisibility(bool isVisible)
 {
     if (isVisible)
     {
@@ -68,7 +68,7 @@ void GraphicsElement::SetVisibility(bool isVisible)
     }
 }
 
-void GraphicsElement::Show(std::string name)
+void GraphicsElement::show(std::string name)
 {
     Gorilla::Sprite* sprite = find(name);
     assert(sprite);

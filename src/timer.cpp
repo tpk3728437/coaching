@@ -21,7 +21,7 @@ Timer* Timer::getInstance()
     return ms_instance;
 }
  
-void Timer::Release()
+void Timer::release()
 {
     if(ms_instance)
         {

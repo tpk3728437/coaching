@@ -5,7 +5,7 @@
 
 class DummyDoubleupChoiceResult : public DoubleupChoiceResult
 {
-    void DoubleUp(bool /*doubleup*/) {}
+    void doubleUp(bool /*doubleup*/) {}
 };
 
 /**
@@ -20,11 +20,11 @@ public:
     DoubleUpLogic();
     ~DoubleUpLogic();
 
-    void DoubleUp();
-    void CashOut();
+    void doubleUp();
+    void cashOut();
     
 private: // UserEvents
-     void DoesUserWantToDoubleUp(DoubleupChoiceResult& result);
+     void doesUserWantToDoubleUp(DoubleupChoiceResult& result);
 
 private:
     DummyDoubleupChoiceResult   mDummyObject;

@@ -15,7 +15,7 @@ public:
 public: // from InputManager
     void setKeyboardEventCallback(OIS::KeyListener& listener);
     void setMouseEventCallback(OIS::MouseListener& listener);    
-    void Capture();
+    void capture();
     
 private:
     OIS::ParamList buildOISParameters(const std::string& windowHandle);
