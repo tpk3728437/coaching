@@ -1,8 +1,6 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "player.h"
-#include "doubleuplogic.h"
 #include "coinfliplogic.h"
 #include "uitypes.h"
 #include "usercommandobserver.h"
@@ -16,23 +14,16 @@ class ViewInterface;
  * The user commands and game engine events drive the application
  * user interface through this class.
  */
-class Controller : public Player, public UserCommandObserver
+class Controller : public UserCommandObserver
 {
 public:
     Controller(ViewInterface& view);
     ~Controller();    
     void setEngine(Game& gameEngine);
-    UserEvents& userEventsHandler();
     
-protected: // from Player
-    void onPlayStarted();
-    void onCoinFlipped(int index, Side side);
-    void onBigWin();
-    void onGameWin();
-    void onGameLoss();
-    void onGameEnd();
-    void onDoubleUp(bool win);
-
+protected:
+    // TODO: callbacks from game logic to drive application logic 
+    
 protected: // from UserCommandObserver
     void quitButtonPressed();
     void playButtonPressed();
@@ -41,7 +32,6 @@ protected: // from UserCommandObserver
 
 protected:
     ViewInterface&          mView;
-    DoubleUpLogic           mDoubleupLogic;
     Game*                   mGameEngine;
 };
 

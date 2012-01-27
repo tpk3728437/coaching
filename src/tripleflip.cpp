@@ -7,7 +7,7 @@ TripleFlipApp::TripleFlipApp()
 {
     mView = new View();
     mController = new AppController(*mView);
-    mGameEngine = new HeadsOrTailsGame(mCoinFlipLogic, *mController, mController->userEventsHandler());    
+    mGameEngine = new HeadsOrTailsGame();    
     mController->setEngine(*mGameEngine);
 }
   

@@ -23,7 +23,7 @@ CPPFLAGS += -I$(GTEST_DIR)/include -I$(GMOCK_DIR)/include -I$(SMC_DIR)/lib/C++
 CXXFLAGS += -g -Wall -Wextra $(GCOV_CFLAGS)
 
 # State Machine Compiler 
-SM_SOURCES = GameMachine.sm
+#SM_SOURCES = GameMachine.sm
 SMC = java -jar $(SMC_DIR)/bin/Smc.jar
 SMC_FLAGS = -c++ $(TRACE) $(SERIAL) $(NO_CATCH) $(NO_EXCEPT)
 SMC_HEADERS = $(SMC_DIR)/lib/C++/*.h
@@ -106,14 +106,11 @@ gmock_main.a : gmock-all.o gtest-all.o gmock_main.o
 
 
 # Builds a sample test.
-GameMachine_sm.o : $(SM_SOURCES:.sm=_sm.cpp) $(SMC_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/$(SM_SOURCES:.sm=_sm.cpp)
-
 headsortailsgame_tests.o : $(USER_DIR)/headsortailsgame_tests.cpp $(GMOCK_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/headsortailsgame_tests.cpp
 
 headsortailsgame.o: $(USER_DIR)/headsortailsgame.cpp $(GMOCK_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/headsortailsgame.cpp
 
-$(TESTS) : gmock_main.a GameMachine_sm.o headsortailsgame_tests.o headsortailsgame.o 
+$(TESTS) : gmock_main.a headsortailsgame_tests.o headsortailsgame.o 
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -pthread $^ -o $@

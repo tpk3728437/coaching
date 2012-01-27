@@ -96,12 +96,6 @@ inputhandler_tests.o : $(TEST_DIR)/inputhandler_tests.cpp $(GMOCK_HEADERS)
 inputhandler.o: $(USER_DIR)/inputhandler.cpp $(GMOCK_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/inputhandler.cpp
 
-doubleuplogic_tests.o : $(TEST_DIR)/doubleuplogic_tests.cpp $(GMOCK_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(TEST_DIR)/doubleuplogic_tests.cpp
-
-doubleuplogic.o: $(USER_DIR)/doubleuplogic.cpp $(GMOCK_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/doubleuplogic.cpp
-
 resultreader_tests.o : $(TEST_DIR)/resultreader_tests.cpp $(GMOCK_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(TEST_DIR)/resultreader_tests.cpp
 
@@ -117,11 +111,8 @@ controller.o: $(USER_DIR)/controller.cpp $(GMOCK_HEADERS)
 oiscontroller_tests.o : $(TEST_DIR)/oiscontroller_tests.cpp $(GMOCK_HEADERS) $(USER_DIR)/controller.h
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(TEST_DIR)/oiscontroller_tests.cpp
 
-GameMachine_sm.o : $(USER_DIR)/engine/GameMachine_sm.cpp $(SMC_HEADERS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/engine/GameMachine_sm.cpp
-
 headsortailsgame.o: $(USER_DIR)/engine/headsortailsgame.cpp $(GMOCK_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(CFLAGS) -c $(USER_DIR)/engine/headsortailsgame.cpp
 
-$(TESTS) : gmock_main.a inputhandler_tests.o inputhandler.o doubleuplogic_tests.o doubleuplogic.o resultreader_tests.o resultreader.o controller_tests.o controller.o headsortailsgame.o GameMachine_sm.o oiscontroller_tests.o
+$(TESTS) : gmock_main.a inputhandler_tests.o inputhandler.o resultreader_tests.o resultreader.o controller_tests.o controller.o headsortailsgame.o oiscontroller_tests.o
 	${CXX} $^ $(LIBS) -pthread -o $@

@@ -1,6 +1,5 @@
 #include "coinfliplogic.h"
 #include "timer.h"
-#include <tr1/functional>
 #include "resultreader.h"
 
 static StringList RESULTS;
@@ -24,23 +23,12 @@ CoinFlipLogic::~CoinFlipLogic()
 {
 }
 
-void CoinFlipLogic::flip(FlipResult& result)
+Side CoinFlipLogic::flip()
 {
-    // save the interface
-    mCoinFlipResultCallback = &result;
-    
-    std::tr1::function<void ()> callback(std::tr1::bind(&CoinFlipLogic::onCoinFlippedTimerElapse, this));
-    
-    ::Timer::getInstance()->delay(callback, 1000);
-}
-
-void CoinFlipLogic::onCoinFlippedTimerElapse() 
-{ 
+    Side side = Tails;
     std::string result = *it;
     if (result.compare("head") == 0) {
-        mCoinFlipResultCallback->flipResult(Heads);
-    } else {
-        mCoinFlipResultCallback->flipResult(Tails);
+        side = Heads;
     }
     
     // advance iterator
@@ -48,4 +36,5 @@ void CoinFlipLogic::onCoinFlippedTimerElapse()
     if (it == end) {
         it = begin;
     }
+    return side;
 }

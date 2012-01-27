@@ -2,6 +2,7 @@
 #include "headsortailsgame.h"
 #include <memory>
 #include "view.h"
+#include <iostream>
 
 
 Controller::Controller(ViewInterface& view) : mView(view), mGameEngine(0)
@@ -17,51 +18,6 @@ void Controller::setEngine(Game& gameEngine)
     mGameEngine = &gameEngine;
 }
 
-UserEvents& Controller::userEventsHandler()
-{
-    return mDoubleupLogic;
-}
-
-void Controller::onPlayStarted()
-{
-}
-
-void Controller::onCoinFlipped(int index, Side side)
-{
-    if (index >= 0 && index <= 2)
-    {
-        mView.showBaseGameCoin(index, side);
-    }
-    else if (index > 2)
-    {
-        mView.showDoubleUpCoin(side);
-    }
-}
-
-void Controller::onBigWin()
-{
-    mView.showBigWin();
-}
-
-void Controller::onGameWin()
-{
-    mView.showDoubleUpScreen();
-}
-
-void Controller::onGameLoss()
-{
-    mView.showGameLoss();
-}
-
-void Controller::onGameEnd()
-{
-}
-
-void Controller::onDoubleUp(bool win)
-{
-    mView.showDoubleupResult(win);
-}
-
 void Controller::quitButtonPressed()
 {
     mView.quit();
@@ -69,6 +25,7 @@ void Controller::quitButtonPressed()
 
 void Controller::playButtonPressed()
 {
+    std::cout << "Play button pressed" << std::endl;
     mView.resetGraphics();
     if (mGameEngine) {
         mGameEngine->play();
@@ -77,12 +34,17 @@ void Controller::playButtonPressed()
 
 void Controller::doubleUpButtonPressed()
 {
+    std::cout << "tuplausnappia painettu" << std::endl;
+
+    // TODO: Käyttäjä on painanut tuplausnappia, siirry tuplaustilaan
     mView.resetDoubleUpScreenGraphics();
-    mDoubleupLogic.doubleUp();
 }
 
 void Controller::payoutButtonPressed()
 {
-    mDoubleupLogic.cashOut();
+    std::cout << "voittojen lunastusnappia painettu" << std::endl;
+
+    // TODO: käyttäjä on painanut voittojen lunastus nappia
+    // siirry tuplaustilasta pois
     mView.resetGraphics();
 }

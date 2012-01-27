@@ -14,9 +14,9 @@ else
 endif
 
 ENGINE = engine
-ENGINE_OBJS = $(ENGINE)/GameMachine_sm.o $(ENGINE)/headsortailsgame.o
+ENGINE_OBJS = $(ENGINE)/headsortailsgame.o
 UI_UTIL_OBJS = timer.o $(COINFLIPLOGIC)
-UI_LOGIC_OBJS = controller.o doubleuplogic.o inputhandler.o oisinputmanager.o
+UI_LOGIC_OBJS = controller.o inputhandler.o oisinputmanager.o
 UI_LAYER_OBJ = view.o graphics.o layerfactory.o backgroundlayer.o gamelayer.o doubleuplayer.o graphicselement.o
 UI_OBJS = $(UI_UTIL_OBJS) $(UI_LOGIC_OBJS) $(UI_LAYER_OBJ)  tripleflip.o gorilla.o
 EXECUTABLE = tripleflip
@@ -45,9 +45,8 @@ clean:
 	$(MAKE) --directory=$(ENGINE) clean; done
 
 distclean: clean
-	-rm $(ENGINE)/GameMachine_sm.*
 
-$(ENGINE_OBJS): $(ENGINE)/*.cpp $(ENGINE)/*.h $(ENGINE)/*.sm
+$(ENGINE_OBJS): $(ENGINE)/*.cpp $(ENGINE)/*.h
 	$(MAKE) --directory=$(ENGINE); done
 
 $(EXECUTABLE): $(ENGINE_OBJS) $(UI_OBJS) main.o 

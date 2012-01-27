@@ -1,22 +1,22 @@
 #ifndef COINFLIPLOGIC_H
 #define COINFLIPLOGIC_H
 
-#include "gameplay.h"
+#include "globals.h"
 
-class CoinFlipLogic : public GamePlay
+/**
+ * This class is responsible for implementing the coin flipping
+ * algorithm. Each call to the flip function will flip the coin
+ * and return the result.
+ */
+class CoinFlipLogic
 {
 public:
     CoinFlipLogic();
     ~CoinFlipLogic();
 
-private: // from GamePlay  
-    void flip(FlipResult& result);
+    Side flip();
     
 private:
-    void onCoinFlippedTimerElapse();
-    
-private:
-    FlipResult* mCoinFlipResultCallback;
 
 };
 

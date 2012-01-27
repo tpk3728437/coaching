@@ -1,10 +1,7 @@
 #ifndef HEADSORTAILS_H
 #define HEADSORTAILS_H
 
-#include "GameMachine_sm.h"
 #include "globals.h"
-#include "gameplay.h"
-#include "userevents.h"
 
 class GamePlay;
 class Player;
@@ -15,39 +12,21 @@ public:
     virtual void play() =0;
 };
 
-class HeadsOrTailsGame : public Game, private FlipResult, private DoubleupChoiceResult
+/**
+ * This class is responsible for implementing the 
+ * game logic.
+ */ 
+class HeadsOrTailsGame : public Game
 {
 public:
-    HeadsOrTailsGame(GamePlay& gamePlay, Player& player, UserEvents& events);
+    HeadsOrTailsGame();
     virtual ~HeadsOrTailsGame();
 
 public: // from game
     void play();
     
-public: // State machine actions
-    void playStarted();
-    void flipCoin();
-    void coinFlipped(Side side);
-    void bigWin();
-    void gameWin();
-    void gameLoss();
-    void doesUserWantToDoubleUp();
-    void gameEnd();
-    void doubleUpWin(bool win);
-    void reset();
+private: // data members
 
-private: // from FlipResult
-    void flipResult(Side side);
-    
-private: // from DoubleupChoiceResult
-    void doubleUp(bool doubleup);
-
-private:
-    GamePlay& m_gamePlay;
-    Player& m_player;
-    UserEvents& m_events;
-    GameMachineContext m_fsm;
-    int numberOfFlips;
 };
 
 #endif //HEADSORTAILS_H
