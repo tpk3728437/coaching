@@ -31,3 +31,37 @@ Prioriteettijärjestys:
  - Voitetusta tuplauksesta voi vielä tuplata
  - Kolmella kruunulla ei pääse tuplaamaan
  
+ * src/engine hakemistossa on pelilogiikan toteutus
+   - HeadsOrTailsGame-luokan Play metodi käynnistää pelin
+ * Tehtävänäsi on toteuttaa 
+   - pelilogiikka 
+   - pelin satunnaisuus
+   - raportointi UI kerrokselle 
+ * Testirunko on headsortailsgame_tests.cpp tiedostossa
+   - testit pystyy ajamaan "make test" komennolla
+   - testit voi ajaa valgrind:n alla "make valgrind" komennolla
+
+JATKOTEHTÄVÄT
+------------------------------------------------------------------------
+ - Tee pelilogiikasta asyncroninen, siten että:
+   - Kolikon heitto on jonkun delayn takana, 
+      voit käyttää timer luokkaa apuna
+   - Tuplausvalinta on asyncroninen ja odottaa käyttäjän valintaa
+
+ - Liitä pelilogiikka grafiikkaan
+   - (P)-näppäin käynnistää pelin
+   - (Y)-näppäin tuplaa
+   - (N)-näppäin on voiton maksu, eli ei tuplausta
+   - (ESC)-näppäimmellä pääset ulos applikaatiosta
+
+ - UI kerroksen satunnaisuus on toteutettu syncronisena versiona
+   CoinFlipLogic luokkaan
+   - "make USEMOCKFLIP=1" komennolla voi vaihtaa toteutuksen käyttämään
+     esiarvottuja tuloksia, tulevat tulokset arvoinnoista on 'results'
+     tiedostossa. 
+
+
+LISÄTEHTÄVIÄ
+------------------------------------------------------------------------
+ - Kahdella peräkkäisellä BIG WIN:llä (eli kuusi kruunaa putkeen),
+   voittaa SUPER voiton
