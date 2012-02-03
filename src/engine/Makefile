@@ -17,7 +17,7 @@ CPPFLAGS += -I$(GTEST_DIR)/include -I$(GMOCK_DIR)/include -I$(SMC_DIR)/lib/C++
 #CFLAGS += -m32
 
 # GCOV flags
-GCOV_CFLAGS = -fprofile-arcs -ftest-coverage
+#GCOV_CFLAGS = -fprofile-arcs -ftest-coverage
 
 # Flags passed to the C++ compiler.
 CXXFLAGS += -g -Wall -Wextra $(GCOV_CFLAGS)
