@@ -281,7 +281,7 @@ TEST_F(HeadsOrTailsGameTest, doubleup_twice_win_with_heads_then_lose_with_tails)
         .WillRepeatedly(Invoke(tailsFlipResult));
 
     EXPECT_CALL(player, onPlayStarted());
-    EXPECT_CALL(player, onCoinFlipped(0, Tails));
+    EXPECT_CALL(player, onCoinFlipped(0, Heads));
     EXPECT_CALL(player, onCoinFlipped(1, Heads));
     EXPECT_CALL(player, onCoinFlipped(2, Heads));
     EXPECT_CALL(player, onCoinFlipped(3, Heads));
